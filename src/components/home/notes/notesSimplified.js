@@ -27,8 +27,8 @@ export default function NotesSimplified() {
       </Typography>
       <Grid spacing={1} container>
         {Array.from(Array(3), (_, i) => i + 1).map((e) => (
-          <Grid item>
-            <Chip key={e} label="Chip Filled" />
+          <Grid item key={e}>
+            <Chip label="Chip Filled" />
           </Grid>
         ))}
       </Grid>

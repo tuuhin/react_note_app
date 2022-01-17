@@ -7,15 +7,21 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 const db = getFirestore();
-export const addUserToDb = async (user, username) => {
-  console.log(user.uid);
+export const addUserToDb = async (user) => {
+  await setDoc(doc(db, "users", user.uid), {
+    name: "",
+    created_At: serverTimestamp(),
+  });
+};
+
+export const addNoteToDb = async (user, heading, note) => {
   try {
-    await addDoc(collection(db, "users", user.uid), {
-      name: username,
-      created_At: serverTimestamp(),
+    await addDoc(collection(db, "users", user.uid, "notes"), {
+      heading: heading,
+      note: note,
     });
     console.log("done");
   } catch (e) {
-    console.warn(e);
+    console.log(e);
   }
 };

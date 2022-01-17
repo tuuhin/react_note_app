@@ -4,8 +4,7 @@ import EditorTextArea from "./editorTextArea";
 import { createEditor } from "slate";
 import { Slate, withReact } from "slate-react";
 import { useMemo, useState } from "react";
-import { Button } from "@mui/material";
-export default function Editor() {
+export default function Editor(props) {
   const editor = useMemo(() => withReact(createEditor()), []);
   const [value, setValue] = useState([
     {
@@ -43,7 +42,14 @@ export default function Editor() {
   ]);
 
   return (
-    <Slate editor={editor} value={value} onChange={(value) => setValue(value)}>
+    <Slate
+      editor={editor}
+      value={props.value || value}
+      onChange={(value) =>
+        // setValue(value);
+        props.onChange(value)
+      }
+    >
       <EditorOptionBar />
       <EditorTextArea />
     </Slate>

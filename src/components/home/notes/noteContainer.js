@@ -1,7 +1,8 @@
 import React from "react";
 import { Box } from "@mui/system";
 import NotesSimplified from "./notesSimplified";
-import AddNote from "./addnote";
+import AddNote from "../addNote/addnote";
+import ModalProvider from "../../../context/useModal";
 
 export default function NoteContainer() {
   const arr = Array.from({ length: 10 }, (_, index) => index + 1);
@@ -9,7 +10,9 @@ export default function NoteContainer() {
   return (
     <Box sx={{ borderRight: "1px solid grey", padding: "0px 10px" }}>
       <h2 style={{ fontFamily: "Poppins", border: "0px" }}>My Notes</h2>
-      <AddNote />
+      <ModalProvider>
+        <AddNote />
+      </ModalProvider>
       <Box
         sx={{
           display: "flex",
