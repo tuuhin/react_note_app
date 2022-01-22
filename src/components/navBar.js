@@ -16,11 +16,14 @@ export default function NavBar() {
   const HelperButtons = () => {
     return user ? (
       <>
+        <Button component={Link} to="/profile">
+          {"Profile"}
+        </Button>
         <Button component={Link} to="/notes">
           Notes
         </Button>
         <Button onClick={LogOut}>Logout</Button>
-        <Avatar src={user.photoURL} />
+        <Avatar src={user.photoURL} sx={{ ml: 1 }} />
       </>
     ) : (
       <>
@@ -42,7 +45,7 @@ export default function NavBar() {
         sx={{ borderBottom: "1px solid grey" }}
       >
         <Toolbar sx={{ display: "flex", flexDirection: "row" }}>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" sx={{ flexGrow: 1 }} component={Link} to="/">
             My Note
           </Typography>
           <HelperButtons />

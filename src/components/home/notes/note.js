@@ -1,20 +1,23 @@
 import { Navigate } from "react-router-dom";
 import { useUser } from "../../../context/userContext";
 import NoteContainer from "./noteContainer";
-import { Grid } from "@mui/material";
-import NoteDetails from "./notedetails";
+import { Stack } from "@mui/material";
+import NoteDetails from "./noteDetails";
 import NavBar from "../../navBar";
+import NotesProvider from "../../../context/useNotes";
+import NoteDetailsProvider from "../../../context/useNoteDetails";
 export default function Home() {
   const { user } = useUser();
-  console.log(user);
   return user ? (
-    <>
-      <NavBar />
-      <Grid container>
-        <NoteContainer />
-        <NoteDetails />
-      </Grid>
-    </>
+    <NotesProvider>
+      <NoteDetailsProvider>
+        <NavBar />
+        <Stack direction="row" alignItems="center">
+          <NoteContainer />
+          <NoteDetails />
+        </Stack>
+      </NoteDetailsProvider>
+    </NotesProvider>
   ) : (
     <Navigate to="/login" />
   );

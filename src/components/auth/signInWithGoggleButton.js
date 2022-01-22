@@ -16,11 +16,12 @@ const SignInWithGoggleButton = () => (
     size="small"
     fullWidth
     onClick={signInWithGoogle}
+    sx={{ fontFamily: "Poppins" }}
     startIcon={
       <img src={googleImage} alt="" style={{ height: "24px", width: "24px" }} />
     }
   >
-    SignIn with Google
+    Sign with Google
   </GoogleButton>
 );
 

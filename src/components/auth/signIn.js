@@ -7,6 +7,9 @@ import {
   Stack,
   Collapse,
   Fade,
+  CircularProgress,
+  Slide,
+  InputLabel,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
@@ -14,7 +17,7 @@ import { signIn } from "../../services/authservice";
 import { Navigate } from "react-router-dom";
 import { useUser } from "../../context/userContext";
 import { Link } from "react-router-dom";
-
+import image from "../../img/auth1.jfif";
 export default function SignUp() {
   const { user } = useUser();
   const [email, setEmail] = useState("");
@@ -22,29 +25,30 @@ export default function SignUp() {
   const [collapsed, setCollapsed] = useState(false);
   const [alertHead, setAlertHead] = useState("info");
   const [alertBody, setAlertBody] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
 
   const signUserIn = async (e) => {
     e.preventDefault();
+    if (!email) return setEmailError(true);
+    if (!password) return setPasswordError(true);
     try {
+      setLoading(true);
       await signIn(email, password);
     } catch (e) {
-      console.log(e);
+      setLoading(false);
       setCollapsed(true);
       setAlertHead("warning");
-      setAlertBody(e.code);
+      setAlertBody(e.code || e);
     }
   };
   return !user ? (
-    <Fade in timeout={1000}>
-      <Stack direction={"row"} justifyContent={"space-between"}>
-        <img
-          style={{ height: "100vh" }}
-          alt=""
-          src={
-            "https://images.unsplash.com/photo-1518188689134-aa7854b27574?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=436&q=80"
-          }
-        />
-
+    <Stack direction={"row"} justifyContent={"space-between"}>
+      <Slide in timeout={1000} direction={"right"}>
+        <img style={{ height: "100vh" }} alt="" src={image} />
+      </Slide>
+      <Fade in timeout={1000}>
         <Container maxWidth="xs">
           <Box
             sx={{
@@ -84,6 +88,7 @@ export default function SignUp() {
             </Stack>
             <Stack
               component="form"
+              noValidate
               onSubmit={signUserIn}
               spacing={2}
               sx={{ width: "100%" }}
@@ -91,34 +96,64 @@ export default function SignUp() {
               <Collapse in={collapsed} sx={{ width: "100%" }}>
                 <Alert severity={alertHead}>{alertBody}</Alert>
               </Collapse>
+              <InputLabel
+                htmlFor="email"
+                error={emailError}
+                sx={{ fontFamily: "Poppins", fontWeight: "500" }}
+              >
+                {"Email"}
+              </InputLabel>
               <TextField
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                type="email"
+                error={emailError}
                 required
                 fullWidth
-                label="Email Address"
+                id="email"
+                name="email"
                 autoComplete="email"
-                onFocus={() => setCollapsed(false)}
+                onFocus={() => {
+                  setCollapsed(false);
+                  setEmailError(false);
+                }}
+                onChange={(e) => setEmail(e.target.value)}
               />
-
+              <InputLabel
+                htmlFor="password"
+                error={passwordError}
+                sx={{ fontFamily: "Poppins", fontWeight: "500" }}
+              >
+                {"Password"}
+              </InputLabel>
               <TextField
+                sx={{ padding: "2px" }}
                 value={password}
-                onChangeCapture={(e) => setPassword(e.target.value)}
+                error={passwordError}
+                onChange={(e) => setPassword(e.target.value)}
                 required
                 fullWidth
-                label="Password"
+                id="password"
+                name="password"
                 type="password"
                 autoComplete="current-password"
+                onFocus={() => {
+                  setCollapsed(false);
+                  setPasswordError(false);
+                }}
               />
-
-              <Button fullWidth variant={"contained"} type="submit">
-                Sign In
+              <Button
+                fullWidth
+                variant={"contained"}
+                type="submit"
+                size="large"
+              >
+                {!loading ? "Sign In" : <CircularProgress color="inherit" />}
               </Button>
             </Stack>
           </Box>
         </Container>
-      </Stack>
-    </Fade>
+      </Fade>
+    </Stack>
   ) : (
     <Navigate to="/" />
   );

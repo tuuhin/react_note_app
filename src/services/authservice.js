@@ -19,6 +19,7 @@ export const signUp = async (email, password) => {
 export const signIn = (email, password) =>
   signInWithEmailAndPassword(auth, email, password);
 
-export const signInWithGoogle = () => signInWithPopup(auth, provider);
+export const signInWithGoogle = () =>
+  signInWithPopup(auth, provider).then(({ user }) => addUserToDb(user));
 
 export const logOut = () => signOut(auth);

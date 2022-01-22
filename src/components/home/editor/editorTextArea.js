@@ -1,12 +1,9 @@
 import { useCallback } from "react";
 import { Editable } from "slate-react";
-import { Typography } from "@mui/material";
-import { Box } from "@mui/system";
+import { Typography, Stack } from "@mui/material";
 
 export default function EditorTextArea() {
   const renderElement = useCallback((props) => {
-    console.log(props.element.type);
-
     switch (props.element.type) {
       case "typography":
         return (
@@ -14,29 +11,17 @@ export default function EditorTextArea() {
             {props.children}
           </Typography>
         );
-      case "heading-2":
-        return (
-          <Typography {...props.attributes} variant="h2">
-            {props.children}
-          </Typography>
-        );
-      case "heading-3":
-        return (
-          <Typography {...props.attributes} variant="h3">
-            {props.children}
-          </Typography>
-        );
       case "list-item":
         return <li {...props.attributes}>{props.children}</li>;
       case "ordered-list":
-        return <OrderedList {...props} />;
+        return <ol {...props.attributes}>{props.children}</ol>;
       case "unordered-list":
-        return <UnOrderedList {...props} />;
+        return <ul {...props.attributes}>{props.children}</ul>;
       default:
         return (
           <Default
             {...props}
-            style={{ alignSelf: props.element.alignment ?? "flex-start" }}
+            style={{ alignSelf: props.element.alignment ?? "center" }}
           />
         );
     }
@@ -44,20 +29,17 @@ export default function EditorTextArea() {
 
   const renderLeaf = useCallback((props) => {
     // console.log(props.leaf);
-    if (props.leaf.link) return <Link {...props} />;
 
     return <FontStyles {...props} />;
   }, []);
 
   return (
-    <Box
-      style={{
-        display: "flex",
-        margin: " 0px 5px",
-        minHeight: " 25em",
-        padding: "2px 0px",
+    <Stack
+      direction="column"
+      sx={{
+        width: "100%",
+        padding: "8px 0px",
         borderTop: "1px solid rgba(170, 169, 169, 0.74)",
-        borderBottom: "1px solid rgba(170, 169, 169, 0.74)",
       }}
     >
       <Editable
@@ -65,15 +47,15 @@ export default function EditorTextArea() {
           display: "flex",
           flexDirection: "column",
           width: "100%",
-          padding: 0,
+          minHeight: "30em",
+          margin: "2px 5px",
+          padding: "10px 20px",
         }}
         renderElement={renderElement}
         renderLeaf={renderLeaf}
-        placeholder="kindly…"
-        spellCheck
-        autoFocus
+        placeholder="Add Your note"
       />
-    </Box>
+    </Stack>
   );
 }
 
@@ -104,11 +86,3 @@ const Default = (props) => {
     </p>
   );
 };
-
-const OrderedList = (props) => <ol {...props.attributes}>{props.children}</ol>;
-
-const UnOrderedList = (props) => (
-  <ul {...props.attributes}>{props.children}</ul>
-);
-
-const Link = (props) => <a {...props.attributes}>{props.children}</a>;

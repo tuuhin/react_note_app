@@ -5,9 +5,11 @@ export const Tag = styled("div")({
   color: "rgba(170, 169, 169,1)",
   borderRadius: "5px",
   padding: "4px 8px ",
-  fontSize: "0.8em",
+  fontSize: "1em",
+  fontFamily: "Ubuntu",
 });
 
 export const MutedText = styled("p")({
   color: "rgba(170, 169, 169,1)",
+  fontFamily: "Poppins",
 });

@@ -1,32 +1,71 @@
 import React from "react";
 import { Box } from "@mui/system";
+import { CircularProgress, Stack, Typography, Slide } from "@mui/material";
 import NotesSimplified from "./notesSimplified";
-import AddNote from "../addNote/addnote";
-import ModalProvider from "../../../context/useModal";
+import AddNoteDialog from "../addNote/addNoteDialog";
+import NoteModal from "../../../context/useNoteModal";
+import { useNotes } from "../../../context/useNotes";
+import { useNoteDetailed } from "../../../context/useNoteDetails";
+import img from "../../../img/notes.png";
 
 export default function NoteContainer() {
-  const arr = Array.from({ length: 10 }, (_, index) => index + 1);
-
+  const { notes, loading } = useNotes();
+  const { setSelected, setNote } = useNoteDetailed();
   return (
-    <Box sx={{ borderRight: "1px solid grey", padding: "0px 10px" }}>
-      <h2 style={{ fontFamily: "Poppins", border: "0px" }}>My Notes</h2>
-      <ModalProvider>
-        <AddNote />
-      </ModalProvider>
-      <Box
+    <Box
+      sx={{ padding: "0px 10px", borderRight: "1px solid grey", width: "30%" }}
+    >
+      <h2 style={{ fontFamily: "Poppins" }}>{"My Notes"}</h2>
+      <NoteModal>
+        <AddNoteDialog />
+      </NoteModal>
+      <Stack
+        direction={"column"}
+        alignItems={"center"}
+        justifyContent={loading ? "flex-start" : "center"}
+        spacing={2}
         sx={{
-          display: "flex",
-          margin: "0px 2px",
-          flexDirection: "column",
           overflowY: "scroll",
           height: "70vh",
-          width: "30vw",
+          p: 0,
         }}
       >
-        {arr.map((e, i) => (
-          <NotesSimplified key={i} />
-        ))}
-      </Box>
+        {loading ? (
+          notes.length !== 0 ? (
+            notes.map((note, index) => (
+              <NotesSimplified
+                key={index}
+                heading={note.heading}
+                category={note.category}
+                createdAt={note.createdAt}
+                onClick={() => {
+                  setNote(note);
+                  setSelected(true);
+                }}
+              />
+            ))
+          ) : (
+            // /><Slide/>)
+            <Stack
+              direction={"column"}
+              alignItems={"center"}
+              justifyContent={"center"}
+              sx={{ height: "100%" }}
+            >
+              <img src={img} alt="" style={{ width: "50%" }} />
+              <Typography variant={"caption"}>
+                {"You don't have any notes"}
+                {"Try adding some"}
+              </Typography>
+            </Stack>
+          )
+        ) : (
+          <>
+            <CircularProgress />
+            <Typography variant="subtitle">{"Loading"}</Typography>
+          </>
+        )}
+      </Stack>
     </Box>
   );
 }

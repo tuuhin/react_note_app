@@ -1,63 +1,47 @@
 import React from "react";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  IconButton,
-  Menu,
-  MenuItem,
-} from "@mui/material";
-import { Box } from "@mui/system";
-import { MdMoreVert } from "react-icons/md";
+import { Stack, Fade } from "@mui/material";
 import Editor from "../editor/editor";
-import CurrentContent from "./currentContent";
+import NoteMetaData from "./noteMetaData";
+import NoteUnselected from "./noteUnselected";
 import { useState } from "react";
-export default function NoteDetails() {
-  const [anchor, setAnchor] = useState(null);
-  const open = !!anchor;
+import { useNoteDetailed } from "../../../context/useNoteDetails";
+import NoteNavBar from "./noteNavBar";
 
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        flexGrow: 1,
-        width: "60vw",
-      }}
-    >
-      <AppBar
-        position="static"
-        color={"inherit"}
-        elevation={0}
-        sx={{ borderBottom: "1px solid grey", flexGrow: 1 }}
+export default function NoteDetails() {
+  const [editor, setEditor] = useState([
+    {
+      type: "paragraph",
+      children: [{ text: "" }],
+    },
+  ]);
+  const { selected, note } = useNoteDetailed();
+  return selected ? (
+    <Fade in timeout={1200}>
+      <Stack
+        direction={"column"}
+        sx={{
+          p: 0,
+          height: "90vh",
+          overflowY: "scroll",
+          overflowX: "hidden",
+          width: "100%",
+        }}
       >
-        <Toolbar sx={{ display: "flex", flexDirection: "row" }}>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            My Note
-          </Typography>
-          <>
-            <IconButton
-              id="tabar-button"
-              onClick={(e) => setAnchor(e.currentTarget)}
-            >
-              <MdMoreVert />
-            </IconButton>
-            <Menu
-              open={open}
-              anchorEl={anchor}
-              onClose={() => setAnchor(null)}
-              MenuListProps={{ "aria-labelledby": "tabar-button" }}
-            >
-              <MenuItem>Update</MenuItem>
-              <MenuItem>Delete</MenuItem>
-            </Menu>
-          </>
-        </Toolbar>
-      </AppBar>
-      <Box sx={{ pl: 2, pr: 2, height: "80vh", overflow: "scroll" }}>
-        <CurrentContent />
-        <Editor />
-      </Box>
-    </Box>
+        <NoteNavBar heading={note.heading} createdAt={note.createdAt} />
+        <NoteMetaData
+          tags={note.tags}
+          updatedAt={note.updatedAt}
+          createdAt={note.createdAt}
+        />
+
+        <Editor
+          value={note.note}
+          style={{ margin: "0px 20px" }}
+          onChange={(e) => setEditor(e)}
+        />
+      </Stack>
+    </Fade>
+  ) : (
+    <NoteUnselected />
   );
 }

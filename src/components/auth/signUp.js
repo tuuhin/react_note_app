@@ -9,6 +9,8 @@ import {
   Fade,
   Divider,
   InputLabel,
+  CircularProgress,
+  Slide,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
@@ -18,6 +20,7 @@ import { useUser } from "../../context/userContext";
 import { Link } from "react-router-dom";
 import SignInWithGoggleButton from "./signInWithGoggleButton";
 import { validateEmail } from "../../utils/validators";
+import image from "../../img/auth2.jfif";
 export default function SignUp() {
   const { user } = useUser();
   const [email, setEmail] = useState("");
@@ -27,15 +30,17 @@ export default function SignUp() {
   const [alertBody, setAlertBody] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const signNewUser = async (e) => {
     e.preventDefault();
-
     if (!validateEmail(email)) return setEmailError(true);
     if (!password) return setPasswordError(true);
     try {
+      setLoading(true);
       await signUp(email, password);
     } catch (e) {
+      setLoading(false);
       setCollapsed(true);
       console.log(e);
       setAlertHead("warning");
@@ -43,19 +48,15 @@ export default function SignUp() {
     }
   };
   return !user ? (
-    <Fade in timeout={800}>
-      <Stack
-        alignItems={"center"}
-        direction={"row"}
-        justifyContent={"space-between"}
-      >
-        <img
-          style={{ height: "100vh" }}
-          alt=""
-          src={
-            "https://images.unsplash.com/photo-1620387510136-82f3bd6d39d3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YmxhY2slMjBhbmQlMjB3aGl0ZSUyMGJvb2tzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-          }
-        />
+    <Stack
+      alignItems={"center"}
+      direction={"row"}
+      justifyContent={"space-between"}
+    >
+      <Slide in timeout={1000} direction={"right"}>
+        <img style={{ height: "100vh" }} alt="" src={image} />
+      </Slide>
+      <Fade in timeout={800}>
         <Container component="main" maxWidth="xs">
           <Box
             sx={{
@@ -79,11 +80,10 @@ export default function SignUp() {
                 sx={{
                   color: "gray",
                   fontFamily: "Poppins",
-
                   textTransform: "capitalize",
                 }}
               >
-                Already have a account
+                {"Already have a account?"}
               </Typography>
               <Button
                 sx={{ textTransform: "none", mt: 1, mb: 1 }}
@@ -91,24 +91,20 @@ export default function SignUp() {
                 component={Link}
                 to="/login"
               >
-                Sign up
+                {"Sign In"}
               </Button>
             </Stack>
-
             <SignInWithGoggleButton />
-            <Divider sx={{ mb: 1, width: "100%" }}>
-              <Typography
-                variant="caption"
-                sx={{ color: "gray", position: "relative", top: "2px" }}
-              >
-                OR
+            <Divider sx={{ width: "100%" }}>
+              <Typography variant="caption" sx={{ color: "gray" }}>
+                {"OR"}
               </Typography>
             </Divider>
             <Stack
               component="form"
               noValidate
               spacing={1}
-              sx={{ width: "100%" }}
+              sx={{ width: "100%", mt: 1 }}
               onSubmit={signNewUser}
             >
               <Collapse in={collapsed} sx={{ width: "100%" }}>
@@ -116,9 +112,10 @@ export default function SignUp() {
               </Collapse>
               <InputLabel
                 htmlFor="email"
+                error={emailError}
                 sx={{ fontFamily: "Poppins", fontWeight: "500" }}
               >
-                Email
+                {"Email"}
               </InputLabel>
               <TextField
                 value={email}
@@ -137,9 +134,10 @@ export default function SignUp() {
               />
               <InputLabel
                 htmlFor="password"
+                error={passwordError}
                 sx={{ fontFamily: "Poppins", fontWeight: "500" }}
               >
-                Password
+                {"Password"}
               </InputLabel>
               <TextField
                 sx={{ padding: "2px" }}
@@ -163,13 +161,13 @@ export default function SignUp() {
                 type="submit"
                 size="large"
               >
-                Register
+                {!loading ? "Register" : <CircularProgress color="inherit" />}
               </Button>
             </Stack>
           </Box>
         </Container>
-      </Stack>
-    </Fade>
+      </Fade>
+    </Stack>
   ) : (
     <Navigate to="/" />
   );

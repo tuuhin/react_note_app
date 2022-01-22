@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,600;1,500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital@1&family=Oxygen&family=Poppins:wght@400;500;600&family=Roboto&family=Source+Serif+Pro&family=Ubuntu&display=swap");
 body {
   margin: 0;
   padding: 0;
@@ -17,6 +17,8 @@ code {
 
 .styled {
   text-overflow: ellipsis;
+  text-transform: capitalize;
+  height: calc("100vh"-64px);
 
   color: rgba(170, 169, 169, 0.74);
 }
