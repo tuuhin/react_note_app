@@ -46,7 +46,7 @@ export default function EditorTextArea() {
         style={{
           display: "flex",
           flexDirection: "column",
-          width: "100%",
+
           minHeight: "30em",
           margin: "2px 5px",
           padding: "10px 20px",

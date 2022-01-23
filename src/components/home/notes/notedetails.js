@@ -6,41 +6,45 @@ import NoteUnselected from "./noteUnselected";
 import { useState } from "react";
 import { useNoteDetailed } from "../../../context/useNoteDetails";
 import NoteNavBar from "./noteNavBar";
-
+import Loading from "./loading";
 export default function NoteDetails() {
-  const [editor, setEditor] = useState([
-    {
-      type: "paragraph",
-      children: [{ text: "" }],
-    },
-  ]);
-  const { selected, note } = useNoteDetailed();
+  const { selected, currentNote, loading } = useNoteDetailed();
   return selected ? (
-    <Fade in timeout={1200}>
-      <Stack
-        direction={"column"}
-        sx={{
-          p: 0,
-          height: "90vh",
-          overflowY: "scroll",
-          overflowX: "hidden",
-          width: "100%",
-        }}
-      >
-        <NoteNavBar heading={note.heading} createdAt={note.createdAt} />
-        <NoteMetaData
-          tags={note.tags}
-          updatedAt={note.updatedAt}
-          createdAt={note.createdAt}
-        />
+    loading ? (
+      <Fade in timeout={1200}>
+        <Stack
+          justifyContent={"flex-start"}
+          direction={"column"}
+          sx={{
+            p: 0,
+            height: "90vh",
+            overflowY: "scroll",
+            overflowX: "scroll",
+            width: "100%",
+          }}
+        >
+          <NoteNavBar
+            heading={currentNote.heading}
+            createdAt={currentNote.createdAt}
+          />
+          <NoteMetaData
+            tags={currentNote.tags}
+            updatedAt={currentNote.updatedAt}
+            createdAt={currentNote.createdAt}
+          />
 
-        <Editor
-          value={note.note}
-          style={{ margin: "0px 20px" }}
-          onChange={(e) => setEditor(e)}
-        />
-      </Stack>
-    </Fade>
+          <Editor
+            value={currentNote.note}
+            style={{ margin: "0px 20px" }}
+            onChange={(e) => {
+              console.log(e);
+            }}
+          />
+        </Stack>
+      </Fade>
+    ) : (
+      <Loading />
+    )
   ) : (
     <NoteUnselected />
   );

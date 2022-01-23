@@ -10,10 +10,7 @@ export default function NoteUnselected() {
       justifyContent={"center"}
       sx={{ width: "100%" }}
     >
-      <img src={post} alt="" style={{ width: "30%" }} />
-      <Typography variant="h6" sx={{ fontFamily: "Poppins" }}>
-        {"No Notes Selected"}
-      </Typography>
+      <img src={post} alt="" style={{ width: "25%" }} />
       <Typography variant="overline" sx={{ fontFamily: "Poppins" }}>
         {"Select a note to continue"}
       </Typography>

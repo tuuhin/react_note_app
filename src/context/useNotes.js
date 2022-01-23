@@ -11,11 +11,11 @@ const NotesProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
   useEffect(() => {
-    const noteSnaphshot = onSnapshot(notesRef(user), (snapshot) => {
+    const unsuscribe = onSnapshot(notesRef(user), (snapshot) => {
       setNotes(snapshot.docs.map((note) => note.data()));
       setLoading(true);
     });
-    return noteSnaphshot;
+    return unsuscribe;
   }, [user]);
 
   const value = {

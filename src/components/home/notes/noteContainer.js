@@ -10,7 +10,6 @@ import img from "../../../img/notes.png";
 
 export default function NoteContainer() {
   const { notes, loading } = useNotes();
-  const { setSelected, setNote } = useNoteDetailed();
   return (
     <Box
       sx={{ padding: "0px 10px", borderRight: "1px solid grey", width: "30%" }}
@@ -38,14 +37,10 @@ export default function NoteContainer() {
                 heading={note.heading}
                 category={note.category}
                 createdAt={note.createdAt}
-                onClick={() => {
-                  setNote(note);
-                  setSelected(true);
-                }}
+                noteId={note.reference}
               />
             ))
           ) : (
-            // /><Slide/>)
             <Stack
               direction={"column"}
               alignItems={"center"}

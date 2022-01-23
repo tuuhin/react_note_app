@@ -38,12 +38,7 @@ export default function NavBar() {
   };
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar
-        position="static"
-        color={"inherit"}
-        elevation={0}
-        sx={{ borderBottom: "1px solid grey" }}
-      >
+      <AppBar position="static" color={"inherit"}>
         <Toolbar sx={{ display: "flex", flexDirection: "row" }}>
           <Typography variant="h6" sx={{ flexGrow: 1 }} component={Link} to="/">
             My Note

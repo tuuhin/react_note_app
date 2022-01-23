@@ -10,9 +10,9 @@ export default function Home() {
   const { user } = useUser();
   return user ? (
     <NotesProvider>
+      <NavBar />
       <NoteDetailsProvider>
-        <NavBar />
-        <Stack direction="row" alignItems="center">
+        <Stack direction="row" alignItems="center" sx={{ m: 1 }}>
           <NoteContainer />
           <NoteDetails />
         </Stack>
