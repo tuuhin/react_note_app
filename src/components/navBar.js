@@ -5,7 +5,8 @@ import { useUser } from "../context/userContext";
 import { logOut } from "../services/authservice";
 
 export default function NavBar() {
-  const { user } = useUser();
+  const { user, userInfo } = useUser();
+
   const LogOut = async () => {
     try {
       await logOut();
@@ -23,7 +24,10 @@ export default function NavBar() {
           Notes
         </Button>
         <Button onClick={LogOut}>Logout</Button>
-        <Avatar src={user.photoURL} sx={{ ml: 1 }} />
+        <Avatar
+          src={(userInfo && userInfo.photoURL) || user.photoURL}
+          sx={{ ml: 1 }}
+        />
       </>
     ) : (
       <>

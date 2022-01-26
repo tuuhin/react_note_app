@@ -10,7 +10,7 @@ import {
   Divider,
   InputLabel,
   CircularProgress,
-  Slide,
+  Grid,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
@@ -24,6 +24,10 @@ import image from "../../img/auth2.jfif";
 export default function SignUp() {
   const { user } = useUser();
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [userName, setUserName] = useState("");
+  const [nameError, setNameError] = useState(false);
+  const [userNameError, setUserNameError] = useState(false);
   const [password, setPassword] = useState("");
   const [collapsed, setCollapsed] = useState(false);
   const [alertHead, setAlertHead] = useState("info");
@@ -34,17 +38,18 @@ export default function SignUp() {
 
   const signNewUser = async (e) => {
     e.preventDefault();
+    if (!name) return setNameError(true);
+    if (!userName) return setUserNameError(true);
     if (!validateEmail(email)) return setEmailError(true);
     if (!password) return setPasswordError(true);
     try {
       setLoading(true);
-      await signUp(email, password);
+      await signUp(email, password, name, userName);
     } catch (e) {
       setLoading(false);
       setCollapsed(true);
-      console.log(e);
       setAlertHead("warning");
-      setAlertBody(e.code);
+      setAlertBody(e.code.replace("auth/", ""));
     }
   };
   return !user ? (
@@ -53,9 +58,7 @@ export default function SignUp() {
       direction={"row"}
       justifyContent={"space-between"}
     >
-      <Slide in timeout={1000} direction={"right"}>
-        <img style={{ height: "100vh" }} alt="" src={image} />
-      </Slide>
+      <img style={{ height: "100vh" }} alt="" src={image} />
       <Fade in timeout={800}>
         <Container component="main" maxWidth="xs">
           <Box
@@ -94,76 +97,139 @@ export default function SignUp() {
                 {"Sign In"}
               </Button>
             </Stack>
-            <SignInWithGoggleButton />
+            <SignInWithGoggleButton title={"Sign Up with Google"} isNew />
             <Divider sx={{ width: "100%" }}>
-              <Typography variant="caption" sx={{ color: "gray" }}>
+              <Typography
+                variant="caption"
+                sx={{ color: "gray", position: "relative", top: "5px" }}
+              >
                 {"OR"}
               </Typography>
             </Divider>
-            <Stack
+            <Grid
+              container
+              spacing={1}
               component="form"
               noValidate
-              spacing={1}
               sx={{ width: "100%", mt: 1 }}
               onSubmit={signNewUser}
             >
-              <Collapse in={collapsed} sx={{ width: "100%" }}>
-                <Alert severity={alertHead}>{alertBody}</Alert>
-              </Collapse>
-              <InputLabel
-                htmlFor="email"
-                error={emailError}
-                sx={{ fontFamily: "Poppins", fontWeight: "500" }}
-              >
-                {"Email"}
-              </InputLabel>
-              <TextField
-                value={email}
-                type="email"
-                error={emailError}
-                required
-                fullWidth
-                id="email"
-                name="email"
-                autoComplete="email"
-                onFocus={() => {
-                  setCollapsed(false);
-                  setEmailError(false);
-                }}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <InputLabel
-                htmlFor="password"
-                error={passwordError}
-                sx={{ fontFamily: "Poppins", fontWeight: "500" }}
-              >
-                {"Password"}
-              </InputLabel>
-              <TextField
-                sx={{ padding: "2px" }}
-                value={password}
-                error={passwordError}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                fullWidth
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                onFocus={() => {
-                  setCollapsed(false);
-                  setPasswordError(false);
-                }}
-              />
-              <Button
-                fullWidth
-                variant={"contained"}
-                type="submit"
-                size="large"
-              >
-                {!loading ? "Register" : <CircularProgress color="inherit" />}
-              </Button>
-            </Stack>
+              <Grid item sm={12} lg={12}>
+                <Collapse in={collapsed} sx={{ width: "100%" }}>
+                  <Alert severity={alertHead}>{alertBody}</Alert>
+                </Collapse>
+              </Grid>
+              <Grid item sm={6} lg={6}>
+                <InputLabel
+                  htmlFor="name"
+                  error={nameError}
+                  sx={{ fontFamily: "Poppins", fontWeight: "500" }}
+                >
+                  {"Name"}
+                </InputLabel>
+                <TextField
+                  value={name}
+                  type="text"
+                  error={nameError}
+                  required
+                  fullWidth
+                  id="name"
+                  name="name"
+                  onFocus={() => {
+                    setCollapsed(false);
+                    setNameError(false);
+                  }}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </Grid>
+              <Grid item sm={6} lg={6}>
+                <InputLabel
+                  htmlFor="username"
+                  error={userNameError}
+                  sx={{ fontFamily: "Poppins", fontWeight: "500" }}
+                >
+                  {"Username"}
+                </InputLabel>
+                <TextField
+                  value={userName}
+                  type="text"
+                  error={userNameError}
+                  required
+                  fullWidth
+                  id="username"
+                  name="username"
+                  onFocus={() => {
+                    setCollapsed(false);
+                    setUserNameError(false);
+                  }}
+                  onChange={(e) => setUserName(e.target.value)}
+                />
+              </Grid>
+              <Grid item lg={12} sm={12}>
+                <InputLabel
+                  htmlFor="email"
+                  error={emailError}
+                  sx={{ fontFamily: "Poppins", fontWeight: "500" }}
+                >
+                  {"Email"}
+                </InputLabel>
+                <TextField
+                  value={email}
+                  type="email"
+                  error={emailError}
+                  required
+                  fullWidth
+                  id="email"
+                  name="email"
+                  autoComplete="email"
+                  onFocus={() => {
+                    setCollapsed(false);
+                    setEmailError(false);
+                  }}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </Grid>
+              <Grid item lg={12} sm={12}>
+                <InputLabel
+                  htmlFor="password"
+                  error={passwordError}
+                  sx={{ fontFamily: "Poppins", fontWeight: "500" }}
+                >
+                  {"Password"}
+                </InputLabel>
+                <TextField
+                  sx={{ padding: "2px" }}
+                  value={password}
+                  error={passwordError}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  fullWidth
+                  id="password"
+                  name="password"
+                  type="password"
+                  autoComplete="current-password"
+                  onFocus={() => {
+                    setCollapsed(false);
+                    setPasswordError(false);
+                  }}
+                />
+              </Grid>
+              <Grid item lg={12} sm={12}>
+                <Button
+                  fullWidth={loading ? true : false}
+                  sx={{ textTransform: "none" }}
+                  variant={"contained"}
+                  type="submit"
+                  size="large"
+                >
+                  {!loading ? (
+                    "Create A Account"
+                  ) : (
+                    <CircularProgress color="inherit" />
+                  )}
+                </Button>
+              </Grid>
+            </Grid>
           </Box>
         </Container>
       </Fade>

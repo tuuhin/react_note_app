@@ -7,15 +7,32 @@ import {
   serverTimestamp,
   updateDoc,
 } from "firebase/firestore";
+import { addProfile } from "./firebaseStorage";
 const db = getFirestore();
-export const addUserToDb = async (user) => {
+export const addUserToDb = async (user, name, userName) => {
   await setDoc(doc(db, "users", user.uid), {
     created_At: serverTimestamp(),
+    name: name,
+    userName: userName,
   });
 };
 
-export const updateUser = async (user) => {
-  await updateDoc(doc(db, "users", user.uid), {});
+export const updateUser = async (user, name, userName, about, profile) => {
+  if (profile) {
+    const url = await addProfile(user, profile);
+    await updateDoc(doc(db, "users", user.uid), {
+      name: name,
+      userName: userName,
+      about: about,
+      photoURL: url,
+    });
+  } else {
+    await updateDoc(doc(db, "users", user.uid), {
+      name: name,
+      userName: userName,
+      about: about,
+    });
+  }
 };
 
 export const addNoteToDb = async (user, heading, category, note, tags) => {
@@ -38,3 +55,4 @@ export const addNoteToDb = async (user, heading, category, note, tags) => {
 export const notesRef = (user) => collection(db, "users", user.uid, "notes_sh");
 export const noteDetailsRef = (user, noteId) =>
   doc(db, "users", user.uid, "notes", noteId);
+export const userInfoRef = (user) => doc(db, "users", user.uid);

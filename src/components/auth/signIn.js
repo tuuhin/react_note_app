@@ -7,9 +7,10 @@ import {
   Stack,
   Collapse,
   Fade,
+  Grid,
   CircularProgress,
-  Slide,
   InputLabel,
+  Divider,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
@@ -18,6 +19,7 @@ import { Navigate } from "react-router-dom";
 import { useUser } from "../../context/userContext";
 import { Link } from "react-router-dom";
 import image from "../../img/auth1.jfif";
+import SignInWithGoggleButton from "./signInWithGoggleButton";
 export default function SignUp() {
   const { user } = useUser();
   const [email, setEmail] = useState("");
@@ -40,14 +42,16 @@ export default function SignUp() {
       setLoading(false);
       setCollapsed(true);
       setAlertHead("warning");
-      setAlertBody(e.code || e);
+      setAlertBody(e.code.replace("auth/", ""));
     }
   };
   return !user ? (
-    <Stack direction={"row"} justifyContent={"space-between"}>
-      <Slide in timeout={1000} direction={"right"}>
-        <img style={{ height: "100vh" }} alt="" src={image} />
-      </Slide>
+    <Stack
+      alignItems={"center"}
+      direction={"row"}
+      justifyContent={"space-between"}
+    >
+      <img style={{ height: "100vh" }} alt="" src={image} />
       <Fade in timeout={1000}>
         <Container maxWidth="xs">
           <Box
@@ -64,7 +68,7 @@ export default function SignUp() {
               variant="h4"
               sx={{ fontFamily: "Poppins", fontWeight: "600" }}
             >
-              Welcome Back!
+              {" Welcome Back!"}
             </Typography>
             <Stack direction="row" alignItems="center" sx={{ mb: 2 }}>
               <Typography
@@ -75,7 +79,7 @@ export default function SignUp() {
                   textTransform: "capitalize",
                 }}
               >
-                Don't have account
+                {"Don't have account"}
               </Typography>
               <Button
                 sx={{ textTransform: "none" }}
@@ -83,73 +87,93 @@ export default function SignUp() {
                 component={Link}
                 to="/signup"
               >
-                Sign up
+                {"Sign up"}
               </Button>
             </Stack>
-            <Stack
+            <SignInWithGoggleButton title={"Sign In with Google"} />
+            <Divider sx={{ width: "100%" }}>
+              <Typography
+                variant="caption"
+                sx={{ color: "gray", position: "relative", top: "5px" }}
+              >
+                {"OR"}
+              </Typography>
+            </Divider>
+
+            <Grid
+              container
               component="form"
               noValidate
               onSubmit={signUserIn}
               spacing={2}
-              sx={{ width: "100%" }}
+              sx={{ width: "100%", mt: 2 }}
             >
-              <Collapse in={collapsed} sx={{ width: "100%" }}>
-                <Alert severity={alertHead}>{alertBody}</Alert>
-              </Collapse>
-              <InputLabel
-                htmlFor="email"
-                error={emailError}
-                sx={{ fontFamily: "Poppins", fontWeight: "500" }}
-              >
-                {"Email"}
-              </InputLabel>
-              <TextField
-                value={email}
-                type="email"
-                error={emailError}
-                required
-                fullWidth
-                id="email"
-                name="email"
-                autoComplete="email"
-                onFocus={() => {
-                  setCollapsed(false);
-                  setEmailError(false);
-                }}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <InputLabel
-                htmlFor="password"
-                error={passwordError}
-                sx={{ fontFamily: "Poppins", fontWeight: "500" }}
-              >
-                {"Password"}
-              </InputLabel>
-              <TextField
-                sx={{ padding: "2px" }}
-                value={password}
-                error={passwordError}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                fullWidth
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                onFocus={() => {
-                  setCollapsed(false);
-                  setPasswordError(false);
-                }}
-              />
-              <Button
-                fullWidth
-                variant={"contained"}
-                type="submit"
-                size="large"
-              >
-                {!loading ? "Sign In" : <CircularProgress color="inherit" />}
-              </Button>
-            </Stack>
+              <Grid item sm={12} lg={12}>
+                <Collapse in={collapsed} sx={{ width: "100%" }}>
+                  <Alert severity={alertHead}>{alertBody}</Alert>
+                </Collapse>
+              </Grid>
+              <Grid item sm={12} lg={12}>
+                <InputLabel
+                  htmlFor="email"
+                  error={emailError}
+                  sx={{ fontFamily: "Poppins", fontWeight: "500" }}
+                >
+                  {"Email"}
+                </InputLabel>
+                <TextField
+                  value={email}
+                  type="email"
+                  error={emailError}
+                  required
+                  fullWidth
+                  id="email"
+                  name="email"
+                  autoComplete="email"
+                  onFocus={() => {
+                    setCollapsed(false);
+                    setEmailError(false);
+                  }}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </Grid>
+              <Grid item sm={12} lg={12}>
+                <InputLabel
+                  htmlFor="password"
+                  error={passwordError}
+                  sx={{ fontFamily: "Poppins", fontWeight: "500" }}
+                >
+                  {"Password"}
+                </InputLabel>
+                <TextField
+                  sx={{ padding: "2px" }}
+                  value={password}
+                  error={passwordError}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  fullWidth
+                  id="password"
+                  name="password"
+                  type="password"
+                  autoComplete="current-password"
+                  onFocus={() => {
+                    setCollapsed(false);
+                    setPasswordError(false);
+                  }}
+                />
+              </Grid>
+              <Grid item item lg={12} sm={12}>
+                <Button
+                  fullWidth={loading ? true : false}
+                  variant={"contained"}
+                  type="submit"
+                  size="large"
+                  sx={{ textTransform: "none" }}
+                >
+                  {!loading ? "Sign In" : <CircularProgress color="inherit" />}
+                </Button>
+              </Grid>
+            </Grid>
           </Box>
         </Container>
       </Fade>

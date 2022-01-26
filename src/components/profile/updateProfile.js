@@ -1,11 +1,10 @@
-import { useState } from "react";
-import { useUser } from "../../context/userContext";
+import { useState, useRef } from "react";
 import { Navigate } from "react-router-dom";
 import NavBar from "../navBar";
 import { Box } from "@mui/system";
 import {
   Container,
-  Typography,
+  Divider,
   Avatar,
   Stack,
   Paper,
@@ -14,32 +13,69 @@ import {
   InputLabel,
   Collapse,
   Alert,
+  ListItemText,
+  ListItem,
+  Grid,
+  IconButton,
+  CircularProgress,
 } from "@mui/material";
+import { MdMoreVert } from "react-icons/md";
 import { useFilePicker } from "use-file-picker";
-import { addProfile } from "../../services/firebaseStorage";
+import { useUser } from "../../context/userContext";
+import { updateUser } from "../../services/firestore";
 
 export default function UpdateProfile() {
-  const { user } = useUser();
-  const [isCollpased, setIsColaapsed] = useState(false);
+  const { user, userInfo } = useUser();
+  const [isCollpased, setIsColapsed] = useState(false);
+  const [userNameError, setUserNameError] = useState(false);
+  const [nameError, setNameError] = useState(false);
+  const [alertType, setAlertType] = useState("info");
   const [alert, setAlert] = useState("");
-  const [openFileSelector, { filesContent, errors }] = useFilePicker({
+  const [loading, setLoading] = useState(false);
+
+  const [about, setAbout] = useState(userInfo.about);
+  const [name, setName] = useState(userInfo.name);
+
+  const [userName, setUserName] = useState(userInfo.userName);
+  const [openFileSelector, { filesContent }] = useFilePicker({
     readAs: "DataURL",
     accept: "image/*",
     multiple: false,
     limitFilesConfig: { max: 1 },
-    maxFileSize: 20,
+    maxFileSize: 2,
   });
 
-  const update = (e) => {
+  const update = async (e) => {
     e.preventDefault();
-    console.log(filesContent);
-    // addProfile(user, filesContent[0]);
+
+    if (!name) return setNameError(true);
+    if (!userName) return setUserNameError(true);
+
+    try {
+      setIsColapsed(false);
+      setAlertType("warning");
+      setLoading(true);
+      await updateUser(user, name, userName, about, filesContent[0]);
+      setLoading(false);
+      setIsColapsed(true);
+      setAlertType("success");
+      setAlert("Updated");
+      setName("");
+      setUserName("");
+      setAbout("");
+    } catch (e) {
+      setIsColapsed(true);
+      setAlertType("error");
+      console.log(e);
+      setAlert("failed");
+    }
   };
 
   return user ? (
     <>
       <NavBar />
-      <Container maxWidth="sm">
+
+      <Container maxWidth="xs">
         <Box
           sx={{
             display: "flex",
@@ -55,40 +91,89 @@ export default function UpdateProfile() {
             noValidate
             onSubmit={update}
           >
-            <Stack
-              direction="row"
-              alignItems={"center"}
-              justifyContent={"space-around"}
-            >
-              <Avatar
-                sx={{ top: 4, width: 64, height: 64 }}
-                onClick={openFileSelector}
-                src={filesContent[0] && filesContent[0].content}
-              />
-              <Typography
-                variant="h4"
-                sx={{ fontWeight: 500, fontFamilt: "Poppins" }}
-              >
-                {"Update Profile"}
-              </Typography>
+            <Stack direction={"row"}>
+              <ListItem>
+                <ListItemText
+                  primary="Profile"
+                  secondary={"Update Your photo and personal details here"}
+                />
+              </ListItem>
+              <IconButton>
+                <MdMoreVert />
+              </IconButton>
             </Stack>
-            <Stack direction="column" spacing={2}>
-              <Collapse in={isCollpased}>
-                <Alert severity={"warning"}>{alert}</Alert>
-              </Collapse>
-              <InputLabel htmlFor="username">{"UserName"}</InputLabel>
-              <TextField fullWidth />
-              <InputLabel htmlFor="username">{"About"}</InputLabel>
-              <TextField
-                fullWidth
-                multiline
-                minRows={8}
-                sx={{ overflowY: "auto" }}
-              />
-              <Button type="submit" variant="contained" fullWidth>
-                submit
-              </Button>
-            </Stack>
+            <Divider />
+            <Grid container spacing={2} sx={{ mt: 1 }}>
+              <Grid item sm={12} lg={12}>
+                <Collapse in={isCollpased}>
+                  <Alert severity={alertType}>{alert}</Alert>
+                </Collapse>
+              </Grid>
+              <Grid item sm={12} lg={12}>
+                <Stack direction={"row"} alignItems={"center"} spacing={5}>
+                  <Avatar
+                    sx={{ top: 4, width: 64, height: 64 }}
+                    onClick={openFileSelector}
+                    src={
+                      (filesContent[0] && filesContent[0].content) ||
+                      (userInfo && userInfo.photoURL) ||
+                      user.photoURL
+                    }
+                  />
+                  <ListItem>
+                    <ListItemText
+                      primary="Select a photo"
+                      secondary={"Add a profile picture"}
+                    />
+                  </ListItem>
+                </Stack>
+              </Grid>
+              <Grid item sm={6} lg={6}>
+                <InputLabel htmlFor="name" required error={nameError}>
+                  {"Name"}
+                </InputLabel>
+                <TextField
+                  fullWidth
+                  type="text"
+                  id="name"
+                  error={nameError}
+                  name="name"
+                  value={name}
+                  onFocus={() => setNameError(false)}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </Grid>
+              <Grid item sm={6} lg={6}>
+                <InputLabel htmlFor="username" required error={userNameError}>
+                  {"UserName"}
+                </InputLabel>
+                <TextField
+                  fullWidth
+                  error={userNameError}
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={userName}
+                  onFocus={() => setUserNameError(false)}
+                  onChange={(e) => setUserName(e.target.value)}
+                />
+              </Grid>
+              <Grid item sm={12} lg={12}>
+                <InputLabel htmlFor="username">{"About"}</InputLabel>
+                <TextField
+                  fullWidth
+                  multiline
+                  maxRows={2}
+                  value={about}
+                  onChange={(e) => setAbout(e.target.value)}
+                />
+              </Grid>
+              <Grid item sm={12} lg={12}>
+                <Button type="submit" variant="contained" fullWidth>
+                  {loading ? <CircularProgress /> : "Update"}
+                </Button>
+              </Grid>
+            </Grid>
           </Paper>
         </Box>
       </Container>
