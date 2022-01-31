@@ -14,7 +14,10 @@ Firebase is notonly used as a backend server but too for hosting ,authenticating
   Firebase Storage is used for storing the userprofile images
 - **Hosting**
   for hosting the site.
+
   > Url for the webApp : [note-app](https://notify-b3141.web.app/)
+
+  for the mean time removed hosting.
 
 ### Front End
 
