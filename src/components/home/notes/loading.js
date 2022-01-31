@@ -7,7 +7,7 @@ export default function Loading(props) {
       direction={"column"}
       alignItems="center"
       justifyContent="center"
-      sx={{ width: "100%" }}
+      sx={{ width: "70%" }}
     >
       <CircularProgress />
       <Typography variant="overline">Loading</Typography>

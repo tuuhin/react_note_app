@@ -3,9 +3,21 @@ import EditorRibbon from "./editorRibbon";
 import EditorTextArea from "./editorTextArea";
 import { createEditor } from "slate";
 import { Slate, withReact } from "slate-react";
+import { withHistory } from "slate-history";
 import { useMemo } from "react";
 export default function Editor(props) {
-  const editor = useMemo(() => withReact(createEditor()), []);
+  const withInlines = (editor) => {
+    const { isInline } = editor;
+
+    editor.isInline = (element) => element.type == "link" || isInline(element);
+
+    return editor;
+  };
+  const editor = useMemo(
+    () => withInlines(withHistory(withReact(createEditor()))),
+    []
+  );
+
   return (
     <Slate
       editor={editor}

@@ -162,7 +162,7 @@ export default function SignUp() {
                   }}
                 />
               </Grid>
-              <Grid item item lg={12} sm={12}>
+              <Grid item lg={12} sm={12}>
                 <Button
                   fullWidth={loading ? true : false}
                   variant={"contained"}

@@ -1,8 +1,8 @@
-import { AppBar, Toolbar, Typography, Button, Avatar } from "@mui/material";
-import { Box } from "@mui/system";
+import { AppBar, Toolbar, Avatar } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useUser } from "../context/userContext";
 import { logOut } from "../services/authservice";
+import { NavButtons, LogoLink } from "../utils/styled";
 
 export default function NavBar() {
   const { user, userInfo } = useUser();
@@ -17,39 +17,32 @@ export default function NavBar() {
   const HelperButtons = () => {
     return user ? (
       <>
-        <Button component={Link} to="/profile">
+        <NavButtons component={Link} to="/profile">
           {"Profile"}
-        </Button>
-        <Button component={Link} to="/notes">
-          Notes
-        </Button>
-        <Button onClick={LogOut}>Logout</Button>
+        </NavButtons>
+        <NavButtons onClick={LogOut} component={Link} to="/login">
+          Logout
+        </NavButtons>
         <Avatar
+          onClick={() => console.log("hi")}
           src={(userInfo && userInfo.photoURL) || user.photoURL}
           sx={{ ml: 1 }}
         />
       </>
     ) : (
-      <>
-        <Button to="/login" component={Link}>
-          Login
-        </Button>
-        <Button to="/signup" component={Link}>
-          SignUp
-        </Button>
-      </>
+      <></>
     );
   };
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" color={"inherit"}>
-        <Toolbar sx={{ display: "flex", flexDirection: "row" }}>
-          <Typography variant="h6" sx={{ flexGrow: 1 }} component={Link} to="/">
-            My Note
-          </Typography>
-          <HelperButtons />
-        </Toolbar>
-      </AppBar>
-    </Box>
+    <AppBar position="static" color={"inherit"}>
+      <Toolbar sx={{ display: "flex", flexDirection: "row" }}>
+        <div style={{ flexGrow: 1 }}>
+          <LogoLink variant="text" component={Link} to="/">
+            {"afternotes"}
+          </LogoLink>
+        </div>
+        <HelperButtons />
+      </Toolbar>
+    </AppBar>
   );
 }

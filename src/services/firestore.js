@@ -6,6 +6,8 @@ import {
   setDoc,
   serverTimestamp,
   updateDoc,
+  query,
+  orderBy,
 } from "firebase/firestore";
 import { addProfile } from "./firebaseStorage";
 const db = getFirestore();
@@ -52,7 +54,11 @@ export const addNoteToDb = async (user, heading, category, note, tags) => {
   });
 };
 
-export const notesRef = (user) => collection(db, "users", user.uid, "notes_sh");
+export const notesRef = (user) =>
+  query(
+    collection(db, "users", user.uid, "notes_sh"),
+    orderBy("createdAt", "desc")
+  );
 export const noteDetailsRef = (user, noteId) =>
   doc(db, "users", user.uid, "notes", noteId);
 export const userInfoRef = (user) => doc(db, "users", user.uid);

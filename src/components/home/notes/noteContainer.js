@@ -1,20 +1,26 @@
 import React from "react";
 import { Box } from "@mui/system";
-import { CircularProgress, Stack, Typography, Slide } from "@mui/material";
+import { CircularProgress, Stack, Typography } from "@mui/material";
 import NotesSimplified from "./notesSimplified";
 import AddNoteDialog from "../addNote/addNoteDialog";
 import NoteModal from "../../../context/useNoteModal";
 import { useNotes } from "../../../context/useNotes";
-import { useNoteDetailed } from "../../../context/useNoteDetails";
 import img from "../../../img/notes.png";
 
 export default function NoteContainer() {
   const { notes, loading } = useNotes();
   return (
     <Box
-      sx={{ padding: "0px 10px", borderRight: "1px solid grey", width: "30%" }}
+      sx={{
+        padding: "0px 2px",
+        borderRight: "2px solid whitesmoke",
+        width: "25%",
+        mt: 2,
+      }}
     >
-      <h2 style={{ fontFamily: "Poppins" }}>{"My Notes"}</h2>
+      <Typography variant="h5" sx={{ fontFamily: "Poppins", mt: 1, ml: 2 }}>
+        {"My Notes"}
+      </Typography>
       <NoteModal>
         <AddNoteDialog />
       </NoteModal>
@@ -24,7 +30,8 @@ export default function NoteContainer() {
         justifyContent={loading ? "flex-start" : "center"}
         spacing={2}
         sx={{
-          overflowY: "scroll",
+          overflowY: "auto",
+          overflowX: "hidden",
           height: "70vh",
           p: 0,
         }}

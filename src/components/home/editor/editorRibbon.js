@@ -7,13 +7,19 @@ import {
   MdFormatItalic,
   MdFormatUnderlined,
   MdFormatStrikethrough,
-  MdFormatAlignLeft,
-  MdFormatAlignCenter,
-  MdFormatAlignRight,
   MdFormatListNumbered,
   MdFormatListBulleted,
+  MdUndo,
+  MdRedo,
+  MdCode,
 } from "react-icons/md";
-import { TypographySelector, FontSelector } from "./selectors";
+import {
+  TypographySelector,
+  FontSelector,
+  // ColorPicker,
+  // AddLink,
+  // ImagePicker,
+} from "./selectors";
 
 export default function EditorRibbon() {
   const editor = useSlate();
@@ -85,6 +91,15 @@ export default function EditorRibbon() {
     }
   };
 
+  const blockCode = () => {
+    const [isActive] = Editor.nodes(editor, {
+      match: (n) => n.type === "block-quote",
+    });
+    Transforms.setNodes(editor, {
+      type: isActive ? "paragraph" : "block-quote",
+    });
+  };
+
   const UnOrderedList = () => {
     const [match] = Editor.nodes(editor, {
       match: (n) => n.type === "unordered-list",
@@ -106,26 +121,9 @@ export default function EditorRibbon() {
     }
   };
 
-  const AlignLeft = () => {};
+  const undo = () => editor.undo();
 
-  const AlignCenter = () => {
-    const [match] = Editor.nodes(editor, {
-      match: (n) => n.alignment === "center",
-    });
-    Transforms.setNodes(editor, {
-      alignment: match ? "flex-start" : "center",
-      match: (n) => Editor.isBlock(editor, n),
-    });
-  };
-  const AlignRight = () => {
-    const [match] = Editor.nodes(editor, {
-      match: (n) => n.alignment === "flex-end",
-    });
-    Transforms.setNodes(editor, {
-      alignment: match ? "flex-start" : "flex-end",
-      match: (n) => Editor.isBlock(editor, n),
-    });
-  };
+  const redo = () => editor.redo();
 
   return (
     <Grid
@@ -140,6 +138,14 @@ export default function EditorRibbon() {
       alignItems={"center"}
       justifyContent={"center"}
     >
+      <Grid item>
+        <IconButton onClick={undo} disabled={!editor.history.undos.length}>
+          <MdUndo />
+        </IconButton>
+        <IconButton onClick={redo} disabled={!editor.history.redos.length}>
+          <MdRedo />
+        </IconButton>
+      </Grid>
       <Grid item>
         <TypographySelector />
         <FontSelector />
@@ -157,6 +163,11 @@ export default function EditorRibbon() {
         <IconButton onClick={LineThrough}>
           <MdFormatStrikethrough />
         </IconButton>
+        {/* <ColorPicker />
+        <AddLink /> */}
+        <IconButton onClick={blockCode}>
+          <MdCode />
+        </IconButton>
       </Grid>
       <Grid item>
         <IconButton onClick={UnOrderedList}>
@@ -165,18 +176,7 @@ export default function EditorRibbon() {
         <IconButton onClick={OrderedList}>
           <MdFormatListNumbered />
         </IconButton>
-      </Grid>
-
-      <Grid item>
-        <IconButton onClick={AlignLeft}>
-          <MdFormatAlignLeft />
-        </IconButton>
-        <IconButton onClick={AlignCenter}>
-          <MdFormatAlignCenter />
-        </IconButton>
-        <IconButton onClick={AlignRight}>
-          <MdFormatAlignRight />
-        </IconButton>
+        {/* <ImagePicker /> */}
       </Grid>
     </Grid>
   );

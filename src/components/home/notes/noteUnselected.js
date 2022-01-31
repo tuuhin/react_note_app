@@ -8,10 +8,10 @@ export default function NoteUnselected() {
       direction={"column"}
       alignItems={"center"}
       justifyContent={"center"}
-      sx={{ width: "100%" }}
+      sx={{ width: "70%" }}
     >
-      <img src={post} alt="" style={{ width: "25%" }} />
-      <Typography variant="overline" sx={{ fontFamily: "Poppins" }}>
+      <img src={post} alt="no-notes-present" style={{ width: "25%" }} />
+      <Typography sx={{ fontFamily: "Poppins", color: "gray", mt: 2 }}>
         {"Select a note to continue"}
       </Typography>
     </Stack>

@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import NavBar from "../navBar";
 import { Box } from "@mui/system";
@@ -74,7 +74,6 @@ export default function UpdateProfile() {
   return user ? (
     <>
       <NavBar />
-
       <Container maxWidth="xs">
         <Box
           sx={{

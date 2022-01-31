@@ -3,20 +3,15 @@ import { Button, Dialog } from "@mui/material";
 import { MdAdd } from "react-icons/md";
 import AddNoteToDb from "./addNoteToDb";
 import { useModal } from "../../../context/useNoteModal";
+import { AddNoteButton } from "../../../utils/styled";
 export default function AddNoteDialog() {
   const { modal, setModal } = useModal();
 
   return (
     <>
-      <Button
-        onClick={() => setModal(!modal)}
-        variant="outlined"
-        fullWidth
-        startIcon={<MdAdd />}
-        sx={{ mt: 1, mb: 1 }}
-      >
-        Add note
-      </Button>
+      <AddNoteButton onClick={() => setModal(!modal)} startIcon={<MdAdd />}>
+        Add new note
+      </AddNoteButton>
       <Dialog
         open={modal}
         onClose={() => setModal(!modal)}

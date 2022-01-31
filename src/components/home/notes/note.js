@@ -12,7 +12,7 @@ export default function Home() {
     <NotesProvider>
       <NavBar />
       <NoteDetailsProvider>
-        <Stack direction="row" alignItems="center" sx={{ m: 1 }}>
+        <Stack direction="row">
           <NoteContainer />
           <NoteDetails />
         </Stack>

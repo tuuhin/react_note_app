@@ -3,7 +3,6 @@ import { Stack, Fade } from "@mui/material";
 import Editor from "../editor/editor";
 import NoteMetaData from "./noteMetaData";
 import NoteUnselected from "./noteUnselected";
-import { useState } from "react";
 import { useNoteDetailed } from "../../../context/useNoteDetails";
 import NoteNavBar from "./noteNavBar";
 import Loading from "./loading";
@@ -13,14 +12,14 @@ export default function NoteDetails() {
     loading ? (
       <Fade in timeout={1200}>
         <Stack
-          justifyContent={"flex-start"}
           direction={"column"}
           sx={{
-            p: 0,
-            height: "90vh",
+            ml: 1,
+            pt: 1,
+            height: "calc( 100vh - 80px )",
             overflowY: "scroll",
-            overflowX: "scroll",
-            width: "100%",
+            flexGrow: 1,
+            width: "80%",
           }}
         >
           <NoteNavBar
@@ -35,7 +34,7 @@ export default function NoteDetails() {
 
           <Editor
             value={currentNote.note}
-            style={{ margin: "0px 20px" }}
+            style={{ margin: "0px 10px" }}
             onChange={(e) => {
               console.log(e);
             }}
