@@ -10,7 +10,7 @@ import {
 import { Box } from "@mui/system";
 import Editor from "../editor/editor";
 import { useModal } from "../../../context/useNoteModal";
-import { useUser } from "../../../context/userContext";
+import { useUser } from "../../../context/useUser";
 import { addNoteToDb } from "../../../services/firestore";
 
 export default function AddNoteToDb() {

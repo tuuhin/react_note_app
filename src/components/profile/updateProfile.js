@@ -21,7 +21,7 @@ import {
 } from "@mui/material";
 import { MdMoreVert } from "react-icons/md";
 import { useFilePicker } from "use-file-picker";
-import { useUser } from "../../context/userContext";
+import { useUser } from "../../context/useUser";
 import { updateUser } from "../../services/firestore";
 
 export default function UpdateProfile() {

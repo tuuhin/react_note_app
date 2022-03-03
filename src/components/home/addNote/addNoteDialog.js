@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Dialog } from "@mui/material";
+import { Dialog } from "@mui/material";
 import { MdAdd } from "react-icons/md";
 import AddNoteToDb from "./addNoteToDb";
 import { useModal } from "../../../context/useNoteModal";

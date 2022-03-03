@@ -1,5 +1,5 @@
 import { Navigate, Link } from "react-router-dom";
-import { useUser } from "../../context/userContext";
+import { useUser } from "../../context/useUser";
 import { Container, Stack, Typography } from "@mui/material";
 import NavBar from "../navBar";
 import { BlackButton } from "../../utils/styled";

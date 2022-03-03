@@ -16,11 +16,12 @@ import { Box } from "@mui/system";
 import { useState } from "react";
 import { signUp } from "../../services/authservice";
 import { Navigate } from "react-router-dom";
-import { useUser } from "../../context/userContext";
+import { useUser } from "../../context/useUser";
 import { Link } from "react-router-dom";
-import SignInWithGoggleButton from "./signInWithGoggleButton";
+import SocialAuth from "./socialAuth";
 import { validateEmail } from "../../utils/validators";
 import image from "../../img/auth2.jfif";
+
 export default function SignUp() {
   const { user } = useUser();
   const [email, setEmail] = useState("");
@@ -89,7 +90,12 @@ export default function SignUp() {
                 {"Already have a account?"}
               </Typography>
               <Button
-                sx={{ textTransform: "none", mt: 1, mb: 1 }}
+                sx={{
+                  textTransform: "none",
+
+                  color: "darkslategray",
+                  fontWeight: 500,
+                }}
                 variant="text"
                 component={Link}
                 to="/login"
@@ -97,15 +103,8 @@ export default function SignUp() {
                 {"Sign In"}
               </Button>
             </Stack>
-            <SignInWithGoggleButton title={"Sign Up with Google"} isNew />
-            <Divider sx={{ width: "100%" }}>
-              <Typography
-                variant="caption"
-                sx={{ color: "gray", position: "relative", top: "5px" }}
-              >
-                {"OR"}
-              </Typography>
-            </Divider>
+            <SocialAuth />
+            <Divider sx={{ width: "100%" }} />
             <Grid
               container
               spacing={1}
@@ -216,7 +215,7 @@ export default function SignUp() {
               </Grid>
               <Grid item lg={12} sm={12}>
                 <Button
-                  fullWidth={loading ? true : false}
+                  fullWidth
                   sx={{ textTransform: "none" }}
                   variant={"contained"}
                   type="submit"

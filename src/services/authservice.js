@@ -1,4 +1,3 @@
-import app from "./firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -6,22 +5,35 @@ import {
   signOut,
   signInWithPopup,
   GoogleAuthProvider,
+  FacebookAuthProvider,
 } from "firebase/auth";
 import { addUserToDb } from "./firestore";
 
-const provider = new GoogleAuthProvider();
+const googleProvider = new GoogleAuthProvider();
+const facebookProvider = new FacebookAuthProvider();
 export const auth = getAuth();
 
 export const signUp = async (email, password, name, userName) => {
   const { user } = await createUserWithEmailAndPassword(auth, email, password);
   await addUserToDb(user, name, userName);
 };
-export const signIn = (email, password) =>
-  signInWithEmailAndPassword(auth, email, password);
+export const signIn = async (email, password) =>
+  await signInWithEmailAndPassword(auth, email, password);
 
-export const signInWithGoogle = (isNew) =>
-  signInWithPopup(auth, provider).then(({ user }) =>
-    isNew ? addUserToDb(user) : null
-  );
+export const signInWithGoogle = async () => {
+  try {
+    await signInWithPopup(auth, googleProvider);
+  } catch (error) {
+    console.warn(error);
+  }
+};
+
+export const signWithFaceBook = async () => {
+  try {
+    await signInWithPopup(auth, facebookProvider);
+  } catch (error) {
+    console.warn(error);
+  }
+};
 
 export const logOut = () => signOut(auth);

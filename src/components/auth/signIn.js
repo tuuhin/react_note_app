@@ -16,10 +16,10 @@ import { Box } from "@mui/system";
 import { useState } from "react";
 import { signIn } from "../../services/authservice";
 import { Navigate } from "react-router-dom";
-import { useUser } from "../../context/userContext";
+import { useUser } from "../../context/useUser";
 import { Link } from "react-router-dom";
 import image from "../../img/auth1.jfif";
-import SignInWithGoggleButton from "./signInWithGoggleButton";
+import SocialAuth from "./socialAuth";
 
 export default function SignUp() {
   const { user } = useUser();
@@ -49,10 +49,10 @@ export default function SignUp() {
   return !user ? (
     <Stack
       alignItems={"center"}
-      direction={"row"}
-      justifyContent={"space-between"}
+      direction={{ sm: "row", xs: "column" }}
+      justifyContent={"space-around"}
     >
-      <img style={{ height: "100vh" }} alt="" src={image} />
+      <img alt="" src={image} style={{ height: "100vh" }} />
       <Fade in timeout={1000}>
         <Container maxWidth="xs">
           <Box
@@ -83,7 +83,11 @@ export default function SignUp() {
                 {"Don't have account"}
               </Typography>
               <Button
-                sx={{ textTransform: "none" }}
+                sx={{
+                  textTransform: "none",
+                  color: "darkslategray",
+                  fontWeight: 500,
+                }}
                 variant="text"
                 component={Link}
                 to="/signup"
@@ -91,15 +95,13 @@ export default function SignUp() {
                 {"Sign up"}
               </Button>
             </Stack>
-            <SignInWithGoggleButton title={"Sign In with Google"} />
-            <Divider sx={{ width: "100%" }}>
-              <Typography
-                variant="caption"
-                sx={{ color: "gray", position: "relative", top: "5px" }}
-              >
-                {"OR"}
-              </Typography>
-            </Divider>
+            <SocialAuth />
+            <Divider sx={{ width: "100%" }} />
+            <Collapse in={collapsed} sx={{ width: "100%", mt: 1 }}>
+              <Alert sx={{ borderRadius: 5 }} severity={alertHead}>
+                {alertBody.toUpperCase()}
+              </Alert>
+            </Collapse>
 
             <Grid
               container
@@ -107,13 +109,8 @@ export default function SignUp() {
               noValidate
               onSubmit={signUserIn}
               spacing={2}
-              sx={{ width: "100%", mt: 2 }}
+              sx={{ width: "100%", mt: 1 }}
             >
-              <Grid item sm={12} lg={12}>
-                <Collapse in={collapsed} sx={{ width: "100%" }}>
-                  <Alert severity={alertHead}>{alertBody}</Alert>
-                </Collapse>
-              </Grid>
               <Grid item sm={12} lg={12}>
                 <InputLabel
                   htmlFor="email"
@@ -165,7 +162,7 @@ export default function SignUp() {
               </Grid>
               <Grid item lg={12} sm={12}>
                 <Button
-                  fullWidth={loading ? true : false}
+                  fullWidth
                   variant={"contained"}
                   type="submit"
                   size="large"

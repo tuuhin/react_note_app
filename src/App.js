@@ -4,7 +4,7 @@ import SignUp from "./components/auth/signUp";
 import SignIn from "./components/auth/signIn";
 import Notes from "./components/home/notes/note";
 import UpdateProfile from "./components/profile/updateProfile";
-import Auth from "./context/userContext";
+import Auth from "./context/useUser";
 import { IntlProvider } from "react-intl";
 import Page404 from "./components/404page";
 

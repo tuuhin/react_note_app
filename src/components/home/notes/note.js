@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { useUser } from "../../../context/userContext";
+import { useUser } from "../../../context/useUser";
 import NoteContainer from "./noteContainer";
 import { Stack } from "@mui/material";
 import NoteDetails from "./noteDetails";

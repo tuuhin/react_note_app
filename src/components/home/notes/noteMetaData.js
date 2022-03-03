@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography, Grid, Stack, Avatar } from "@mui/material";
 import { Box } from "@mui/system";
-import { useUser } from "../../../context/userContext";
+import { useUser } from "../../../context/useUser";
 import DateFormat from "../../../utils/dateFormat";
 import { MutedText, Tag } from "../../../utils/styled";
 export default function NoteMetaData(props) {

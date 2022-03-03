@@ -1,6 +1,6 @@
 import { useState, useContext, createContext, useEffect } from "react";
 import { onSnapshot } from "firebase/firestore";
-import { useUser } from "./userContext";
+import { useUser } from "./useUser";
 import { noteDetailsRef } from "../services/firestore";
 export const NoteDetailsContext = createContext();
 export const useNoteDetailed = () => useContext(NoteDetailsContext);
@@ -27,7 +27,7 @@ const NoteDetailsProvider = (props) => {
       });
       return () => {
         cleanUp();
-        console.log("ckleaned");
+        console.log("cleaned");
         setLoading(false);
       };
     }

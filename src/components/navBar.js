@@ -1,6 +1,6 @@
 import { AppBar, Toolbar, Avatar } from "@mui/material";
 import { Link } from "react-router-dom";
-import { useUser } from "../context/userContext";
+import { useUser } from "../context/useUser";
 import { logOut } from "../services/authservice";
 import { NavButtons, LogoLink } from "../utils/styled";
 

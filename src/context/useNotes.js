@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext, createContext } from "react";
 import { onSnapshot } from "firebase/firestore";
 import { notesRef } from "../services/firestore";
-import { useUser } from "./userContext";
+import { useUser } from "./useUser";
 
 export const NotesContext = createContext();
 export const useNotes = () => useContext(NotesContext);

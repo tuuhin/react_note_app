@@ -1,8 +1,11 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
-import { onAuthStateChanged } from "firebase/auth";
+import { createContext, useContext, useState, useEffect } from "react";
+
 import { auth } from "../services/authservice";
 import { userInfoRef } from "../services/firestore";
 import { onSnapshot } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
+
+// AuthContext
 export const AuthContext = createContext();
 export const useUser = () => useContext(AuthContext);
 
@@ -15,6 +18,7 @@ const Auth = (props) => {
   useEffect(() => {
     if (user != null) {
       const cleanUp = onSnapshot(userInfoRef(user), (snapshot) => {
+        console.log(snapshot.data());
         setUserInfo(snapshot.data());
       });
       return cleanUp;
