@@ -102,12 +102,12 @@ export default function UpdateProfile() {
               </IconButton>
             </Stack>
             <Divider />
+            <Grid item sm={12} lg={12}>
+              <Collapse in={isCollpased}>
+                <Alert severity={alertType}>{alert}</Alert>
+              </Collapse>
+            </Grid>
             <Grid container spacing={2} sx={{ mt: 1 }}>
-              <Grid item sm={12} lg={12}>
-                <Collapse in={isCollpased}>
-                  <Alert severity={alertType}>{alert}</Alert>
-                </Collapse>
-              </Grid>
               <Grid item sm={12} lg={12}>
                 <Stack direction={"row"} alignItems={"center"} spacing={5}>
                   <Avatar

@@ -20,6 +20,7 @@ import { useUser } from "../../context/userContext";
 import { Link } from "react-router-dom";
 import image from "../../img/auth1.jfif";
 import SignInWithGoggleButton from "./signInWithGoggleButton";
+
 export default function SignUp() {
   const { user } = useUser();
   const [email, setEmail] = useState("");
