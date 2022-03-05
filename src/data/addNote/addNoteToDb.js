@@ -8,10 +8,10 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import Editor from "../editor/editor";
-import { useModal } from "../../../context/useNoteModal";
-import { useUser } from "../../../context/useUser";
-import { addNoteToDb } from "../../../services/firestore";
+import Editor from "../../components/home/editor/editor";
+import { useModal } from "../../context/useNoteModal";
+import { useUser } from "../../context/useUser";
+import { addNoteToDb } from "../../services/firestore";
 
 export default function AddNoteToDb() {
   const { setModal } = useModal();

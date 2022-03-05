@@ -25,6 +25,7 @@ export const signInWithGoogle = async () => {
     await signInWithPopup(auth, googleProvider);
   } catch (error) {
     console.warn(error);
+    alert(error.code.replace("auth/", ""));
   }
 };
 
@@ -33,6 +34,7 @@ export const signWithFaceBook = async () => {
     await signInWithPopup(auth, facebookProvider);
   } catch (error) {
     console.warn(error);
+    alert(error.code.replace("auth/", ""));
   }
 };
 

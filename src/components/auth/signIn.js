@@ -1,24 +1,23 @@
 import {
-  Typography,
   Alert,
-  Button,
   Container,
   TextField,
   Stack,
   Collapse,
   Fade,
   Grid,
-  CircularProgress,
+  Slide,
   InputLabel,
   Divider,
 } from "@mui/material";
 import { Box } from "@mui/system";
+import { BlackButton } from "../../utils/styled";
 import { useState } from "react";
 import { signIn } from "../../services/authservice";
 import { Navigate } from "react-router-dom";
 import { useUser } from "../../context/useUser";
-import { Link } from "react-router-dom";
-import image from "../../img/auth1.jfif";
+import { SignInMeta } from "./meta/headers";
+import image from "../../img/prof.jpg";
 import SocialAuth from "./socialAuth";
 
 export default function SignUp() {
@@ -42,18 +41,16 @@ export default function SignUp() {
     } catch (e) {
       setLoading(false);
       setCollapsed(true);
-      setAlertHead("warning");
+      setAlertHead("error");
       setAlertBody(e.code.replace("auth/", ""));
     }
   };
   return !user ? (
-    <Stack
-      alignItems={"center"}
-      direction={{ sm: "row", xs: "column" }}
-      justifyContent={"space-around"}
-    >
-      <img alt="" src={image} style={{ height: "100vh" }} />
-      <Fade in timeout={1000}>
+    <Stack direction={"row"} justifyContent={"space-around"}>
+      <Fade in timeout={1800}>
+        <img alt="" src={image} style={{ height: "100vh" }} />
+      </Fade>
+      <Slide in timeout={1400} direction={"left"}>
         <Container maxWidth="xs">
           <Box
             sx={{
@@ -64,52 +61,21 @@ export default function SignUp() {
               height: "100vh",
             }}
           >
-            <Typography
-              component="h1"
-              variant="h4"
-              sx={{ fontFamily: "Poppins", fontWeight: "600" }}
-            >
-              {" Welcome Back!"}
-            </Typography>
-            <Stack direction="row" alignItems="center" sx={{ mb: 2 }}>
-              <Typography
-                variant="overline"
-                sx={{
-                  color: "gray",
-                  fontFamily: "Poppins",
-                  textTransform: "capitalize",
-                }}
-              >
-                {"Don't have account"}
-              </Typography>
-              <Button
-                sx={{
-                  textTransform: "none",
-                  color: "darkslategray",
-                  fontWeight: 500,
-                }}
-                variant="text"
-                component={Link}
-                to="/signup"
-              >
-                {"Sign up"}
-              </Button>
-            </Stack>
+            <SignInMeta />
             <SocialAuth />
             <Divider sx={{ width: "100%" }} />
             <Collapse in={collapsed} sx={{ width: "100%", mt: 1 }}>
-              <Alert sx={{ borderRadius: 5 }} severity={alertHead}>
+              <Alert sx={{ borderRadius: 2 }} severity={alertHead}>
                 {alertBody.toUpperCase()}
               </Alert>
             </Collapse>
-
             <Grid
               container
               component="form"
               noValidate
+              spacing={1.2}
               onSubmit={signUserIn}
-              spacing={2}
-              sx={{ width: "100%", mt: 1 }}
+              sx={{ width: "100%" }}
             >
               <Grid item sm={12} lg={12}>
                 <InputLabel
@@ -125,12 +91,15 @@ export default function SignUp() {
                   error={emailError}
                   required
                   fullWidth
+                  autoFocus
                   id="email"
                   name="email"
                   autoComplete="email"
                   onFocus={() => {
-                    setCollapsed(false);
-                    setEmailError(false);
+                    if (collapsed) {
+                      setCollapsed(false);
+                      setEmailError(false);
+                    }
                   }}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -155,26 +124,30 @@ export default function SignUp() {
                   type="password"
                   autoComplete="current-password"
                   onFocus={() => {
-                    setCollapsed(false);
-                    setPasswordError(false);
+                    if (collapsed) {
+                      setCollapsed(false);
+                      setPasswordError(false);
+                    }
                   }}
                 />
               </Grid>
+              <div sx={{ height: 10 }}></div>
+
               <Grid item lg={12} sm={12}>
-                <Button
+                <BlackButton
                   fullWidth
                   variant={"contained"}
                   type="submit"
+                  disabled={loading}
                   size="large"
-                  sx={{ textTransform: "none" }}
                 >
-                  {!loading ? "Sign In" : <CircularProgress color="inherit" />}
-                </Button>
+                  {!loading ? "Sign In" : "Authenticating..."}
+                </BlackButton>
               </Grid>
             </Grid>
           </Box>
         </Container>
-      </Fade>
+      </Slide>
     </Stack>
   ) : (
     <Navigate to="/" />

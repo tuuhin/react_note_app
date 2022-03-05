@@ -1,7 +1,7 @@
 import { Navigate, Link } from "react-router-dom";
 import { useUser } from "../../context/useUser";
 import { Container, Stack, Typography } from "@mui/material";
-import NavBar from "../navBar";
+import NavBar from "../utils/navBar";
 import { BlackButton } from "../../utils/styled";
 export default function Home() {
   const { user } = useUser();

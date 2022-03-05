@@ -6,7 +6,7 @@ import Notes from "./components/home/notes/note";
 import UpdateProfile from "./components/profile/updateProfile";
 import Auth from "./context/useUser";
 import { IntlProvider } from "react-intl";
-import Page404 from "./components/404page";
+import InvalidPage from "./components/utils/invalidPage";
 
 const App = () => {
   return (
@@ -19,7 +19,7 @@ const App = () => {
             <Route exact path="signup" element={<SignUp />} />
             <Route exact path="/notes" element={<Notes />} />
             <Route exact path="/profile" element={<UpdateProfile />} />
-            <Route path="*" element={<Page404 />} />
+            <Route path="*" element={<InvalidPage />} />
           </Routes>
         </BrowserRouter>
       </IntlProvider>

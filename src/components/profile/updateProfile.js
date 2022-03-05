@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
-import NavBar from "../navBar";
+import NavBar from "../utils/navBar";
 import { Box } from "@mui/system";
 import {
   Container,

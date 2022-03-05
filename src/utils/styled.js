@@ -1,5 +1,13 @@
 import { styled } from "@mui/styles";
 import { Button, Paper } from "@mui/material";
+import { Link } from "react-router-dom";
+
+export const StyledLink = styled(Link)({
+  textDecoration: "none",
+  fontSize: "0.8em",
+  fontWeight: 600,
+  color: "black",
+});
 
 export const Tag = styled("div")({
   backgroundColor: "whitesmoke",
@@ -21,18 +29,19 @@ export const MutedText = styled("p")({
 export const BlackButton = styled(Button)({
   backgroundColor: "black",
   color: "white",
-  padding: "8px 25px ",
   fontSize: "1.2em",
-  textDecoration:'none',
+  padding: "8px 25px ",
+  textDecoration: "none",
   fontFamily: "Poppins",
-  borderRadius: "10px",
+  borderRadius: "5px",
   textTransform: "none",
   margin: "10px 0px",
-  border: "1px solid black",
-  boxShadow: "0px 4px 20px 3px gray",
+  border: "1px solid transparent",
+  boxShadow: "0px 4px 10px 3px rgba(80, 80, 80, 0.3)",
   "&:hover": {
     color: "black",
     backgroundColor: "transparent",
+    border: "1px solid rgba(80, 80, 80, 0.9)",
   },
 });
 

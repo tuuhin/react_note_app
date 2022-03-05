@@ -1,23 +1,22 @@
 import {
-  Typography,
   Alert,
-  Button,
   Container,
   TextField,
   Stack,
   Collapse,
   Fade,
   Divider,
+  Slide,
   InputLabel,
-  CircularProgress,
   Grid,
 } from "@mui/material";
+import { BlackButton } from "../../utils/styled";
 import { Box } from "@mui/system";
 import { useState } from "react";
 import { signUp } from "../../services/authservice";
 import { Navigate } from "react-router-dom";
 import { useUser } from "../../context/useUser";
-import { Link } from "react-router-dom";
+import { SignUpMetaData } from "./meta/headers";
 import SocialAuth from "./socialAuth";
 import { validateEmail } from "../../utils/validators";
 import image from "../../img/auth2.jfif";
@@ -59,8 +58,11 @@ export default function SignUp() {
       direction={"row"}
       justifyContent={"space-between"}
     >
-      <img style={{ height: "100vh" }} alt="" src={image} />
       <Fade in timeout={800}>
+        <img style={{ height: "100vh" }} alt="" src={image} />
+      </Fade>
+
+      <Slide in timeout={1200} direction="left">
         <Container component="main" maxWidth="xs">
           <Box
             sx={{
@@ -71,38 +73,7 @@ export default function SignUp() {
               height: "100vh",
             }}
           >
-            <Typography
-              component="h1"
-              variant="h4"
-              sx={{ fontFamily: "Poppins", fontWeight: "600" }}
-            >
-              Get's started.
-            </Typography>
-            <Stack direction="row" alignItems="center" sx={{ mb: 2 }}>
-              <Typography
-                variant="overline"
-                sx={{
-                  color: "gray",
-                  fontFamily: "Poppins",
-                  textTransform: "capitalize",
-                }}
-              >
-                {"Already have a account?"}
-              </Typography>
-              <Button
-                sx={{
-                  textTransform: "none",
-
-                  color: "darkslategray",
-                  fontWeight: 500,
-                }}
-                variant="text"
-                component={Link}
-                to="/login"
-              >
-                {"Sign In"}
-              </Button>
-            </Stack>
+            <SignUpMetaData />
             <SocialAuth />
             <Divider sx={{ width: "100%" }} />
             <Grid
@@ -214,24 +185,20 @@ export default function SignUp() {
                 />
               </Grid>
               <Grid item lg={12} sm={12}>
-                <Button
+                <BlackButton
                   fullWidth
-                  sx={{ textTransform: "none" }}
                   variant={"contained"}
                   type="submit"
+                  disabled={loading}
                   size="large"
                 >
-                  {!loading ? (
-                    "Create A Account"
-                  ) : (
-                    <CircularProgress color="inherit" />
-                  )}
-                </Button>
+                  {!loading ? "Resister " : "Authenticating..."}
+                </BlackButton>
               </Grid>
             </Grid>
           </Box>
         </Container>
-      </Fade>
+      </Slide>
     </Stack>
   ) : (
     <Navigate to="/" />

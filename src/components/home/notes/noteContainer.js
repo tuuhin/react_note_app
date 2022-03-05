@@ -2,7 +2,7 @@ import React from "react";
 import { Box } from "@mui/system";
 import { CircularProgress, Stack, Typography } from "@mui/material";
 import NotesSimplified from "./notesSimplified";
-import AddNoteDialog from "../addNote/addNoteDialog";
+import AddNoteDialog from "../../../data/addNote/addNoteDialog";
 import NoteModal from "../../../context/useNoteModal";
 import { useNotes } from "../../../context/useNotes";
 import img from "../../../img/notes.png";

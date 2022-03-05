@@ -1,8 +1,8 @@
 import { AppBar, Toolbar, Avatar } from "@mui/material";
 import { Link } from "react-router-dom";
-import { useUser } from "../context/useUser";
-import { logOut } from "../services/authservice";
-import { NavButtons, LogoLink } from "../utils/styled";
+import { useUser } from "../../context/useUser";
+import { logOut } from "../../services/authservice";
+import { NavButtons, LogoLink } from "../../utils/styled";
 
 export default function NavBar() {
   const { user, userInfo } = useUser();

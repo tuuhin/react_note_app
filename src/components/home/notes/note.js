@@ -3,7 +3,7 @@ import { useUser } from "../../../context/useUser";
 import NoteContainer from "./noteContainer";
 import { Stack } from "@mui/material";
 import NoteDetails from "./noteDetails";
-import NavBar from "../../navBar";
+import NavBar from "../../utils/navBar";
 import NotesProvider from "../../../context/useNotes";
 import NoteDetailsProvider from "../../../context/useNoteDetails";
 export default function Home() {

@@ -3,7 +3,7 @@ import { styled, Button, Stack } from "@mui/material";
 import { signInWithGoogle, signWithFaceBook } from "../../services/authservice";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
 
-const RoundedButton = styled(Button)({
+const SocialButton = styled(Button)({
   fontFamily: "Poppins",
   fontWeight: 500,
   color: "darkslategray",
@@ -13,16 +13,16 @@ const RoundedButton = styled(Button)({
 });
 
 export const SignWithGoggleButton = () => (
-  <RoundedButton onClick={signInWithGoogle} startIcon={<FaGoogle />}>
+  <SocialButton onClick={signInWithGoogle} startIcon={<FaGoogle />}>
     {"Google"}
-  </RoundedButton>
+  </SocialButton>
 );
 
 export const SignWithFaceBookButton = () => {
   return (
-    <RoundedButton onClick={signWithFaceBook} startIcon={<FaFacebook />}>
+    <SocialButton onClick={signWithFaceBook} startIcon={<FaFacebook />}>
       Facebook
-    </RoundedButton>
+    </SocialButton>
   );
 };
 
