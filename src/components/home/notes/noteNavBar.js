@@ -3,9 +3,9 @@ import {
   Typography,
   IconButton,
   Button,
-  Menu,
-  MenuItem,
+  Popover,
   Stack,
+  Divider,
 } from "@mui/material";
 import { useState } from "react";
 import { Box } from "@mui/system";
@@ -48,30 +48,33 @@ export default function NoteNavBar(props) {
         >
           <MdMoreVert />
         </IconButton>
-        <Menu
+        <Popover
           open={open}
           anchorEl={anchor}
           onClose={() => setAnchor(null)}
-          MenuListProps={{ "aria-labelledby": "tabar-button" }}
+          anchorOrigin={{ vertical: "center", horizontal: "left" }}
         >
-          <Button
-            color="primary"
-            fullWidth
-            sx={{ textTransform: "capitalize" }}
-            variant={"text"}
-            startIcon={<MdUpdate />}
-          >
-            {"Update"}
-          </Button>
-          <Button
-            color="error"
-            variant="text"
-            fullWidth
-            startIcon={<MdDeleteForever />}
-          >
-            {"Delete"}
-          </Button>
-        </Menu>
+          <Stack direction={"column"} sx={{ p: 1 }}>
+            <Button
+              color={"success"}
+              sx={{ fontWeight: 600 }}
+              variant={"text"}
+              startIcon={<MdUpdate />}
+            >
+              {"Update"}
+            </Button>
+            <Divider />
+            <Button
+              color={"error"}
+              variant="text"
+              fullWidth
+              startIcon={<MdDeleteForever />}
+              sx={{ fontWeight: 600 }}
+            >
+              {"Delete"}
+            </Button>
+          </Stack>
+        </Popover>
       </Toolbar>
     </Box>
   );

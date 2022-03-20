@@ -6,7 +6,7 @@ import Notes from "./components/home/notes/note";
 import UpdateProfile from "./components/profile/updateProfile";
 import Auth from "./context/useUser";
 import { IntlProvider } from "react-intl";
-import InvalidPage from "./components/utils/invalidPage";
+import InvalidPage from "./components/common/invalidPage";
 
 const App = () => {
   return (

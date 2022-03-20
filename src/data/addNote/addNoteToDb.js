@@ -6,27 +6,41 @@ import {
   Typography,
   InputLabel,
   CircularProgress,
+  Chip,
+  Popover,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import Editor from "../../components/home/editor/editor";
 import { useModal } from "../../context/useNoteModal";
 import { useUser } from "../../context/useUser";
 import { addNoteToDb } from "../../services/firestore";
-
+import { MdAdd } from "react-icons/md";
+import { BlackButton } from "../../utils/styled";
 export default function AddNoteToDb() {
   const { setModal } = useModal();
   const { user } = useUser();
+  const [anchor, setAnchor] = useState(null);
   const [heading, setHeading] = useState("");
   const [loading, setLoading] = useState(false);
   const [headingError, setHeadingError] = useState(false);
-  const tags = useRef("");
+  const [tags, setTags] = useState([]);
+  const [newItem, setNewItem] = useState("");
   const categoryRef = useRef("");
+  const open = !!anchor;
   const [editor, setEditor] = useState([
     {
       type: "paragraph",
       children: [{ text: "" }],
     },
   ]);
+  const addNewTag = () => {
+    if (!newItem) return;
+    setTags([...tags, newItem]);
+    setNewItem("");
+  };
+  const removeTag = (e) => {
+    setTags(tags.filter((value) => value !== e));
+  };
 
   const addNote = async (e) => {
     e.preventDefault();
@@ -108,21 +122,33 @@ export default function AddNoteToDb() {
               sx={{ width: "80%" }}
             />
           </Stack>
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-around"
-          >
-            <InputLabel htmlFor="tags">Tags</InputLabel>
-            <TextField
-              inputRef={tags}
-              variant="standard"
-              id="tags"
-              name="tags"
-              helperText="Each tag , space seperated"
-              sx={{ width: "80%" }}
+          <Stack direction="row" justifyContent="space-around">
+            {tags &&
+              tags.map((e, i) => (
+                <Chip label={e} onDelete={() => removeTag(e)} key={i} />
+              ))}
+
+            <Chip
+              label={"Add"}
+              avatar={<MdAdd />}
+              onClick={(e) => setAnchor(e.currentTarget)}
             />
           </Stack>
+          <Popover
+            open={open}
+            anchorEl={anchor}
+            onClose={() => setAnchor(null)}
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          >
+            <Stack direction="column" sx={{ pl: 1, pr: 1 }}>
+              <TextField
+                variant="outlined"
+                value={newItem}
+                onChange={(e) => setNewItem(e.target.value)}
+              />
+              <BlackButton onClick={addNewTag}>{"Add tags"}</BlackButton>
+            </Stack>
+          </Popover>
         </Stack>
         <Editor value={editor} onChange={(e) => setEditor(e)} />
       </Box>

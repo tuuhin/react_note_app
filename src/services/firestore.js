@@ -20,21 +20,17 @@ export const addUserToDb = async (user, name, userName) => {
 };
 
 export const updateUser = async (user, name, userName, about, profile) => {
+  let url;
   if (profile) {
-    const url = await addProfile(user, profile);
-    await updateDoc(doc(db, "users", user.uid), {
-      name: name,
-      userName: userName,
-      about: about,
-      photoURL: url,
-    });
-  } else {
-    await updateDoc(doc(db, "users", user.uid), {
-      name: name,
-      userName: userName,
-      about: about,
-    });
+    url = await addProfile(user, profile);
   }
+  await updateDoc(doc(db, "users", user.uid), {
+    name: name,
+    userName: userName,
+    about: about,
+    photoURL: url,
+    updatedAt: serverTimestamp(),
+  });
 };
 
 export const addNoteToDb = async (user, heading, category, note, tags) => {

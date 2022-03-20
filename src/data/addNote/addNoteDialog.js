@@ -2,8 +2,8 @@ import React from "react";
 import { Dialog } from "@mui/material";
 import { MdAdd } from "react-icons/md";
 import AddNoteToDb from "./addNoteToDb";
-import { useModal } from "../../../context/useNoteModal";
-import { AddNoteButton } from "../../../utils/styled";
+import { useModal } from "../../context/useNoteModal";
+import { AddNoteButton } from "../../utils/styled";
 export default function AddNoteDialog() {
   const { modal, setModal } = useModal();
 

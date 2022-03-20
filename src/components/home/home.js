@@ -1,7 +1,7 @@
 import { Navigate, Link } from "react-router-dom";
 import { useUser } from "../../context/useUser";
-import { Container, Stack, Typography } from "@mui/material";
-import NavBar from "../utils/navBar";
+import { Container, Stack, Typography, Fade } from "@mui/material";
+import NavBar from "../common/navBar";
 import { BlackButton } from "../../utils/styled";
 export default function Home() {
   const { user } = useUser();
@@ -16,25 +16,29 @@ export default function Home() {
           spacing={2}
           height={"80vh"}
         >
+          <Fade in timeout={2000}>
+            <Typography
+              variant={"h2"}
+              sx={{
+                fontFamily: "Poppins",
+                fontWeight: 600,
+                textAlign: "center",
+              }}
+            >
+              {"Boost your productivity with one tool"}
+            </Typography>
+          </Fade>
           <Typography
-            variant={"h2"}
-            sx={{ fontFamily: "Poppins", fontWeight: 600 }}
-          >
-            {"Boost your productivity with one tool"}
-          </Typography>
-          <Typography
-            variant={"body"}
+            variant={"subtitle2"}
             sx={{
               color: "gray",
               fontFamily: "Poppins",
-              fontWeight: 500,
-              fontSize: "1.25em",
             }}
           >
-            Plan Organize for Free
+            {"plan organize for free"}
           </Typography>
           <BlackButton variant="contained" component={Link} to="/notes">
-            Get started
+            {"Get started"}
           </BlackButton>
         </Stack>
       </Container>
