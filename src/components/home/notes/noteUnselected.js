@@ -1,6 +1,6 @@
 import React from "react";
 import { Stack, Typography } from "@mui/material";
-import post from "../../../img/post-it.png";
+import { BlackButton } from "../../../utils/styled";
 
 export default function NoteUnselected() {
   return (
@@ -10,10 +10,13 @@ export default function NoteUnselected() {
       justifyContent={"center"}
       sx={{ width: "70%" }}
     >
-      <img src={post} alt="no-notes-present" style={{ width: "25%" }} />
-      <Typography sx={{ fontFamily: "Poppins", color: "gray", mt: 2 }}>
+      <Typography sx={{ fontFamily: "Poppins", mt: 2 }} variant={"h5"}>
         {"Select a note to continue"}
       </Typography>
+      <Typography variant="caption" sx={{ color: "gray" }}>
+        {"Nothing is currently selected. Please select a note to view."}
+      </Typography>
+      <BlackButton>{"Add a new Note"}</BlackButton>
     </Stack>
   );
 }

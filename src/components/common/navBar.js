@@ -26,7 +26,7 @@ export default function NavBar() {
         <Avatar
           onClick={() => console.log("hi")}
           src={(userInfo && userInfo.photoURL) || user.photoURL}
-          sx={{ ml: 1 }}
+          sx={{ ml: 1, border: "2px dashed black" }}
         />
       </>
     ) : (

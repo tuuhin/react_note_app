@@ -7,6 +7,10 @@ export const StyledLink = styled(Link)({
   fontSize: "0.8em",
   fontWeight: 600,
   color: "black",
+  fontFamily: "Poppins",
+  "&:hover": {
+    textDecoration: "underline",
+  },
 });
 
 export const Tag = styled("div")({

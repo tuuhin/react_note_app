@@ -13,11 +13,13 @@ export default function InvalidPage() {
         justifyContent: "center",
       }}
     >
-      <Typography variant="h1">!404!</Typography>
-      <Typography variant="caption">
-        {"This page don'\t exists.This route is a invalid one."}
+      <Typography variant="h1" sx={{ fontFamily: "Poppins" }}>
+        !404!
       </Typography>
-      <div style={{ height: 20 }}></div>
+      <Typography variant="caption" sx={{ fontFamily: "Poppins" }}>
+        {"This page don'\t exists."}
+      </Typography>
+      <div style={{ height: 20 }} />
       <StyledLink to="/">{"Click to return to home"}</StyledLink>
     </Container>
   );
