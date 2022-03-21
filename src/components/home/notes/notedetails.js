@@ -1,4 +1,3 @@
-import React from "react";
 import { Stack, Fade } from "@mui/material";
 import Editor from "../editor/editor";
 import NoteMetaData from "./noteMetaData";
@@ -6,6 +5,7 @@ import NoteUnselected from "./noteUnselected";
 import { useNoteDetailed } from "../../../context/useNoteDetails";
 import NoteNavBar from "./noteNavBar";
 import Loading from "./loading";
+
 export default function NoteDetails() {
   const { selected, currentNote, loading } = useNoteDetailed();
   return selected ? (

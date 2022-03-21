@@ -5,7 +5,6 @@ import {
   addDoc,
   setDoc,
   serverTimestamp,
-  updateDoc,
   query,
   orderBy,
 } from "firebase/firestore";
@@ -21,16 +20,26 @@ export const addUserToDb = async (user, name, userName) => {
 
 export const updateUser = async (user, name, userName, about, profile) => {
   let url;
-  if (profile) {
+  if (!!profile) {
     url = await addProfile(user, profile);
   }
-  await updateDoc(doc(db, "users", user.uid), {
-    name: name,
-    userName: userName,
-    about: about,
-    photoURL: url,
-    updatedAt: serverTimestamp(),
-  });
+  await setDoc(
+    doc(db, "users", user.uid),
+    url !== undefined
+      ? {
+          name: name,
+          userName: userName,
+          about: about,
+          photoURL: url,
+          updatedAt: serverTimestamp(),
+        }
+      : {
+          name: name,
+          userName: userName,
+          about: about,
+          updatedAt: serverTimestamp(),
+        }
+  );
 };
 
 export const addNoteToDb = async (user, heading, category, note, tags) => {
