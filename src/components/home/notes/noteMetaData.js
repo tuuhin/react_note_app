@@ -6,6 +6,7 @@ import {
   Chip,
   Popover,
   TextField,
+  Button,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { MdAdd } from "react-icons/md";
@@ -81,11 +82,12 @@ export default function NoteMetaData(props) {
       >
         <Stack direction="column" sx={{ pl: 1, pr: 1 }}>
           <TextField
-            variant="outlined"
+            variant="standard"
+            autoFocus
             value={newItem}
             onChange={(e) => setNewItem(e.target.value)}
           />
-          <BlackButton onClick={addNewTag}>{"Add"}</BlackButton>
+          <Button onClick={addNewTag}>{"Add"}</Button>
         </Stack>
       </Popover>
     </>

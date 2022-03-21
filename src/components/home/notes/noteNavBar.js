@@ -11,8 +11,11 @@ import { useState } from "react";
 import { Box } from "@mui/system";
 import { MdMoreVert, MdDeleteForever, MdUpdate } from "react-icons/md";
 import DateFormat from "../../../utils/dateFormat";
+import { useNoteDetailed } from "../../../context/useNoteDetails";
 export default function NoteNavBar(props) {
   const [anchor, setAnchor] = useState(null);
+  const { noteId } = useNoteDetailed();
+  console.log(noteId);
   const open = !!anchor;
   return (
     <Box sx={{ height: "64px" }}>
@@ -31,6 +34,9 @@ export default function NoteNavBar(props) {
               fontFamily: "Poppins",
               fontWeight: 500,
               textTransform: "capitalize",
+              textOverflow: "ellipsis",
+              overflow: "hidden",
+              whiteSpace: "now-wrap",
             }}
           >
             {props.heading}

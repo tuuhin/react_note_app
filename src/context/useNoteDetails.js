@@ -33,7 +33,15 @@ const NoteDetailsProvider = (props) => {
     }
   }, [user, noteId]);
 
-  const value = { selected, setSelected, currentNote, setNoteId, loading };
+  const value = {
+    selected,
+    setSelected,
+    currentNote,
+    setNoteId,
+    loading,
+
+    noteId,
+  };
   return (
     <NoteDetailsContext.Provider value={value}>
       {props.children}

@@ -1,11 +1,20 @@
-import { AppBar, Toolbar, Avatar } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Avatar,
+  Menu,
+  MenuItem,
+  ListItemText,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import { useUser } from "../../context/useUser";
 import { logOut } from "../../services/authservice";
-import { NavButtons, LogoLink } from "../../utils/styled";
+import { LogoLink } from "../../utils/styled";
+import { useState } from "react";
 
 export default function NavBar() {
   const { user, userInfo } = useUser();
+  const [anchor, setAnchor] = useState(null);
 
   const LogOut = async () => {
     try {
@@ -14,25 +23,7 @@ export default function NavBar() {
       console.warn(e);
     }
   };
-  const HelperButtons = () => {
-    return user ? (
-      <>
-        <NavButtons component={Link} to="/profile">
-          {"Profile"}
-        </NavButtons>
-        <NavButtons onClick={LogOut} component={Link} to="/login">
-          Logout
-        </NavButtons>
-        <Avatar
-          onClick={() => console.log("hi")}
-          src={(userInfo && userInfo.photoURL) || user.photoURL}
-          sx={{ ml: 1, border: "2px dashed gray" }}
-        />
-      </>
-    ) : (
-      <></>
-    );
-  };
+
   return (
     <AppBar position="static" color={"inherit"}>
       <Toolbar sx={{ display: "flex", flexDirection: "row" }}>
@@ -41,7 +32,28 @@ export default function NavBar() {
             {"afternotes"}
           </LogoLink>
         </div>
-        <HelperButtons />
+        <Menu
+          open={!!anchor}
+          anchorEl={anchor}
+          onClose={() => setAnchor(null)}
+          anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        >
+          <MenuItem component={Link} to="/profile">
+            <ListItemText>{"Profile"}</ListItemText>
+          </MenuItem>
+          <MenuItem onClick={LogOut} component={Link} to="/login">
+            <ListItemText sx={{ color: "red" }}>{"Logout"}</ListItemText>
+          </MenuItem>
+        </Menu>
+        <Avatar
+          onClick={(e) => setAnchor(e.currentTarget)}
+          src={(userInfo && userInfo.photoURL) || user.photoURL}
+          sx={{
+            ml: 1,
+            border: "2px dashed gray",
+            "&:hover": { cursor: "pointer" },
+          }}
+        />
       </Toolbar>
     </AppBar>
   );

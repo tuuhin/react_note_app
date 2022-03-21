@@ -14,7 +14,6 @@ export default function NoteContainer() {
       sx={{
         padding: "0px 2px",
         borderRight: "2px solid whitesmoke",
-        width: "25%",
         mt: 2,
       }}
     >

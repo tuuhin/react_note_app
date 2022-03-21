@@ -11,7 +11,15 @@ export default function NotesSimplified(props) {
         <Typography variant={"caption"}>
           <DateFormat at={props.createdAt} />
         </Typography>
-        <Typography variant="h6" sx={{ textTransform: "capitalize" }}>
+        <Typography
+          variant="h6"
+          sx={{
+            textTransform: "capitalize",
+            textOverflow: "ellipsis",
+            overflow: "hidden",
+            whiteSpace: "now-wrap",
+          }}
+        >
           {props.heading}
         </Typography>
         <Typography variant="body2">{`Category: ${props.category}`}</Typography>

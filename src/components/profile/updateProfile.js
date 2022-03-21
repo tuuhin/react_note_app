@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import NavBar from "../common/navBar";
-import { Box } from "@mui/system";
 import {
   Container,
   Avatar,
@@ -20,6 +19,7 @@ import { MdCamera } from "react-icons/md";
 import { useFilePicker } from "use-file-picker";
 import { useUser } from "../../context/useUser";
 import { BlackButton } from "../../utils/styled";
+import { dateFormatWithTime } from "../../utils/dateFormat";
 import { updateUser } from "../../services/firestore";
 
 export default function UpdateProfile() {
@@ -84,7 +84,7 @@ export default function UpdateProfile() {
       >
         <Paper
           elevation={4}
-          sx={{ width: "100%", p: 1 }}
+          sx={{ width: "100%", p: 2 }}
           component="form"
           noValidate
           onSubmit={update}
@@ -193,6 +193,18 @@ export default function UpdateProfile() {
               </Grid>
             </Grid>
           </Grid>
+          <Typography
+            variant="caption"
+            sx={{
+              textAlign: "center",
+              fontWeight: 600,
+              color: "gray",
+              fontStyle: "italic",
+              display: "block",
+            }}
+          >
+            {`updated ${dateFormatWithTime(userInfo.updatedAt)}...`}
+          </Typography>
         </Paper>
         <Snackbar open={isCollpased}>
           <Alert severity={alertType}>{alert}</Alert>

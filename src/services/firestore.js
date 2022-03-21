@@ -7,6 +7,8 @@ import {
   serverTimestamp,
   query,
   orderBy,
+  deleteDoc,
+  updateDoc,
 } from "firebase/firestore";
 import { addProfile } from "./firebaseStorage";
 const db = getFirestore();
@@ -42,13 +44,21 @@ export const updateUser = async (user, name, userName, about, profile) => {
   );
 };
 
+export const updateNote = async (user, noteId, note) => {
+  await updateDoc(doc(db, "users", user.uid, "notes", noteId), note);
+};
+
+export const removeNote = async (user, noteId, noteShId) => {
+  await deleteDoc(doc(db, "users", user.uid, "notes", noteId));
+  await deleteDoc(doc(db, "users", user.uid, "notes", noteShId));
+};
+
 export const addNoteToDb = async (user, heading, category, note, tags) => {
-  const formatTags = tags.split(",").map((tag) => tag.trim());
   const doc = await addDoc(collection(db, "users", user.uid, "notes"), {
     heading: heading,
     note: note,
     category: category,
-    tags: formatTags,
+    tags: tags,
     createdAt: serverTimestamp(),
   });
   await addDoc(collection(db, "users", user.uid, "notes_sh"), {

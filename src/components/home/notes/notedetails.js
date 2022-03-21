@@ -8,6 +8,7 @@ import Loading from "./loading";
 
 export default function NoteDetails() {
   const { selected, currentNote, loading } = useNoteDetailed();
+
   return selected ? (
     loading ? (
       <Fade in timeout={1200}>
@@ -19,7 +20,6 @@ export default function NoteDetails() {
             height: "calc( 100vh - 80px )",
             overflowY: "scroll",
             flexGrow: 1,
-            width: "80%",
           }}
         >
           <NoteNavBar
