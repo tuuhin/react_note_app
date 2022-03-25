@@ -1,6 +1,6 @@
 import React from "react";
 import { Stack, Typography } from "@mui/material";
-import { BlackButton } from "../../../utils/styled";
+import { BlackButton } from "../../common/styled";
 
 export default function NoteUnselected() {
   return (

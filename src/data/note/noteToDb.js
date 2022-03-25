@@ -14,10 +14,10 @@ import { Box } from "@mui/system";
 import Editor from "../../components/home/editor/editor";
 import { useModal } from "../../context/useNoteModal";
 import { useUser } from "../../context/useUser";
-import { addNoteToDb } from "../../services/firestore";
+import { addNoteToDb } from "../services/firestore";
 import { MdAdd } from "react-icons/md";
-import { BlackButton } from "../../utils/styled";
-export default function AddNoteToDb() {
+import { BlackButton } from "../../components/common/styled";
+export default function NoteToDb() {
   const { setModal } = useModal();
   const { user } = useUser();
   const [anchor, setAnchor] = useState(null);

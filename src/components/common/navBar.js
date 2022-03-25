@@ -8,8 +8,8 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useUser } from "../../context/useUser";
-import { logOut } from "../../services/authservice";
-import { LogoLink } from "../../utils/styled";
+import { logOut } from "../../data/services/authservice";
+import { LogoLink } from "./styled";
 import { useState } from "react";
 
 export default function NavBar() {

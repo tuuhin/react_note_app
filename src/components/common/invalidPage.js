@@ -1,6 +1,6 @@
 import React from "react";
 import { Typography, Container } from "@mui/material";
-import { StyledLink } from "../../utils/styled";
+import { StyledLink } from "./styled";
 export default function InvalidPage() {
   return (
     <Container

@@ -1,5 +1,5 @@
 import { Typography, Stack } from "@mui/material";
-import { StyledLink } from "../../../utils/styled";
+import { StyledLink } from "../common/styled";
 export const SignUpMetaData = () => {
   return (
     <>

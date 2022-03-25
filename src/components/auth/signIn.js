@@ -11,12 +11,12 @@ import {
   Divider,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { BlackButton } from "../../utils/styled";
+import { BlackButton } from "../common/styled";
 import { useState } from "react";
-import { signIn } from "../../services/authservice";
+import { signIn } from "../../data/services/authservice";
 import { Navigate } from "react-router-dom";
 import { useUser } from "../../context/useUser";
-import { SignInMeta } from "./meta/headers";
+import { SignInMeta } from "./headers";
 import image from "../../img/prof.jpg";
 import SocialAuth from "./socialAuth";
 

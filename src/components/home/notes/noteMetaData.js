@@ -12,7 +12,7 @@ import { Box } from "@mui/system";
 import { MdAdd } from "react-icons/md";
 import { useUser } from "../../../context/useUser";
 import DateFormat from "../../../utils/dateFormat";
-import { MutedText, BlackButton } from "../../../utils/styled";
+import { MutedText, BlackButton } from "../../common/styled";
 
 export default function NoteMetaData(props) {
   const { user, userInfo } = useUser();

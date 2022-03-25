@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 
-import { auth } from "../services/authservice";
-import { userInfoRef } from "../services/firestore";
+import { auth } from "../data/services/authservice";
+import { userInfoRef } from "../data/services/firestore";
 import { onSnapshot } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -26,7 +26,7 @@ const Auth = (props) => {
   }, [user]);
 
   const value = { user, userInfo };
-    console.log(user);
+  console.log(user);
   return (
     <AuthContext.Provider value={value}>{props.children}</AuthContext.Provider>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import "./services/firebase";
+import "./data/services/firebase";
 import App from "./App";
 
 ReactDOM.render(

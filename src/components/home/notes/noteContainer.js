@@ -2,7 +2,7 @@ import React from "react";
 import { Box } from "@mui/system";
 import { CircularProgress, Stack, Typography } from "@mui/material";
 import NotesSimplified from "./notesSimplified";
-import AddNoteDialog from "../../../data/addNote/addNoteDialog";
+import NoteDialog from "../../../data/note/noteDialog";
 import NoteModal from "../../../context/useNoteModal";
 import { useNotes } from "../../../context/useNotes";
 import img from "../../../img/notes.png";
@@ -21,7 +21,7 @@ export default function NoteContainer() {
         {"My Notes"}
       </Typography>
       <NoteModal>
-        <AddNoteDialog />
+        <NoteDialog />
       </NoteModal>
       <Stack
         direction={"column"}

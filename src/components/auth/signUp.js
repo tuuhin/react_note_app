@@ -10,13 +10,13 @@ import {
   InputLabel,
   Grid,
 } from "@mui/material";
-import { BlackButton } from "../../utils/styled";
+import { BlackButton } from "../common/styled";
 import { Box } from "@mui/system";
 import { useState } from "react";
-import { signUp } from "../../services/authservice";
+import { signUp } from "../../data/services/authservice";
 import { Navigate } from "react-router-dom";
 import { useUser } from "../../context/useUser";
-import { SignUpMetaData } from "./meta/headers";
+import { SignUpMetaData } from "./headers";
 import SocialAuth from "./socialAuth";
 import { validateEmail } from "../../utils/validators";
 import image from "../../img/auth2.jfif";
@@ -192,7 +192,7 @@ export default function SignUp() {
                   disabled={loading}
                   size="large"
                 >
-                  {!loading ? "Resister " : "Authenticating..."}
+                  {!loading ? "Register " : "Authenticating..."}
                 </BlackButton>
               </Grid>
             </Grid>

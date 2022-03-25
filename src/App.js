@@ -7,10 +7,11 @@ import UpdateProfile from "./components/profile/updateProfile";
 import Auth from "./context/useUser";
 import { IntlProvider } from "react-intl";
 import InvalidPage from "./components/common/invalidPage";
-
+import { CssBaseline } from "@mui/material";
 const App = () => {
   return (
     <Auth>
+      <CssBaseline />
       <IntlProvider locale={"en-US"}>
         <BrowserRouter>
           <Routes>

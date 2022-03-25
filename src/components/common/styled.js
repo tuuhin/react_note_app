@@ -8,7 +8,9 @@ export const StyledLink = styled(Link)({
   fontWeight: 600,
   color: "black",
   fontFamily: "Poppins",
+  transition: "200ms ease-in",
   "&:hover": {
+    transform: "translateX(10px) scale(1.2)",
     textDecoration: "underline",
   },
 });
@@ -33,19 +35,21 @@ export const MutedText = styled("p")({
 export const BlackButton = styled(Button)({
   backgroundColor: "black",
   color: "white",
-  fontSize: "1.2em",
+  fontSize: "1.1em",
   padding: "8px 25px ",
   textDecoration: "none",
   fontFamily: "Poppins",
   borderRadius: "5px",
   textTransform: "none",
-  margin: "10px 0px",
+  margin: "8px 0px",
   border: "1px solid transparent",
-  boxShadow: "0px 4px 10px 3px rgba(80, 80, 80, 0.3)",
+  boxShadow: "0px 2px 5px 2px rgba(80, 80, 80, 0.3)",
+  transition: "200ms ease-in-out",
   "&:hover": {
     color: "black",
     backgroundColor: "transparent",
-    border: "1px solid rgba(80, 80, 80, 0.9)",
+    border: "1px solid rgba(100, 100, 100, 0.7)",
+    boxShadow: "0px 5px 12px 2px rgba(80, 80, 80, 0.5)",
   },
 });
 

@@ -1,10 +1,10 @@
 import React from "react";
 import { Dialog } from "@mui/material";
 import { MdAdd } from "react-icons/md";
-import AddNoteToDb from "./addNoteToDb";
+import NoteToDb from "./noteToDb";
 import { useModal } from "../../context/useNoteModal";
-import { AddNoteButton } from "../../utils/styled";
-export default function AddNoteDialog() {
+import { AddNoteButton } from "../../components/common/styled";
+export default function NoteDialog() {
   const { modal, setModal } = useModal();
 
   return (
@@ -18,7 +18,7 @@ export default function AddNoteDialog() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <AddNoteToDb />
+        <NoteToDb />
       </Dialog>
     </>
   );

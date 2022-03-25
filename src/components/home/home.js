@@ -2,7 +2,7 @@ import { Navigate, Link } from "react-router-dom";
 import { useUser } from "../../context/useUser";
 import { Container, Stack, Typography, Fade } from "@mui/material";
 import NavBar from "../common/navBar";
-import { BlackButton } from "../../utils/styled";
+import { BlackButton } from "../common/styled";
 export default function Home() {
   const { user } = useUser();
   return user ? (

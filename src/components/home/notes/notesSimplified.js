@@ -1,7 +1,7 @@
 import { Typography, Slide } from "@mui/material";
 import { useNoteDetailed } from "../../../context/useNoteDetails";
 import DateFormat from "../../../utils/dateFormat";
-import { NoteHolderPaper } from "../../../utils/styled";
+import { NoteHolderPaper } from "../../common/styled";
 
 export default function NotesSimplified(props) {
   const { setNoteId } = useNoteDetailed();

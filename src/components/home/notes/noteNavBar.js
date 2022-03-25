@@ -25,6 +25,9 @@ export default function NoteNavBar(props) {
           flexDirection: "row",
           borderBottom: "2px solid whitesmoke",
           flexGrow: 1,
+          textOverflow: "ellipsis",
+          overflow: "hidden",
+          whiteSpace: "now-wrap",
         }}
       >
         <Stack direction="column" sx={{ flexGrow: 1 }}>
@@ -34,9 +37,6 @@ export default function NoteNavBar(props) {
               fontFamily: "Poppins",
               fontWeight: 500,
               textTransform: "capitalize",
-              textOverflow: "ellipsis",
-              overflow: "hidden",
-              whiteSpace: "now-wrap",
             }}
           >
             {props.heading}

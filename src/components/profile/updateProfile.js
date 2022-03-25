@@ -18,9 +18,9 @@ import {
 import { MdCamera } from "react-icons/md";
 import { useFilePicker } from "use-file-picker";
 import { useUser } from "../../context/useUser";
-import { BlackButton } from "../../utils/styled";
+import { BlackButton } from "../common/styled";
 import { dateFormatWithTime } from "../../utils/dateFormat";
-import { updateUser } from "../../services/firestore";
+import { updateUser } from "../../data/services/firestore";
 
 export default function UpdateProfile() {
   const { user, userInfo } = useUser();
