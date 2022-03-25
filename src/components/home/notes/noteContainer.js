@@ -5,7 +5,7 @@ import NotesSimplified from "./notesSimplified";
 import NoteDialog from "../../../data/note/noteDialog";
 import NoteModal from "../../../context/useNoteModal";
 import { useNotes } from "../../../context/useNotes";
-import img from "../../../img/notes.png";
+import img from "../../img/notes.png";
 
 export default function NoteContainer() {
   const { notes, loading } = useNotes();

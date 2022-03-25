@@ -17,7 +17,7 @@ import { signIn } from "../../data/services/authservice";
 import { Navigate } from "react-router-dom";
 import { useUser } from "../../context/useUser";
 import { SignInMeta } from "./headers";
-import image from "../../img/prof.jpg";
+import image from "../img/prof.jpg";
 import SocialAuth from "./socialAuth";
 
 export default function SignUp() {

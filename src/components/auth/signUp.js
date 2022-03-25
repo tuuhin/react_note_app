@@ -19,7 +19,7 @@ import { useUser } from "../../context/useUser";
 import { SignUpMetaData } from "./headers";
 import SocialAuth from "./socialAuth";
 import { validateEmail } from "../../utils/validators";
-import image from "../../img/auth2.jfif";
+import image from "../img/auth2.jfif";
 
 export default function SignUp() {
   const { user } = useUser();
