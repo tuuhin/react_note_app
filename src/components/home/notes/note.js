@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { useUser } from "../../../context/useUser";
 import NoteContainer from "./noteContainer";
-import { Stack, Grid } from "@mui/material";
+import { Grid, Divider } from "@mui/material";
 import NoteDetails from "./noteDetails";
 import NavBar from "../../common/navBar";
 import NotesProvider from "../../../context/useNotes";
@@ -15,10 +15,13 @@ export default function Home() {
       <NavBar />
       <NoteDetailsProvider>
         <Grid container>
-          <Grid item lg={3} sm={5} xl={2} xs={12}>
+          <Grid item lg={3} sm={5} xl={2}>
             <NoteContainer />
           </Grid>
-          <Grid item lg={9} sm={7} xl={10} xs={12}>
+          <Grid item>
+            <Divider orientation="vertical" variant="middle" sx={{ ml: 0.5 }} />
+          </Grid>
+          <Grid item lg={8} sm={6} xl={9}>
             <NoteDetails />
           </Grid>
         </Grid>

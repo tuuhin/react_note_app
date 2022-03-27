@@ -1,28 +1,35 @@
 import React from "react";
 import { Box } from "@mui/system";
-import { CircularProgress, Stack, Typography } from "@mui/material";
+import {
+  CircularProgress,
+  Stack,
+  Typography,
+  Divider,
+  ListItem,
+  ListItemAvatar,
+  ListItemButton,
+  ListItemText,
+} from "@mui/material";
 import NotesSimplified from "./notesSimplified";
-import NoteDialog from "../../../data/note/noteDialog";
-import NoteModal from "../../../context/useNoteModal";
 import { useNotes } from "../../../context/useNotes";
 import img from "../../img/notes.png";
+import { IoAddOutline } from "react-icons/io5";
 
 export default function NoteContainer() {
   const { notes, loading } = useNotes();
+  const onTap = () => {};
   return (
-    <Box
-      sx={{
-        padding: "0px 2px",
-        borderRight: "2px solid whitesmoke",
-        mt: 2,
-      }}
-    >
-      <Typography variant="h5" sx={{ fontFamily: "Poppins", mt: 1, ml: 2 }}>
-        {"My Notes"}
-      </Typography>
-      <NoteModal>
-        <NoteDialog />
-      </NoteModal>
+    <Box sx={{ mt: 2 }}>
+      <ListItemButton onClick={onTap}>
+        <ListItemAvatar>
+          <IoAddOutline />
+        </ListItemAvatar>
+        <ListItemText primary={"My notes"} secondary={"Add a new note"} />
+        <Typography variant="body2" sx={{ color: "gray" }}>
+          {notes.length}
+        </Typography>
+      </ListItemButton>
+      <Divider sx={{ mb: 1 }} variant="middle" />
       <Stack
         direction={"column"}
         alignItems={"center"}
@@ -31,8 +38,7 @@ export default function NoteContainer() {
         sx={{
           overflowY: "auto",
           overflowX: "hidden",
-          height: "70vh",
-          p: 0,
+          height: "75vh",
         }}
       >
         {loading ? (
@@ -41,9 +47,9 @@ export default function NoteContainer() {
               <NotesSimplified
                 key={index}
                 heading={note.heading}
-                category={note.category}
+                tags={note.tags}
                 createdAt={note.createdAt}
-                noteId={note.reference}
+                id={note.id}
               />
             ))
           ) : (
@@ -53,7 +59,7 @@ export default function NoteContainer() {
               justifyContent={"center"}
               sx={{ height: "100%" }}
             >
-              <img src={img} alt="" style={{ width: "50%" }} />
+              <img src={img} alt="" style={{ width: "80%" }} />
               <Typography variant={"caption"}>
                 {"You don't have any notes"}
                 {"Try adding some"}

@@ -1,10 +1,11 @@
-import { Stack, Fade } from "@mui/material";
+import { Stack, Fade, Typography } from "@mui/material";
 import Editor from "../editor/editor";
 import NoteMetaData from "./noteMetaData";
-import NoteUnselected from "./noteUnselected";
 import { useNoteDetailed } from "../../../context/useNoteDetails";
 import NoteNavBar from "./noteNavBar";
 import Loading from "./loading";
+import { BlackButton } from "../../common/styled";
+import { useEffect } from "react";
 
 export default function NoteDetails() {
   const { selected, currentNote, loading } = useNoteDetailed();
@@ -14,13 +15,7 @@ export default function NoteDetails() {
       <Fade in timeout={1200}>
         <Stack
           direction={"column"}
-          sx={{
-            ml: 1,
-            pt: 1,
-            height: "calc( 100vh - 80px )",
-            overflowY: "scroll",
-            flexGrow: 1,
-          }}
+          sx={{ ml: 1, height: "80vh", overflowX: "hidden" }}
         >
           <NoteNavBar
             heading={currentNote.heading}
@@ -34,7 +29,7 @@ export default function NoteDetails() {
 
           <Editor
             value={currentNote.note}
-            style={{ margin: "0px 10px" }}
+            style={{ margin: "0px 10px", overflowY: "scroll" }}
             onChange={(e) => {
               console.log(e);
             }}
@@ -45,6 +40,14 @@ export default function NoteDetails() {
       <Loading />
     )
   ) : (
-    <NoteUnselected />
+    <Stack direction={"column"} alignItems={"center"} justifyContent={"center"}>
+      <Typography sx={{ fontFamily: "Poppins", mt: 2 }} variant={"h5"}>
+        {"Select a note to continue"}
+      </Typography>
+      <Typography variant="caption" sx={{ color: "gray" }}>
+        {"Nothing is currently selected. Please select a note to view."}
+      </Typography>
+      <BlackButton>{"Add a new Note"}</BlackButton>
+    </Stack>
   );
 }
