@@ -1,4 +1,4 @@
-import { Typography, Stack, Chip, Grid } from "@mui/material";
+import { Typography, Stack, Chip } from "@mui/material";
 import { useNoteDetailed } from "../../../context/useNoteDetails";
 import DateFormat from "../../../utils/dateFormat";
 import { NoteHolderPaper } from "../../common/styled";

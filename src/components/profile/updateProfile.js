@@ -184,17 +184,19 @@ export default function UpdateProfile() {
               </BlackButton>
             </Grid>
           </Grid>
-          <Typography
-            variant="caption"
-            sx={{
-              textAlign: "center",
-              color: "rgba(80,80,80,0.8)",
-              fontStyle: "italic",
-              display: "block",
-            }}
-          >
-            {`updated ${dateFormatWithTime(userInfo.updatedAt)}...`}
-          </Typography>
+          {userInfo && (
+            <Typography
+              variant="caption"
+              sx={{
+                textAlign: "center",
+                color: "rgba(80,80,80,0.8)",
+                fontStyle: "italic",
+                display: "block",
+              }}
+            >
+              {`updated ${dateFormatWithTime(userInfo.updatedAt)}...`}
+            </Typography>
+          )}
         </Paper>
         <Snackbar open={isCollpased}>
           <Alert severity={alertType}>{alert}</Alert>
