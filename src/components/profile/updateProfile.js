@@ -74,131 +74,121 @@ export default function UpdateProfile() {
       <NavBar />
       <Container
         maxWidth="sm"
+        component="form"
+        noValidate
+        onSubmit={update}
         sx={{
           display: "flex",
-          height: "90vh",
+
           justifyContent: "center",
           alignItems: "center",
           flexDirection: "column",
         }}
       >
-        <Paper
-          elevation={4}
-          sx={{ width: "100%", p: 2 }}
-          component="form"
-          noValidate
-          onSubmit={update}
+        <Stack
+          direction={"column"}
+          alignItems={"center"}
+          spacing={1}
+          justifyContent={"flex-start"}
         >
-          <Grid container>
-            <Grid container spacing={2} sx={{ mt: 1 }}>
-              <Grid item sm={12} lg={12}>
-                <Stack
-                  direction={"column"}
-                  alignItems={"center"}
-                  spacing={5}
-                  justifyContent={"flex-start"}
+          <Badge
+            overlap="circular"
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            badgeContent={
+              <Avatar>
+                <IconButton
+                  onClick={openFileSelector}
+                  sx={{ p: 0, border: "12px solid white", m: 0 }}
                 >
-                  <Badge
-                    overlap="circular"
-                    anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-                    badgeContent={
-                      <Avatar>
-                        <IconButton
-                          onClick={openFileSelector}
-                          sx={{ p: 0, border: "12px solid white", m: 0 }}
-                        >
-                          <MdCamera />
-                        </IconButton>
-                      </Avatar>
-                    }
-                  >
-                    <Avatar
-                      sx={{ top: 4, width: "128px", height: "128px" }}
-                      src={
-                        (filesContent[0] && filesContent[0].content) ||
-                        (userInfo && userInfo.photoURL) ||
-                        user.photoURL
-                      }
-                    />
-                  </Badge>
-                  <Typography
-                    sx={{ fontSize: "1.2em", mt: 0 }}
-                    variant={"subtitle1"}
-                  >
-                    {"Select your image"}
-                  </Typography>
-                </Stack>
-              </Grid>
-              <Grid item sm={6} lg={6} xs={12}>
-                <InputLabel
-                  htmlFor="name"
-                  required
-                  error={nameError}
-                  sx={{ fontFamily: "Poppins" }}
-                >
-                  {"Name"}
-                </InputLabel>
-                <TextField
-                  fullWidth
-                  type="text"
-                  id="name"
-                  error={nameError}
-                  name="name"
-                  value={name}
-                  onFocus={() => setNameError(false)}
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </Grid>
-              <Grid item sm={6} lg={6} xs={12}>
-                <InputLabel
-                  htmlFor="username"
-                  required
-                  error={userNameError}
-                  sx={{ fontFamily: "Poppins" }}
-                >
-                  {"Username"}
-                </InputLabel>
-                <TextField
-                  fullWidth
-                  error={userNameError}
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={userName}
-                  onFocus={() => setUserNameError(false)}
-                  onChange={(e) => setUserName(e.target.value)}
-                />
-              </Grid>
-              <Grid item sm={12} lg={12} xs={12}>
-                <InputLabel htmlFor="username" sx={{ fontFamily: "Poppins" }}>
-                  {"About"}
-                </InputLabel>
-                <TextField
-                  fullWidth
-                  multiline
-                  maxRows={3}
-                  value={about}
-                  onChange={(e) => setAbout(e.target.value)}
-                />
-              </Grid>
-              <Grid item sm={12} lg={12} xs={12}>
-                <BlackButton
-                  type="submit"
-                  variant="contained"
-                  fullWidth
-                  disabled={loading}
-                >
-                  {loading ? "Updating..." : "Update"}
-                </BlackButton>
-              </Grid>
+                  <MdCamera />
+                </IconButton>
+              </Avatar>
+            }
+          >
+            <Avatar
+              sx={{ top: 4, width: "128px", height: "128px" }}
+              src={
+                (filesContent[0] && filesContent[0].content) ||
+                (userInfo && userInfo.photoURL) ||
+                user.photoURL
+              }
+            />
+          </Badge>
+          <Typography sx={{ fontSize: "1.2em", mt: 0 }} variant={"body2"}>
+            {"Select your image"}
+          </Typography>
+        </Stack>
+        <div style={{ height: 10 }} />
+        <Paper elevation={4} sx={{ width: "100%", p: 2 }}>
+          <Grid container spacing={2}>
+            <Grid item sm={6} lg={6} xs={12}>
+              <InputLabel
+                htmlFor="name"
+                required
+                error={nameError}
+                sx={{ fontFamily: "Poppins" }}
+              >
+                {"Name"}
+              </InputLabel>
+              <TextField
+                fullWidth
+                type="text"
+                id="name"
+                error={nameError}
+                name="name"
+                value={name}
+                onFocus={() => setNameError(false)}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </Grid>
+            <Grid item sm={6} lg={6} xs={12}>
+              <InputLabel
+                htmlFor="username"
+                required
+                error={userNameError}
+                sx={{ fontFamily: "Poppins" }}
+              >
+                {"Username"}
+              </InputLabel>
+              <TextField
+                fullWidth
+                error={userNameError}
+                type="text"
+                id="name"
+                name="name"
+                value={userName}
+                onFocus={() => setUserNameError(false)}
+                onChange={(e) => setUserName(e.target.value)}
+              />
+            </Grid>
+            <Grid item sm={12} lg={12} xs={12}>
+              <InputLabel htmlFor="username" sx={{ fontFamily: "Poppins" }}>
+                {"About"}
+              </InputLabel>
+              <TextField
+                fullWidth
+                multiline
+                maxRows={3}
+                value={about}
+                onChange={(e) => setAbout(e.target.value)}
+              />
+            </Grid>
+            <Grid item sm={12} lg={12} xs={12}>
+              <BlackButton
+                type="submit"
+                variant="contained"
+                fullWidth
+                disabled={loading}
+              >
+                {loading ? "Updating..." : "Update"}
+              </BlackButton>
             </Grid>
           </Grid>
           <Typography
             variant="caption"
             sx={{
               textAlign: "center",
-              fontWeight: 600,
-              color: "gray",
+              color: "rgba(80,80,80,0.8)",
               fontStyle: "italic",
               display: "block",
             }}

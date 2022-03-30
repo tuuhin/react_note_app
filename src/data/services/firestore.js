@@ -48,9 +48,8 @@ export const updateNote = async (user, noteId, note) => {
   await updateDoc(doc(db, "users", user.uid, "notes", noteId), note);
 };
 
-export const removeNote = async (user, noteId, noteShId) => {
+export const removeNote = async (user, noteId) => {
   await deleteDoc(doc(db, "users", user.uid, "notes", noteId));
-  await deleteDoc(doc(db, "users", user.uid, "notes", noteShId));
 };
 
 export const addNoteToDb = async (user, heading, category, note, tags) => {
@@ -71,7 +70,7 @@ export const addNoteToDb = async (user, heading, category, note, tags) => {
 
 export const notesRef = (user) =>
   query(
-    collection(db, "users", user.uid, "notes_sh"),
+    collection(db, "users", user.uid, "notes"),
     orderBy("createdAt", "desc")
   );
 export const noteDetailsRef = (user, noteId) =>

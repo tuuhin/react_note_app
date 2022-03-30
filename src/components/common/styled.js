@@ -35,7 +35,7 @@ export const MutedText = styled("p")({
 export const BlackButton = styled(Button)({
   backgroundColor: "black",
   color: "white",
-  fontSize: "1.1em",
+  fontSize: "1.15em",
   padding: "8px 25px ",
   textDecoration: "none",
   fontFamily: "Poppins",
@@ -57,7 +57,8 @@ export const LogoLink = styled(Button)({
   textDecoration: "none",
   fontSize: "1.2em",
   color: "black",
-  fontWeight: 500,
+  fontWeight: 600,
+  letterSpacing: 1,
 });
 
 export const NavButtons = styled(Button)({
@@ -96,12 +97,16 @@ export const NoteHolderPaper = styled(Paper)({
   color: "gray",
   boxShadow: "none",
   margin: "0px",
-  width: "85%",
+  width: "95%",
   padding: "10px",
   borderRadius: 8,
+  transition: "200ms ease-in-out",
   "&:hover": {
     color: "black",
     cursor: "pointer",
     backgroundColor: "#e8e8e8",
+    borderRadius: 4,
+    // border: "1px solid rgba(100, 100, 100, 0.7)",
+    boxShadow: "0px 5px 12px 2px rgba(80, 80, 80, 0.5)",
   },
 });

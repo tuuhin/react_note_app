@@ -5,14 +5,14 @@ import { createEditor } from "slate";
 import { Slate, withReact } from "slate-react";
 import { withHistory } from "slate-history";
 import { useMemo } from "react";
+import PropTypes from "prop-types";
+
+const withInlines = (editor) => {
+  const { isInline } = editor;
+  editor.isInline = (element) => element.type === "link" || isInline(element);
+  return editor;
+};
 export default function Editor(props) {
-  const withInlines = (editor) => {
-    const { isInline } = editor;
-
-    editor.isInline = (element) => element.type == "link" || isInline(element);
-
-    return editor;
-  };
   const editor = useMemo(
     () => withInlines(withHistory(withReact(createEditor()))),
     []
@@ -29,3 +29,8 @@ export default function Editor(props) {
     </Slate>
   );
 }
+
+Editor.prototype = {
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.any.isRequired,
+};

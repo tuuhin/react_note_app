@@ -41,8 +41,13 @@ export default function NavBar() {
           <MenuItem component={Link} to="/profile">
             <ListItemText>{"Profile"}</ListItemText>
           </MenuItem>
-          <MenuItem onClick={LogOut} component={Link} to="/login">
-            <ListItemText sx={{ color: "red" }}>{"Logout"}</ListItemText>
+          <MenuItem
+            onClick={LogOut}
+            component={Link}
+            to="/login"
+            color={"error"}
+          >
+            <ListItemText>{"Logout"}</ListItemText>
           </MenuItem>
         </Menu>
         <Avatar

@@ -12,18 +12,19 @@ import {
 import { MdAdd } from "react-icons/md";
 import { useUser } from "../../../context/useUser";
 import DateFormat from "../../../utils/dateFormat";
+import { useCurrentNote } from "../../../context/useCurrentNote";
 
 export default function NoteMetaData(props) {
   const { user, userInfo } = useUser();
   const [anchor, setAnchor] = useState(null);
-  const [tags, setTags] = useState([]);
+  const { tags, setTags } = useCurrentNote();
   const [newItem, setNewItem] = useState("");
   const open = !!anchor;
 
   useEffect(() => {
     console.log("useEffect ran!!");
     setTags(props.tags);
-  }, [props.tags]);
+  }, [props.tags, setTags]);
 
   const addNewTag = () => {
     if (!newItem) return;

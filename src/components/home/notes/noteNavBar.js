@@ -12,10 +12,31 @@ import { Box } from "@mui/system";
 import { MdMoreVert, MdDeleteForever, MdUpdate } from "react-icons/md";
 import DateFormat from "../../../utils/dateFormat";
 import { useNoteDetailed } from "../../../context/useNoteDetails";
+import { useCurrentNote } from "../../../context/useCurrentNote";
+import { removeNote } from "../../../data/services/firestore";
+import { useUser } from "../../../context/useUser";
+
 export default function NoteNavBar(props) {
   const [anchor, setAnchor] = useState(null);
-  const { noteId } = useNoteDetailed();
-  console.log(noteId);
+  const { noteId, setSelected } = useNoteDetailed();
+  const { tags, currentNote } = useCurrentNote();
+  const { user } = useUser();
+
+  const deleteNote = async () => {
+    try {
+      await removeNote(user, noteId);
+      setSelected(false);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const updateNote = () => {
+    try {
+    } catch (e) {
+      console.log(e);
+    }
+    console.log(noteId, tags);
+  };
   const open = !!anchor;
   return (
     <Box sx={{ height: "64px" }}>
@@ -62,6 +83,7 @@ export default function NoteNavBar(props) {
         >
           <Stack direction={"column"} sx={{ p: 1 }}>
             <Button
+              onClick={updateNote}
               color={"success"}
               sx={{ fontWeight: 600 }}
               variant={"text"}
@@ -71,6 +93,7 @@ export default function NoteNavBar(props) {
             </Button>
             <Divider />
             <Button
+              onClick={deleteNote}
               color={"error"}
               variant="text"
               fullWidth

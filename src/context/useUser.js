@@ -18,7 +18,6 @@ const Auth = (props) => {
   useEffect(() => {
     if (user != null) {
       const cleanUp = onSnapshot(userInfoRef(user), (snapshot) => {
-        console.log(snapshot.data());
         setUserInfo(snapshot.data());
       });
       return cleanUp;

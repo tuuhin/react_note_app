@@ -1,4 +1,4 @@
-import { Typography, Stack, Chip } from "@mui/material";
+import { Typography, Stack, Chip, Grid } from "@mui/material";
 import { useNoteDetailed } from "../../../context/useNoteDetails";
 import DateFormat from "../../../utils/dateFormat";
 import { NoteHolderPaper } from "../../common/styled";
@@ -26,24 +26,20 @@ export default function NotesSimplified(props) {
       >
         {props.heading}
       </Typography>
-      <Stack direction={"row"} sx={{ flexWrap: "wrap" }} spacing={0.5}>
-        {props.tags.length <= 3 ? (
-          <>
-            {props.tags.map((e, i) => (
-              <Chip sx={{ borderRadius: 1, p: 0.2 }} key={i} label={e} />
-            ))}
-          </>
-        ) : (
-          <>
-            {props.tags.slice(0, 3).map((e, i) => (
-              <Chip sx={{ borderRadius: 1, p: 0.2 }} key={i} label={e} />
-            ))}
-            <Chip
-              sx={{ borderRadius: 1, p: 0.2 }}
-              label={`+${props.tags.length - 3} more`}
-            />
-          </>
-        )}
+      <Stack direction={"row"} sx={{ flexWrap: "wrap", gap: 0.5 }}>
+        {props.tags.map((e, i) => (
+          <Chip
+            sx={{
+              borderRadius: 2,
+              p: 0.2,
+              textOverflow: "ellipsis",
+              overflow: "hidden",
+              whiteSpace: "now-wrap",
+            }}
+            key={i}
+            label={e}
+          />
+        ))}
       </Stack>
     </NoteHolderPaper>
   );

@@ -11,17 +11,18 @@ const NotesProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
   useEffect(() => {
-    const unsuscribe = onSnapshot(notesRef(user), (snapshot) => {
-      setNotes(snapshot.docs.map((note) => note.data()));
+    const unsubscribe = onSnapshot(notesRef(user), (snapshot) => {
+      setNotes(
+        snapshot.docs.map(function (note) {
+          return { ...note.data(), id: note.id };
+        })
+      );
       setLoading(true);
     });
-    return unsuscribe;
+    return unsubscribe;
   }, [user]);
 
-  const value = {
-    notes,
-    loading,
-  };
+  const value = { notes, loading };
   return (
     <NotesContext.Provider value={value}>{children}</NotesContext.Provider>
   );

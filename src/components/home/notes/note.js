@@ -6,6 +6,7 @@ import NoteDetails from "./noteDetails";
 import NavBar from "../../common/navBar";
 import NotesProvider from "../../../context/useNotes";
 import NoteDetailsProvider from "../../../context/useNoteDetails";
+import CurrentNote from "../../../context/useCurrentNote";
 
 export default function Home() {
   const { user } = useUser();
@@ -15,14 +16,16 @@ export default function Home() {
       <NavBar />
       <NoteDetailsProvider>
         <Grid container>
-          <Grid item lg={3} sm={5} xl={2}>
+          <Grid item lg={2.8} sm={4.8} xl={1.8}>
             <NoteContainer />
           </Grid>
           <Grid item>
             <Divider orientation="vertical" variant="middle" sx={{ ml: 0.5 }} />
           </Grid>
-          <Grid item lg={8} sm={6} xl={9}>
-            <NoteDetails />
+          <Grid item lg={9} sm={6} xl={9}>
+            <CurrentNote>
+              <NoteDetails />
+            </CurrentNote>
           </Grid>
         </Grid>
       </NoteDetailsProvider>
