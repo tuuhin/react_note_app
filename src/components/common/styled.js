@@ -41,7 +41,6 @@ export const BlackButton = styled(Button)({
   fontFamily: "Poppins",
   borderRadius: "5px",
   textTransform: "none",
-  margin: "8px 0px",
   border: "1px solid transparent",
   boxShadow: "0px 2px 5px 2px rgba(80, 80, 80, 0.3)",
   transition: "200ms ease-in-out",
@@ -109,4 +108,9 @@ export const NoteHolderPaper = styled(Paper)({
     // border: "1px solid rgba(100, 100, 100, 0.7)",
     boxShadow: "0px 5px 12px 2px rgba(80, 80, 80, 0.5)",
   },
+});
+
+export const Image = styled("img")({
+  boxShadow: "0px 5px 12px 2px rgba(80, 80, 80, 0.5)",
+  transform: "scale(0.8)",
 });

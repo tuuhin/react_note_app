@@ -1,49 +1,59 @@
+import { Container, Stack, Typography, Fade } from "@mui/material";
 import { Navigate, Link } from "react-router-dom";
 import { useUser } from "../../context/useUser";
-import { Container, Stack, Typography, Fade } from "@mui/material";
 import NavBar from "../common/navBar";
-import { BlackButton } from "../common/styled";
+import { BlackButton, Image } from "../common/styled";
+import bookImage from "../img/home.jpg";
 export default function Home() {
   const { user } = useUser();
-  return user ? (
+
+  if (!user) return <Navigate to="/login" />;
+  return (
     <>
       <NavBar />
-      <Container component="main" maxWidth="lg" sx={{ mt: 2 }}>
+      <Container maxWidth="lg">
         <Stack
-          direction="column"
-          alignItems="center"
-          justifyContent="center"
-          spacing={2}
-          height={"80vh"}
+          direction={"row"}
+          alignItems={"center"}
+          justifyContent={"space-around"}
+          sx={{ height: "80vh" }}
+          spacing={5}
         >
-          <Fade in timeout={2000}>
+          <Container
+            maxWidth="xs"
+            sx={{ display: "flex", gap: 1.2, flexDirection: "column" }}
+          >
+            <Fade in timeout={2000}>
+              <Typography
+                variant={"h2"}
+                sx={{
+                  fontFamily: "Poppins",
+                  fontWeight: 600,
+                }}
+              >
+                {"Let's make some notes"}
+              </Typography>
+            </Fade>
             <Typography
-              variant={"h2"}
+              variant={"subtitle1"}
               sx={{
+                letterSpacing: "-0.8px",
+                fonntWeight: 300,
                 fontFamily: "Poppins",
-                fontWeight: 600,
-                textAlign: "center",
               }}
             >
-              {"Boost your productivity with one tool"}
+              {
+                "It's better to note down than to memorize. Get started with afternotes,a note app which helps you to to make maintainable notes."
+              }
             </Typography>
-          </Fade>
-          <Typography
-            variant={"subtitle2"}
-            sx={{
-              color: "gray",
-              fontFamily: "Poppins",
-            }}
-          >
-            {"plan organize for free"}
-          </Typography>
-          <BlackButton variant="contained" component={Link} to="/notes">
-            {"Get started"}
-          </BlackButton>
+            <BlackButton component={Link} to="/notes">
+              {"Get started"}
+            </BlackButton>
+          </Container>
+
+          <Image src={bookImage} alt="not-found" />
         </Stack>
       </Container>
     </>
-  ) : (
-    <Navigate to="/login" />
   );
 }
