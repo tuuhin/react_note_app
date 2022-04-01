@@ -2,7 +2,7 @@ import { Navigate } from "react-router-dom";
 import { useUser } from "../../../context/useUser";
 import NoteContainer from "./noteContainer";
 import { Stack, Grid } from "@mui/material";
-import NoteDetails from "./noteDetails";
+import NoteDetails from "./notedetails";
 import NavBar from "../../common/navBar";
 import NotesProvider from "../../../context/useNotes";
 import NoteDetailsProvider from "../../../context/useNoteDetails";
