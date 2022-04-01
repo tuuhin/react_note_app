@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
-import { CircularProgress, Typography } from "@mui/material";
+import { useState, useMemo } from "react";
+import { Typography } from "@mui/material";
 export default function Quotes() {
   const [author, setAuthor] = useState(null);
   const [quote, setQuote] = useState("");
+
   const fetchQuote = async () => {
     const response = await fetch(
       "https://api.quotable.io/random?tags=technology",
@@ -13,27 +14,31 @@ export default function Quotes() {
     setAuthor(jsonData.author);
     setQuote(jsonData.content);
   };
-  useEffect(() => {
-    fetchQuote();
-  }, []);
+  useMemo(() => fetchQuote(), []);
   if (author == null) {
-    return <CircularProgress />;
+    return (
+      <Typography variant="caption">
+        {"Loading thought for the day !!"}
+      </Typography>
+    );
   }
   return (
     <>
       <Typography
-        variant={"h5"}
+        variant={"subtitle2"}
+        component="h6"
         sx={{
           margin: "0px 10%",
           fontStyle: "italic",
-          fontWeight: 400,
           color: "rgba(0,0,0,0.6)",
           textAlign: "center",
         }}
       >
         <q>{quote}</q>
       </Typography>
-      <cite>{author}</cite>
+      <cite sx={{ color: "rgba(0,0,0,0.6)", textAlign: "center" }}>
+        - {author}
+      </cite>
     </>
   );
 }

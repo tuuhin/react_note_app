@@ -4,9 +4,9 @@ import {
   Stack,
   Typography,
   Divider,
-  ListItemAvatar,
-  ListItemButton,
+  Avatar,
   ListItemText,
+  ListItemButton,
 } from "@mui/material";
 import NotesSimplified from "./notesSimplified";
 import { useNotes } from "../../../context/useNotes";
@@ -15,13 +15,12 @@ import { BlackButton } from "../../common/styled";
 
 export default function NoteContainer() {
   const { notes, loading } = useNotes();
-  const onTap = () => {};
 
   if (!loading) {
     return (
       <Stack
         sx={{ height: "75vh" }}
-        spaing={1}
+        spaing={0.5}
         direction={"column"}
         alignItems={"center"}
         justifyContent={"center"}
@@ -52,16 +51,41 @@ export default function NoteContainer() {
   }
   return (
     <>
-      <ListItemButton onClick={onTap}>
-        <ListItemAvatar>
-          <IoAddOutline />
-        </ListItemAvatar>
-        <ListItemText primary={"My notes"} secondary={"Add a new note"} />
-        <Typography variant="body2" sx={{ color: "gray" }}>
-          {notes.length}
-        </Typography>
+      <ListItemButton
+        sx={{
+          transition: "300ms ease-in-out",
+          transform: "scale(0.9)",
+          "&:hover, &:focus": { borderRadius: "4px", transform: "scale(1)" },
+        }}
+      >
+        <Avatar
+          sx={{
+            backgroundColor: "black",
+            color: "white",
+            mr: 1.5,
+            borderRadius: "10%",
+          }}
+        >
+          <IoAddOutline sx={{ color: "white" }} />
+        </Avatar>
+        <ListItemText
+          primary={
+            <Typography
+              variant="h6"
+              sx={{ fontFamily: "Poppins", fontWeight: 600 }}
+            >
+              {"My Notes"}
+            </Typography>
+          }
+          secondary={
+            <Typography variant="caption">
+              {"Click to add a new note 📓📓 "}
+            </Typography>
+          }
+        />
+        <Typography variant="body2">{notes.length}</Typography>
       </ListItemButton>
-      <Divider sx={{ mb: 0.5 }} variant="middle" />
+      <Divider sx={{ mb: 0.4 }} variant="middle" />
       <Stack
         direction={"column"}
         alignItems={"center"}

@@ -1,13 +1,15 @@
-import { Stack, Fade } from "@mui/material";
+import { Stack, Fade, Typography } from "@mui/material";
 import Editor from "../editor/editor";
 import NoteMetaData from "./noteMetaData";
 import { useNoteDetailed } from "../../../context/useNoteDetails";
 import { useCurrentNote } from "../../../context/useCurrentNote";
+import { useNotes } from "../../../context/useNotes";
 import NoteNavBar from "./noteNavBar";
 import { useEffect } from "react";
 import Quotes from "./quote";
 
 export default function NoteDetails() {
+  const { notes } = useNotes();
   const { selected, currentNote } = useNoteDetailed();
 
   const { note, setNote } = useCurrentNote();
@@ -26,6 +28,16 @@ export default function NoteDetails() {
         justifyContent={"center"}
         sx={{ height: "calc(100vh - 90px)" }}
       >
+        {notes.length !== 0 ? (
+          <Typography
+            variant="h6"
+            sx={{ fontWeight: 500, fontFamily: "Poppins" }}
+          >
+            {"Select a note to continue or add a new one."}
+          </Typography>
+        ) : (
+          <></>
+        )}
         <Quotes />
       </Stack>
     );
@@ -34,7 +46,7 @@ export default function NoteDetails() {
     <Fade in timeout={1200}>
       <Stack
         direction={"column"}
-        sx={{ ml: 1, height: "80vh", overflowX: "hidden" }}
+        sx={{ height: "calc(100vh - 64px)", overflowX: "hidden" }}
       >
         <NoteNavBar
           heading={currentNote.heading}
@@ -48,7 +60,6 @@ export default function NoteDetails() {
 
         <Editor
           value={note}
-          style={{ margin: "0px 10px", overflowY: "scroll" }}
           onChange={(e) => {
             setNote(e);
           }}

@@ -1,8 +1,8 @@
 import { Navigate } from "react-router-dom";
 import { useUser } from "../../../context/useUser";
 import NoteContainer from "./noteContainer";
-import { Grid, Divider } from "@mui/material";
-import NoteDetails from "./noteDetails";
+import { Grid } from "@mui/material";
+import NoteDetails from "./notedetails";
 import NavBar from "../../common/navBar";
 import NotesProvider from "../../../context/useNotes";
 import NoteDetailsProvider from "../../../context/useNoteDetails";
@@ -16,13 +16,10 @@ export default function Home() {
       <NavBar />
       <NoteDetailsProvider>
         <Grid container>
-          <Grid item lg={2.8} sm={4.8} xl={1.8}>
-            <NoteContainer />
+          <Grid item lg={3} sm={5}>
+            <NoteContainer style={{ marginTop: "5px" }} />
           </Grid>
-          <Grid item>
-            <Divider orientation="vertical" variant="middle" sx={{ ml: 0.5 }} />
-          </Grid>
-          <Grid item lg={9} sm={6} xl={9}>
+          <Grid item lg={9} sm={7}>
             <CurrentNote>
               <NoteDetails />
             </CurrentNote>

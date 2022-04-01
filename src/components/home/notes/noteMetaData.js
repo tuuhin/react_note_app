@@ -37,11 +37,16 @@ export default function NoteMetaData(props) {
   };
   return (
     <>
-      <Grid container sx={{ p: 1.5 }} spacing={1}>
-        <Grid item lg={2} sm={2} xs={4}>
-          <Typography variant="subtitle2">{"Created by"}</Typography>
+      <Grid container sx={{ p: 1.5 }} rowSpacing={1} columnSpacing={2}>
+        <Grid item lg={2} sm={2}>
+          <Typography
+            variant="subtitle2"
+            sx={{ fontFamily: "Poppins", textTransform: "capitalize" }}
+          >
+            {"Created by"}
+          </Typography>
         </Grid>
-        <Grid item lg={4} sm={4} xs={8}>
+        <Grid item lg={10} sm={10}>
           <Stack direction={"row"} spacing={1} alignItems={"center"}>
             <Avatar
               sx={{ width: "30px", height: "30px", borderRadius: "5px" }}
@@ -55,23 +60,32 @@ export default function NoteMetaData(props) {
             </Typography>
           </Stack>
         </Grid>
-        <Grid item lg={2} sm={2} xs={4}>
-          <Typography variant="subtitle2">{"Last Modified At"}</Typography>
+        <Grid item lg={2} sm={2}>
+          <Typography
+            variant="subtitle2"
+            sx={{ fontFamily: "Poppins", textTransform: "capitalize" }}
+          >
+            {"Last Modified At"}
+          </Typography>
         </Grid>
-        <Grid item lg={4} sm={4} xs={8}>
+        <Grid item lg={10} sm={10}>
           <Typography variant="body2">
             <DateFormat at={props.updatedAt || props.createdAt} />
           </Typography>
         </Grid>
-        <Grid item lg={2} sm={2} xs={12}>
-          <Typography variant="subtitle2">{"Tags"}</Typography>
+        <Grid item lg={2} sm={2}>
+          <Typography
+            variant="subtitle2"
+            sx={{ fontFamily: "Poppins", textTransform: "capitalize" }}
+          >
+            {"Tags"}
+          </Typography>
         </Grid>
-        <Grid item lg={8} sm={8} xs={12}>
+        <Grid item lg={10} sm={10}>
           <Stack
             direction={"row"}
-            spacing={2}
             alignItems={"center"}
-            sx={{ flexWrap: "wrap" }}
+            sx={{ flexWrap: "wrap", gap: 1.5 }}
           >
             {tags &&
               tags.map((e, i) => (

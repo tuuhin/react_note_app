@@ -1,15 +1,7 @@
-import {
-  Toolbar,
-  Typography,
-  IconButton,
-  Button,
-  Popover,
-  Stack,
-  Divider,
-} from "@mui/material";
+import { Toolbar, Typography, Button, Stack, Divider } from "@mui/material";
 import { useState } from "react";
 import { Box } from "@mui/system";
-import { MdMoreVert, MdDeleteForever, MdUpdate } from "react-icons/md";
+import { MdDeleteForever, MdUpdate } from "react-icons/md";
 import DateFormat from "../../../utils/dateFormat";
 import { useNoteDetailed } from "../../../context/useNoteDetails";
 import { useCurrentNote } from "../../../context/useCurrentNote";
@@ -17,7 +9,6 @@ import { removeNote } from "../../../data/services/firestore";
 import { useUser } from "../../../context/useUser";
 
 export default function NoteNavBar(props) {
-  const [anchor, setAnchor] = useState(null);
   const { noteId, setSelected } = useNoteDetailed();
   const { tags, currentNote } = useCurrentNote();
   const { user } = useUser();
@@ -37,20 +28,10 @@ export default function NoteNavBar(props) {
     }
     console.log(noteId, tags);
   };
-  const open = !!anchor;
+
   return (
     <Box sx={{ height: "64px" }}>
-      <Toolbar
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          borderBottom: "2px solid whitesmoke",
-          flexGrow: 1,
-          textOverflow: "ellipsis",
-          overflow: "hidden",
-          whiteSpace: "now-wrap",
-        }}
-      >
+      <Toolbar>
         <Stack direction="column" sx={{ flexGrow: 1 }}>
           <Typography
             variant="h5"
@@ -58,6 +39,9 @@ export default function NoteNavBar(props) {
               fontFamily: "Poppins",
               fontWeight: 500,
               textTransform: "capitalize",
+              textOverflow: "ellipsis",
+              overflow: "hidden",
+              whiteSpace: "now-wrap",
             }}
           >
             {props.heading}
@@ -69,42 +53,25 @@ export default function NoteNavBar(props) {
             <DateFormat at={props.createdAt} />
           </Typography>
         </Stack>
-        <IconButton
-          id="tabar-button"
-          onClick={(e) => setAnchor(e.currentTarget)}
+        <Button
+          onClick={updateNote}
+          sx={{ fontWeight: 400, color: "black" }}
+          variant={"text"}
+          startIcon={<MdUpdate />}
         >
-          <MdMoreVert />
-        </IconButton>
-        <Popover
-          open={open}
-          anchorEl={anchor}
-          onClose={() => setAnchor(null)}
-          anchorOrigin={{ vertical: "center", horizontal: "left" }}
+          {"Update"}
+        </Button>
+        <Divider />
+        <Button
+          onClick={deleteNote}
+          variant="text"
+          startIcon={<MdDeleteForever />}
+          sx={{ fontWeight: 400, color: "black" }}
         >
-          <Stack direction={"column"} sx={{ p: 1 }}>
-            <Button
-              onClick={updateNote}
-              color={"success"}
-              sx={{ fontWeight: 600 }}
-              variant={"text"}
-              startIcon={<MdUpdate />}
-            >
-              {"Update"}
-            </Button>
-            <Divider />
-            <Button
-              onClick={deleteNote}
-              color={"error"}
-              variant="text"
-              fullWidth
-              startIcon={<MdDeleteForever />}
-              sx={{ fontWeight: 600 }}
-            >
-              {"Delete"}
-            </Button>
-          </Stack>
-        </Popover>
+          {"Delete"}
+        </Button>
       </Toolbar>
+      <Divider variant="middle" />
     </Box>
   );
 }
