@@ -9,12 +9,18 @@ import {
   ListItemButton,
 } from "@mui/material";
 import NotesSimplified from "./notesSimplified";
-import { useNotes } from "../../../context/useNotes";
 import { IoAddOutline } from "react-icons/io5";
 import { BlackButton } from "../../common/styled";
+import { useNotes } from "../../../context/useNotes";
+import { useNoteDetailed } from "../../../context/useNoteDetails";
 
 export default function NoteContainer() {
   const { notes, loading } = useNotes();
+  const { selected, setSelected } = useNoteDetailed();
+
+  const onTap = () => {
+    if (selected) return setSelected(false);
+  };
 
   if (!loading) {
     return (
@@ -34,7 +40,7 @@ export default function NoteContainer() {
   if (notes.length === 0) {
     return (
       <Stack
-        spacing={2}
+        spacing={1}
         direction={"column"}
         alignItems={"center"}
         justifyContent={"center"}
@@ -52,10 +58,16 @@ export default function NoteContainer() {
   return (
     <>
       <ListItemButton
+        onClick={onTap}
         sx={{
+          p: 0,
+          mt: 1,
           transition: "300ms ease-in-out",
           transform: "scale(0.9)",
-          "&:hover, &:focus": { borderRadius: "4px", transform: "scale(1)" },
+          "&:hover": {
+            borderRadius: "4px",
+            transform: "scale(1)",
+          },
         }}
       >
         <Avatar
@@ -85,12 +97,12 @@ export default function NoteContainer() {
         />
         <Typography variant="body2">{notes.length}</Typography>
       </ListItemButton>
-      <Divider sx={{ mb: 0.4 }} variant="middle" />
+      <Divider sx={{ mb: 1 }} variant="middle" />
       <Stack
         direction={"column"}
         alignItems={"center"}
         justifyContent={loading ? "flex-start" : "center"}
-        spacing={2}
+        spacing={1.5}
         sx={{
           overflowY: "auto",
           overflowX: "hidden",

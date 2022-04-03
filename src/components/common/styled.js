@@ -10,7 +10,7 @@ export const StyledLink = styled(Link)({
   fontFamily: "Poppins",
   transition: "200ms ease-in",
   "&:hover": {
-    transform: "translateX(10px) scale(1.2)",
+    transform: "scale(1.2)",
     textDecoration: "underline",
   },
 });

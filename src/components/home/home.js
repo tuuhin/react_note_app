@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <>
       <NavBar />
-      <Fade in={2000}>
+      <Fade in duration={2000}>
         <Container maxWidth="lg">
           <Stack
             direction={"row"}

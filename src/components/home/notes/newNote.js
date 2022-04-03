@@ -10,21 +10,28 @@ import {
   Grid,
   Popover,
   Divider,
+  Avatar,
+  IconButton,
+  Snackbar,
+  Alert,
 } from "@mui/material";
-import { Box } from "@mui/system";
 import Editor from "../editor/editor";
 import { useUser } from "../../../context/useUser";
+import { useNoteDetailed } from "../../../context/useNoteDetails";
 import { addNoteToDb } from "../../../data/services/firestore";
-import { MdAdd } from "react-icons/md";
-import { BlackButton } from "../../common/styled";
 import { currentDate } from "../../../utils/dateFormat";
-import { MdSave } from "react-icons/md";
+import { MdSave, MdAdd } from "react-icons/md";
+
 export default function AddNewNote() {
   const { user } = useUser();
+  const { setSelected } = useNoteDetailed();
+
   const [anchor, setAnchor] = useState(null);
   const [heading, setHeading] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [headingError, setHeadingError] = useState(false);
+  const [isSnackBarOpen, setIsSnackBarOpen] = useState(false);
+  const [alertType, setAlertType] = useState("warning");
+  const [alertBody, setAlertBody] = useState("");
+
   const [tags, setTags] = useState([]);
   const [newItem, setNewItem] = useState("");
 
@@ -46,14 +53,39 @@ export default function AddNewNote() {
 
   const addNote = async (e) => {
     e.preventDefault();
-    if (!heading) return setHeadingError(true);
-    setLoading(true);
+    if (!heading) {
+      setIsSnackBarOpen(true);
+      setAlertType("warning");
+      setAlertBody("Heading is required");
+      return;
+    }
+    if (
+      editor ===
+      [
+        {
+          type: "paragraph",
+          children: [{ text: "" }],
+        },
+      ]
+    ) {
+      setIsSnackBarOpen(true);
+      setAlertType("warning");
+      setAlertBody("There is nothing in the editor");
+      return;
+    }
     try {
-      await addNoteToDb(user, heading, editor, tags);
+      setIsSnackBarOpen(true);
+      setAlertType("warning");
+      setAlertBody("Submitting your note");
+      const id = await addNoteToDb(user, heading, editor, tags);
+      setSelected(id);
+      setAlertType("success");
+      setAlertBody("Your note is successfully added");
     } catch (e) {
       console.log(e);
+      setAlertType("error");
+      setAlertBody("Failed🤔");
     }
-    setLoading(false);
   };
 
   return (
@@ -61,41 +93,44 @@ export default function AddNewNote() {
       <Fade in timeout={1200}>
         <Stack
           direction={"column"}
+          component="form"
+          noVaidate
+          onSubmit={addNote}
           sx={{ height: "calc(100vh - 64px)", overflowX: "hidden" }}
         >
-          <Box>
-            <Toolbar>
-              <Stack direction="column" sx={{ flexGrow: 1 }}>
-                <Typography
-                  variant="h5"
-                  sx={{
-                    fontFamily: "Poppins",
-                    fontWeight: 500,
-                    textTransform: "capitalize",
-                    textOverflow: "ellipsis",
-                    overflow: "hidden",
-                    whiteSpace: "now-wrap",
-                  }}
-                >
-                  {"New Note"}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{ fontFamily: "Poppins", color: "gray" }}
-                >
-                  {currentDate()}
-                </Typography>
-              </Stack>
-              <Button
-                startIcon={<MdSave />}
-                variant="text"
-                sx={{ fontWeight: 400, color: "black" }}
+          <Toolbar>
+            <Stack direction="column" sx={{ flexGrow: 1 }}>
+              <Typography
+                variant="h5"
+                sx={{
+                  fontFamily: "Poppins",
+                  fontWeight: 500,
+                  textTransform: "capitalize",
+                  textOverflow: "ellipsis",
+                  overflow: "hidden",
+                  whiteSpace: "now-wrap",
+                }}
               >
-                {"Save"}
-              </Button>
-            </Toolbar>
-            <Divider variant="middle" />
-          </Box>
+                {!!heading ? heading : "📔📔 New Note "}
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{ fontFamily: "Poppins", color: "gray" }}
+              >
+                {currentDate()}
+              </Typography>
+            </Stack>
+            <Button
+              startIcon={<MdSave />}
+              variant="text"
+              sx={{ fontWeight: 400, color: "black" }}
+              type="submit"
+            >
+              {"Save"}
+            </Button>
+          </Toolbar>
+          <Divider variant="middle" />
+
           <Grid container rowSpacing={3} columnSpacing={2} sx={{ p: 1.5 }}>
             <Grid item sm={3} lg={3}>
               <Typography
@@ -107,13 +142,12 @@ export default function AddNewNote() {
             </Grid>
             <Grid item sm={9} lg={9}>
               <TextField
-                error={headingError}
                 value={heading}
+                autoFocus
                 variant="standard"
-                onFocus={() => setHeadingError(false)}
+                sx={{ pr: 3 }}
                 onChange={(e) => setHeading(e.target.value)}
-                helperText={headingError ? "Heading is required" : ""}
-                sx={{ width: "80%" }}
+                fullWidth
               />
             </Grid>
             <Grid item sm={3} lg={3}>
@@ -145,17 +179,41 @@ export default function AddNewNote() {
         open={open}
         anchorEl={anchor}
         onClose={() => setAnchor(null)}
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        anchorOrigin={{ vertical: "center", horizontal: "right" }}
       >
-        <Stack direction="column" sx={{ pl: 1, pr: 1 }}>
+        <Stack
+          direction="row"
+          alignItems={"flex-end"}
+          sx={{ p: 0.8 }}
+          spacing={0.5}
+        >
           <TextField
-            variant="outlined"
+            variant="standard"
+            autoFocus
             value={newItem}
             onChange={(e) => setNewItem(e.target.value)}
           />
-          <BlackButton onClick={addNewTag}>{"Add tags"}</BlackButton>
+          <IconButton onClick={addNewTag}>
+            <Avatar sx={{ backgroundColor: "black" }}>
+              <MdAdd />
+            </Avatar>
+          </IconButton>
         </Stack>
       </Popover>
+      <Snackbar
+        open={isSnackBarOpen}
+        autoHideDuration={3000}
+        onClose={() => setIsSnackBarOpen(false)}
+      >
+        <Alert
+          severity={alertType}
+          elevation={3}
+          onClose={() => setIsSnackBarOpen(false)}
+          sx={{ fontFamily: "Poppins", fontWeight: 400, borderRadius: 2 }}
+        >
+          {alertBody}
+        </Alert>
+      </Snackbar>
     </>
   );
 }
