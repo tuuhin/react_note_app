@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { MdAdd } from "react-icons/md";
 import { useUser } from "../../../context/useUser";
-import DateFormat from "../../../utils/dateFormat";
+import { currentDateFromTimeStamp } from "../../../utils/dateFormat";
 import { useCurrentNote } from "../../../context/useCurrentNote";
 
 export default function NoteMetaData(props) {
@@ -70,7 +70,7 @@ export default function NoteMetaData(props) {
         </Grid>
         <Grid item lg={10} sm={10}>
           <Typography variant="body2">
-            <DateFormat at={props.updatedAt || props.createdAt} />
+            {currentDateFromTimeStamp(props.updatedAt || props.createdAt)}
           </Typography>
         </Grid>
         <Grid item lg={2} sm={2}>

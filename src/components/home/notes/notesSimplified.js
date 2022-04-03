@@ -1,17 +1,19 @@
 import { Typography, Stack, Chip } from "@mui/material";
 import { useNoteDetailed } from "../../../context/useNoteDetails";
-import DateFormat from "../../../utils/dateFormat";
+
+import { currentDateFromTimeStamp } from "../../../utils/dateFormat";
 import { NoteHolderPaper } from "../../common/styled";
 
 export default function NotesSimplified(props) {
   const { setNoteId } = useNoteDetailed();
+
   const showDetails = () => {
     setNoteId(props.id);
   };
   return (
     <NoteHolderPaper onClick={showDetails}>
       <Typography variant={"caption"}>
-        <DateFormat at={props.createdAt} />
+        {currentDateFromTimeStamp(props.createdAt)}
       </Typography>
       <Typography
         variant="subtitle2"

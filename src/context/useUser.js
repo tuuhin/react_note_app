@@ -13,7 +13,8 @@ const Auth = (props) => {
   const [user, setuser] = useState();
   const [userInfo, setUserInfo] = useState();
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => setuser(user));
+    const cleanup = onAuthStateChanged(auth, (user) => setuser(user));
+    return cleanup;
   }, []);
   useEffect(() => {
     if (user != null) {

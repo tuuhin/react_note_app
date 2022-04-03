@@ -1,12 +1,11 @@
 import { Toolbar, Typography, Button, Stack, Divider } from "@mui/material";
-import { useState } from "react";
 import { Box } from "@mui/system";
 import { MdDeleteForever, MdUpdate } from "react-icons/md";
-import DateFormat from "../../../utils/dateFormat";
 import { useNoteDetailed } from "../../../context/useNoteDetails";
 import { useCurrentNote } from "../../../context/useCurrentNote";
 import { removeNote } from "../../../data/services/firestore";
 import { useUser } from "../../../context/useUser";
+import { currentDateFromTimeStamp } from "../../../utils/dateFormat";
 
 export default function NoteNavBar(props) {
   const { noteId, setSelected } = useNoteDetailed();
@@ -50,7 +49,7 @@ export default function NoteNavBar(props) {
             variant="body2"
             sx={{ fontFamily: "Poppins", color: "gray" }}
           >
-            <DateFormat at={props.createdAt} />
+            {currentDateFromTimeStamp(props.createdAt)}
           </Typography>
         </Stack>
         <Button

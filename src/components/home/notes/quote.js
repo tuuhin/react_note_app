@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { Typography } from "@mui/material";
+import { Typography, Stack } from "@mui/material";
 export default function Quotes() {
   const [author, setAuthor] = useState(null);
   const [quote, setQuote] = useState("");
@@ -10,35 +10,32 @@ export default function Quotes() {
       { method: "GET" }
     );
     const jsonData = await response.json();
-    console.log(jsonData);
     setAuthor(jsonData.author);
     setQuote(jsonData.content);
   };
   useMemo(() => fetchQuote(), []);
-  if (author == null) {
-    return (
-      <Typography variant="caption">
-        {"Loading thought for the day !!"}
-      </Typography>
-    );
-  }
+
   return (
-    <>
-      <Typography
-        variant={"subtitle2"}
-        component="h6"
-        sx={{
-          margin: "0px 10%",
-          fontStyle: "italic",
-          color: "rgba(0,0,0,0.6)",
-          textAlign: "center",
-        }}
-      >
-        <q>{quote}</q>
-      </Typography>
-      <cite sx={{ color: "rgba(0,0,0,0.6)", textAlign: "center" }}>
-        - {author}
-      </cite>
-    </>
+    <Stack
+      spacing={1.2}
+      direction={"column"}
+      alignItems={"flex-end"}
+      sx={{ pr: 4 }}
+    >
+      {author != null ? (
+        <>
+          <Typography variant={"subtitle2"}>
+            <q>{quote}</q>
+          </Typography>
+          <Typography variant={"caption"}>
+            <cite>{`-${author}`}</cite>
+          </Typography>
+        </>
+      ) : (
+        <Typography variant="caption" sx={{ textAlign: "right" }}>
+          {"Loading thought for the day !!"}
+        </Typography>
+      )}
+    </Stack>
   );
 }
