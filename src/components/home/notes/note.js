@@ -15,10 +15,10 @@ export default function Home() {
     <>
       <NavBar />
       <Grid container>
-        <Grid item lg={3} sm={5}>
+        <Grid item lg={3} sm={4}>
           <NoteContainer />
         </Grid>
-        <Grid item lg={9} sm={7}>
+        <Grid item lg={9} sm={8}>
           <CurrentNote>
             <NoteDetails />
           </CurrentNote>

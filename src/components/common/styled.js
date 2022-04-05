@@ -60,17 +60,17 @@ export const LogoLink = styled(Button)({
   letterSpacing: 1,
 });
 
-export const NavButtons = styled(Button)({
-  color: "gray",
-  textDecoration: "none",
-  textTransform: "capitalize",
+export const NoteButtons = styled(Button)({
+  color: "black",
   fontFamily: "Poppins",
-  fontSize: "1em",
-  fontWeight: 400,
-  padding: "0px 10px",
+  textDecoration: "none",
   letterSpacing: "1px",
+  transition: "250ms ease-in-out",
   "&:hover": {
     color: "black",
+    transform: "scale(1.1)",
+    textDecoration: "underline",
+    backgroundColor: "transparent",
   },
 });
 

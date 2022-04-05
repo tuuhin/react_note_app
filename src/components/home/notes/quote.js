@@ -1,10 +1,9 @@
-import { useState, useMemo } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Typography, Stack } from "@mui/material";
 export default function Quotes() {
   const [author, setAuthor] = useState(null);
   const [quote, setQuote] = useState("");
-
-  const fetchQuote = async () => {
+  const fetchNote = useCallback(async () => {
     const response = await fetch(
       "https://api.quotable.io/random?tags=technology",
       { method: "GET" }
@@ -12,8 +11,9 @@ export default function Quotes() {
     const jsonData = await response.json();
     setAuthor(jsonData.author);
     setQuote(jsonData.content);
-  };
-  useMemo(() => fetchQuote(), []);
+  }, []);
+
+  useEffect(fetchNote, [fetchNote]);
 
   return (
     <Stack
