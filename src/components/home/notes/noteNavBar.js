@@ -1,42 +1,58 @@
-import { Toolbar, Typography, Button, Stack, Divider } from "@mui/material";
-import { Box } from "@mui/system";
+import { Toolbar, Typography, Stack, Divider } from "@mui/material";
 import { MdDeleteForever, MdUpdate } from "react-icons/md";
 import { useNoteDetailed } from "../../../context/useNoteDetails";
 import { useCurrentNote } from "../../../context/useCurrentNote";
-import { removeNote } from "../../../data/services/firestore";
 import { useUser } from "../../../context/useUser";
+import { useSnackbar } from "../../../context/useSnackbar";
 import { currentDateFromTimeStamp } from "../../../utils/dateFormat";
+import { NoteButtons } from "../../common/styled";
+import {
+  updateNoteByNoteId,
+  removeNoteByNoteId,
+} from "../../../data/services/firestore";
 
 export default function NoteNavBar(props) {
   const { noteId, setSelected } = useNoteDetailed();
-  const { tags, currentNote } = useCurrentNote();
+  const { tags } = useCurrentNote();
   const { user } = useUser();
+  const { setAlertBody, setAlertHead, setIsSnackBarOpen } = useSnackbar();
 
   const deleteNote = async () => {
     try {
-      await removeNote(user, noteId);
+      setIsSnackBarOpen(true);
+      setAlertBody("Removing your note");
+      await removeNoteByNoteId(user, noteId);
+      setAlertHead("success");
+      setAlertBody("Successfully removed your note 😉😉");
       setSelected(false);
     } catch (e) {
+      setAlertHead("error");
+      setAlertBody("failed to submit your note 😢");
       console.log(e);
     }
   };
-  const updateNote = () => {
+  const updateNote = async () => {
     try {
+      setIsSnackBarOpen(true);
+      setAlertBody("Updating your notes");
+      await updateNoteByNoteId(user, { tags: tags });
+      setAlertHead("success");
+      setAlertBody(`${props.heading} has been updated successfully`);
     } catch (e) {
+      setAlertHead("error");
+      setAlertBody("failed to submit your note 😠");
       console.log(e);
     }
-    console.log(noteId, tags);
   };
 
   return (
-    <Box sx={{ height: "64px" }}>
+    <>
       <Toolbar>
         <Stack direction="column" sx={{ flexGrow: 1 }}>
           <Typography
             variant="h5"
             sx={{
               fontFamily: "Poppins",
-              fontWeight: 500,
               textTransform: "capitalize",
               textOverflow: "ellipsis",
               overflow: "hidden",
@@ -49,28 +65,19 @@ export default function NoteNavBar(props) {
             variant="body2"
             sx={{ fontFamily: "Poppins", color: "gray" }}
           >
-            {currentDateFromTimeStamp(props.createdAt)}
+            {props.createdAt && currentDateFromTimeStamp(props.createdAt)}
           </Typography>
         </Stack>
-        <Button
-          onClick={updateNote}
-          sx={{ fontWeight: 400, color: "black" }}
-          variant={"text"}
-          startIcon={<MdUpdate />}
-        >
+
+        <NoteButtons onClick={updateNote} startIcon={<MdUpdate />}>
           {"Update"}
-        </Button>
+        </NoteButtons>
         <Divider />
-        <Button
-          onClick={deleteNote}
-          variant="text"
-          startIcon={<MdDeleteForever />}
-          sx={{ fontWeight: 400, color: "black" }}
-        >
+        <NoteButtons onClick={deleteNote} startIcon={<MdDeleteForever />}>
           {"Delete"}
-        </Button>
+        </NoteButtons>
       </Toolbar>
       <Divider variant="middle" />
-    </Box>
+    </>
   );
 }

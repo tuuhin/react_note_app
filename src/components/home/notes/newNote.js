@@ -12,12 +12,11 @@ import {
   Divider,
   Avatar,
   IconButton,
-  Snackbar,
-  Alert,
 } from "@mui/material";
 import Editor from "../editor/editor";
 import { useUser } from "../../../context/useUser";
 import { useNoteDetailed } from "../../../context/useNoteDetails";
+import { useSnackbar } from "../../../context/useSnackbar";
 import { addNoteToDb } from "../../../data/services/firestore";
 import { currentDate } from "../../../utils/dateFormat";
 import { MdSave, MdAdd } from "react-icons/md";
@@ -25,12 +24,10 @@ import { MdSave, MdAdd } from "react-icons/md";
 export default function AddNewNote() {
   const { user } = useUser();
   const { setSelected } = useNoteDetailed();
+  const { setAlertBody, setAlertHead, setIsSnackBarOpen } = useSnackbar();
 
   const [anchor, setAnchor] = useState(null);
   const [heading, setHeading] = useState("");
-  const [isSnackBarOpen, setIsSnackBarOpen] = useState(false);
-  const [alertType, setAlertType] = useState("warning");
-  const [alertBody, setAlertBody] = useState("");
 
   const [tags, setTags] = useState([]);
   const [newItem, setNewItem] = useState("");
@@ -55,7 +52,7 @@ export default function AddNewNote() {
     e.preventDefault();
     if (!heading) {
       setIsSnackBarOpen(true);
-      setAlertType("warning");
+      setAlertHead("warning");
       setAlertBody("Heading is required");
       return;
     }
@@ -69,21 +66,21 @@ export default function AddNewNote() {
       ]
     ) {
       setIsSnackBarOpen(true);
-      setAlertType("warning");
+      setAlertHead("warning");
       setAlertBody("There is nothing in the editor");
       return;
     }
     try {
       setIsSnackBarOpen(true);
-      setAlertType("warning");
+      setAlertHead("warning");
       setAlertBody("Submitting your note");
       const id = await addNoteToDb(user, heading, editor, tags);
       setSelected(id);
-      setAlertType("success");
+      setAlertHead("success");
       setAlertBody("Your note is successfully added");
     } catch (e) {
       console.log(e);
-      setAlertType("error");
+      setAlertHead("error");
       setAlertBody("Failed🤔");
     }
   };
@@ -94,7 +91,7 @@ export default function AddNewNote() {
         <Stack
           direction={"column"}
           component="form"
-          noVaidate
+          noValidate
           onSubmit={addNote}
           sx={{ height: "calc(100vh - 64px)", overflowX: "hidden" }}
         >
@@ -200,20 +197,6 @@ export default function AddNewNote() {
           </IconButton>
         </Stack>
       </Popover>
-      <Snackbar
-        open={isSnackBarOpen}
-        autoHideDuration={3000}
-        onClose={() => setIsSnackBarOpen(false)}
-      >
-        <Alert
-          severity={alertType}
-          elevation={3}
-          onClose={() => setIsSnackBarOpen(false)}
-          sx={{ fontFamily: "Poppins", fontWeight: 400, borderRadius: 2 }}
-        >
-          {alertBody}
-        </Alert>
-      </Snackbar>
     </>
   );
 }
