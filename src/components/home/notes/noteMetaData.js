@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Typography,
   Stack,
@@ -7,33 +7,45 @@ import {
   Popover,
   TextField,
   Button,
+  Grid,
 } from "@mui/material";
-import { Box } from "@mui/system";
 import { MdAdd } from "react-icons/md";
 import { useUser } from "../../../context/useUser";
-import DateFormat from "../../../utils/dateFormat";
-import { MutedText, BlackButton } from "../../common/styled";
+import { currentDateFromTimeStamp } from "../../../utils/dateFormat";
+import { useCurrentNote } from "../../../context/useCurrentNote";
 
 export default function NoteMetaData(props) {
   const { user, userInfo } = useUser();
   const [anchor, setAnchor] = useState(null);
-  const [tags, setTags] = useState(props.tags);
+  const { tags, setTags } = useCurrentNote();
   const [newItem, setNewItem] = useState("");
   const open = !!anchor;
+
+  useEffect(() => {
+    setTags(props.tags);
+  }, [props.tags, setTags]);
 
   const addNewTag = () => {
     if (!newItem) return;
     setTags([...tags, newItem]);
     setNewItem("");
+    setAnchor(null);
   };
   const removeTag = (e) => {
     setTags(tags.filter((value) => value !== e));
   };
   return (
     <>
-      <Box sx={{ pl: 3 }}>
-        <Stack direction={"row"} spacing={10} alignItems={"center"}>
-          <MutedText>{"Created by"}</MutedText>
+      <Grid container sx={{ p: 1.5 }} rowSpacing={1} columnSpacing={2}>
+        <Grid item lg={2} sm={3}>
+          <Typography
+            variant="subtitle2"
+            sx={{ fontFamily: "Poppins", textTransform: "capitalize" }}
+          >
+            {"Created by"}
+          </Typography>
+        </Grid>
+        <Grid item lg={10} sm={9}>
           <Stack direction={"row"} spacing={1} alignItems={"center"}>
             <Avatar
               sx={{ width: "30px", height: "30px", borderRadius: "5px" }}
@@ -46,20 +58,34 @@ export default function NoteMetaData(props) {
               {userInfo.userName || user.email}
             </Typography>
           </Stack>
-        </Stack>
-        <Stack direction={"row"} spacing={6} alignItems={"center"}>
-          <MutedText>{"Last Modified At"}</MutedText>
-          <Typography variant="body2" sx={{ fontFamily: "Poppins" }}>
-            <DateFormat at={props.updatedAt || props.createdAt} />
+        </Grid>
+        <Grid item lg={2} sm={3}>
+          <Typography
+            variant="subtitle2"
+            sx={{ fontFamily: "Poppins", textTransform: "capitalize" }}
+          >
+            {"Last Modified At"}
           </Typography>
-        </Stack>
-        <Stack direction={"row"} spacing={10} alignItems={"center"}>
-          <MutedText>Tags</MutedText>
+        </Grid>
+        <Grid item lg={10} sm={9}>
+          <Typography variant="body2">
+            {props.createdAt &&
+              currentDateFromTimeStamp(props.updatedAt || props.createdAt)}
+          </Typography>
+        </Grid>
+        <Grid item lg={2} sm={3}>
+          <Typography
+            variant="subtitle2"
+            sx={{ fontFamily: "Poppins", textTransform: "capitalize" }}
+          >
+            {"Tags"}
+          </Typography>
+        </Grid>
+        <Grid item lg={10} sm={9}>
           <Stack
             direction={"row"}
-            spacing={2}
             alignItems={"center"}
-            sx={{ flexWrap: "wrap" }}
+            sx={{ flexWrap: "wrap", gap: 1, width: "100%" }}
           >
             {tags &&
               tags.map((e, i) => (
@@ -72,8 +98,8 @@ export default function NoteMetaData(props) {
               onClick={(e) => setAnchor(e.currentTarget)}
             />
           </Stack>
-        </Stack>
-      </Box>
+        </Grid>
+      </Grid>
       <Popover
         open={open}
         anchorEl={anchor}

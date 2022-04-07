@@ -1,42 +1,62 @@
-import {
-  Toolbar,
-  Typography,
-  IconButton,
-  Button,
-  Popover,
-  Stack,
-  Divider,
-} from "@mui/material";
-import { useState } from "react";
-import { Box } from "@mui/system";
-import { MdMoreVert, MdDeleteForever, MdUpdate } from "react-icons/md";
-import DateFormat from "../../../utils/dateFormat";
+import { Toolbar, Typography, Stack, Divider } from "@mui/material";
+import { MdDeleteForever, MdUpdate } from "react-icons/md";
 import { useNoteDetailed } from "../../../context/useNoteDetails";
+import { useCurrentNote } from "../../../context/useCurrentNote";
+import { useUser } from "../../../context/useUser";
+import { useSnackbar } from "../../../context/useSnackbar";
+import { currentDateFromTimeStamp } from "../../../utils/dateFormat";
+import { NoteButtons } from "../../common/styled";
+import {
+  updateNoteByNoteId,
+  removeNoteByNoteId,
+} from "../../../data/services/firestore";
+
 export default function NoteNavBar(props) {
-  const [anchor, setAnchor] = useState(null);
-  const { noteId } = useNoteDetailed();
-  console.log(noteId);
-  const open = !!anchor;
+  const { noteId, setSelected } = useNoteDetailed();
+  const { tags } = useCurrentNote();
+  const { user } = useUser();
+  const { setAlertBody, setAlertHead, setIsSnackBarOpen } = useSnackbar();
+
+  const deleteNote = async () => {
+    try {
+      setIsSnackBarOpen(true);
+      setAlertBody("Removing your note");
+      await removeNoteByNoteId(user, noteId);
+      setAlertHead("success");
+      setAlertBody("Successfully removed your note 😉😉");
+      setSelected(false);
+    } catch (e) {
+      setAlertHead("error");
+      setAlertBody("failed to submit your note 😢");
+      console.log(e);
+    }
+  };
+  const updateNote = async () => {
+    try {
+      setIsSnackBarOpen(true);
+      setAlertBody("Updating your notes");
+      // await updateNoteByNoteId(user, { tags: tags });
+      setAlertHead("success");
+      setAlertBody(`${props.heading} has been updated successfully`);
+    } catch (e) {
+      setAlertHead("error");
+      setAlertBody("failed to submit your note 😠");
+      console.log(e);
+    }
+  };
+
   return (
-    <Box sx={{ height: "64px" }}>
-      <Toolbar
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          borderBottom: "2px solid whitesmoke",
-          flexGrow: 1,
-          textOverflow: "ellipsis",
-          overflow: "hidden",
-          whiteSpace: "now-wrap",
-        }}
-      >
+    <>
+      <Toolbar>
         <Stack direction="column" sx={{ flexGrow: 1 }}>
           <Typography
             variant="h5"
             sx={{
               fontFamily: "Poppins",
-              fontWeight: 500,
               textTransform: "capitalize",
+              textOverflow: "ellipsis",
+              overflow: "hidden",
+              whiteSpace: "now-wrap",
             }}
           >
             {props.heading}
@@ -45,43 +65,19 @@ export default function NoteNavBar(props) {
             variant="body2"
             sx={{ fontFamily: "Poppins", color: "gray" }}
           >
-            <DateFormat at={props.createdAt} />
+            {props.createdAt && currentDateFromTimeStamp(props.createdAt)}
           </Typography>
         </Stack>
-        <IconButton
-          id="tabar-button"
-          onClick={(e) => setAnchor(e.currentTarget)}
-        >
-          <MdMoreVert />
-        </IconButton>
-        <Popover
-          open={open}
-          anchorEl={anchor}
-          onClose={() => setAnchor(null)}
-          anchorOrigin={{ vertical: "center", horizontal: "left" }}
-        >
-          <Stack direction={"column"} sx={{ p: 1 }}>
-            <Button
-              color={"success"}
-              sx={{ fontWeight: 600 }}
-              variant={"text"}
-              startIcon={<MdUpdate />}
-            >
-              {"Update"}
-            </Button>
-            <Divider />
-            <Button
-              color={"error"}
-              variant="text"
-              fullWidth
-              startIcon={<MdDeleteForever />}
-              sx={{ fontWeight: 600 }}
-            >
-              {"Delete"}
-            </Button>
-          </Stack>
-        </Popover>
+
+        <NoteButtons onClick={updateNote} startIcon={<MdUpdate />}>
+          {"Update"}
+        </NoteButtons>
+        <Divider />
+        <NoteButtons onClick={deleteNote} startIcon={<MdDeleteForever />}>
+          {"Delete"}
+        </NoteButtons>
       </Toolbar>
-    </Box>
+      <Divider variant="middle" />
+    </>
   );
 }

@@ -1,50 +1,48 @@
+import { useEffect } from "react";
 import { Stack, Fade } from "@mui/material";
 import Editor from "../editor/editor";
 import NoteMetaData from "./noteMetaData";
-import NoteUnselected from "./noteUnselected";
-import { useNoteDetailed } from "../../../context/useNoteDetails";
 import NoteNavBar from "./noteNavBar";
-import Loading from "./loading";
+import AddNewNote from "./newNote";
+import { useNoteDetailed } from "../../../context/useNoteDetails";
+import { useCurrentNote } from "../../../context/useCurrentNote";
 
 export default function NoteDetails() {
-  const { selected, currentNote, loading } = useNoteDetailed();
+  const { selected, currentNote } = useNoteDetailed();
 
-  return selected ? (
-    loading ? (
-      <Fade in timeout={1200}>
-        <Stack
-          direction={"column"}
-          sx={{
-            ml: 1,
-            pt: 1,
-            height: "calc( 100vh - 80px )",
-            overflowY: "scroll",
-            flexGrow: 1,
+  const { note, setNote } = useCurrentNote();
+
+  useEffect(() => {
+    setNote(currentNote.note);
+    console.log(note);
+  }, [currentNote, setNote]);
+
+  if (!selected) {
+    return <AddNewNote />;
+  }
+  return (
+    <Fade in timeout={1200}>
+      <Stack
+        direction={"column"}
+        sx={{ height: "calc(100vh - 64px)", overflowX: "hidden" }}
+      >
+        <NoteNavBar
+          heading={currentNote.heading}
+          createdAt={currentNote.createdAt}
+        />
+        <NoteMetaData
+          tags={currentNote.tags}
+          updatedAt={currentNote.updatedAt}
+          createdAt={currentNote.createdAt}
+        />
+
+        <Editor
+          value={note}
+          onChange={(e) => {
+            setNote(e);
           }}
-        >
-          <NoteNavBar
-            heading={currentNote.heading}
-            createdAt={currentNote.createdAt}
-          />
-          <NoteMetaData
-            tags={currentNote.tags}
-            updatedAt={currentNote.updatedAt}
-            createdAt={currentNote.createdAt}
-          />
-
-          <Editor
-            value={currentNote.note}
-            style={{ margin: "0px 10px" }}
-            onChange={(e) => {
-              console.log(e);
-            }}
-          />
-        </Stack>
-      </Fade>
-    ) : (
-      <Loading />
-    )
-  ) : (
-    <NoteUnselected />
+        />
+      </Stack>
+    </Fade>
   );
 }

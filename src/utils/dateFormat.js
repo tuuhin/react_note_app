@@ -1,17 +1,20 @@
-import React from "react";
-import { FormattedDate } from "react-intl";
 import moment from "moment";
-const DateFormat = (props) => (
-  <FormattedDate
-    value={props.at && new Date(props.at.seconds * 1000)}
-    year="numeric"
-    month="long"
-    day="numeric"
-    weekday="long"
-  />
-);
+export const currentDateFromTimeStamp = (timestamp) => {
+  try {
+    return moment(timestamp.seconds * 1000).format("MM ddd, YYYY hh:mm");
+  } catch (e) {
+    console.log(e);
+    return;
+  }
+};
 
-export const dateFormatWithTime = (timestamp) =>
-  moment(timestamp.seconds * 1000).fromNow();
+export const dateFormatWithTime = (timestamp) => {
+  try {
+    return moment(timestamp.seconds * 1000).fromNow();
+  } catch (e) {
+    console.log(e);
+    return;
+  }
+};
 
-export default DateFormat;
+export const currentDate = () => moment().format("MM ddd, YYYY hh:mm a");

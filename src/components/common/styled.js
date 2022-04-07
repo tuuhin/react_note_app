@@ -10,7 +10,7 @@ export const StyledLink = styled(Link)({
   fontFamily: "Poppins",
   transition: "200ms ease-in",
   "&:hover": {
-    transform: "translateX(10px) scale(1.2)",
+    transform: "scale(1.2)",
     textDecoration: "underline",
   },
 });
@@ -35,13 +35,12 @@ export const MutedText = styled("p")({
 export const BlackButton = styled(Button)({
   backgroundColor: "black",
   color: "white",
-  fontSize: "1.1em",
+  fontSize: "1.15em",
   padding: "8px 25px ",
   textDecoration: "none",
   fontFamily: "Poppins",
   borderRadius: "5px",
   textTransform: "none",
-  margin: "8px 0px",
   border: "1px solid transparent",
   boxShadow: "0px 2px 5px 2px rgba(80, 80, 80, 0.3)",
   transition: "200ms ease-in-out",
@@ -57,20 +56,21 @@ export const LogoLink = styled(Button)({
   textDecoration: "none",
   fontSize: "1.2em",
   color: "black",
-  fontWeight: 500,
+  fontWeight: 600,
+  letterSpacing: 1,
 });
 
-export const NavButtons = styled(Button)({
-  color: "gray",
-  textDecoration: "none",
-  textTransform: "capitalize",
+export const NoteButtons = styled(Button)({
+  color: "black",
   fontFamily: "Poppins",
-  fontSize: "1em",
-  fontWeight: 400,
-  padding: "0px 10px",
+  textDecoration: "none",
   letterSpacing: "1px",
+  transition: "250ms ease-in-out",
   "&:hover": {
     color: "black",
+    transform: "scale(1.1)",
+    textDecoration: "underline",
+    backgroundColor: "transparent",
   },
 });
 
@@ -96,12 +96,21 @@ export const NoteHolderPaper = styled(Paper)({
   color: "gray",
   boxShadow: "none",
   margin: "0px",
-  width: "85%",
+  width: "95%",
   padding: "10px",
   borderRadius: 8,
+  transition: "200ms ease-in-out",
   "&:hover": {
     color: "black",
     cursor: "pointer",
     backgroundColor: "#e8e8e8",
+    borderRadius: 4,
+    // border: "1px solid rgba(100, 100, 100, 0.7)",
+    boxShadow: "0px 5px 12px 2px rgba(80, 80, 80, 0.5)",
   },
+});
+
+export const Image = styled("img")({
+  boxShadow: "0px 5px 12px 2px rgba(80, 80, 80, 0.5)",
+  transform: "scale(0.8)",
 });

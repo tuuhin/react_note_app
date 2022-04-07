@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, IconButton } from "@mui/material";
+import { Divider, Grid, IconButton } from "@mui/material";
 import { useSlate } from "slate-react";
 import { Transforms, Text, Editor } from "slate";
 import {
@@ -13,6 +13,7 @@ import {
   MdRedo,
   MdCode,
 } from "react-icons/md";
+
 import {
   TypographySelector,
   FontSelector,
@@ -126,58 +127,58 @@ export default function EditorRibbon() {
   const redo = () => editor.redo();
 
   return (
-    <Grid
-      sx={{
-        marginTop: "1px",
-        p: 0,
-        borderTop: "1px solid rgba(170, 169, 169, 0.74)",
-      }}
-      container
-      spacing={1}
-      direction={"row"}
-      alignItems={"center"}
-      justifyContent={"center"}
-    >
-      <Grid item>
-        <IconButton onClick={undo} disabled={!editor.history.undos.length}>
-          <MdUndo />
-        </IconButton>
-        <IconButton onClick={redo} disabled={!editor.history.redos.length}>
-          <MdRedo />
-        </IconButton>
-      </Grid>
-      <Grid item>
-        <TypographySelector />
-        <FontSelector />
-      </Grid>
-      <Grid item>
-        <IconButton onClick={Bold}>
-          <MdFormatBold />
-        </IconButton>
-        <IconButton onClick={Italic}>
-          <MdFormatItalic />
-        </IconButton>
-        <IconButton onClick={Underlined}>
-          <MdFormatUnderlined />
-        </IconButton>
-        <IconButton onClick={LineThrough}>
-          <MdFormatStrikethrough />
-        </IconButton>
-        {/* <ColorPicker />
+    <>
+      <Divider variant="middle" />
+      <Grid
+        sx={{ mt: "1px" }}
+        container
+        spacing={1}
+        direction={"row"}
+        alignItems={"center"}
+        justifyContent={"center"}
+      >
+        <Grid item>
+          <IconButton onClick={undo} disabled={!editor.history.undos.length}>
+            <MdUndo />
+          </IconButton>
+          <IconButton onClick={redo} disabled={!editor.history.redos.length}>
+            <MdRedo />
+          </IconButton>
+        </Grid>
+        <Grid item>
+          <TypographySelector />
+          <FontSelector />
+        </Grid>
+        <Grid item>
+          <IconButton onClick={Bold}>
+            <MdFormatBold />
+          </IconButton>
+          <IconButton onClick={Italic}>
+            <MdFormatItalic />
+          </IconButton>
+          <IconButton onClick={Underlined}>
+            <MdFormatUnderlined />
+          </IconButton>
+          <IconButton onClick={LineThrough}>
+            <MdFormatStrikethrough />
+          </IconButton>
+          {/* <ColorPicker />
         <AddLink /> */}
-        <IconButton onClick={blockCode}>
-          <MdCode />
-        </IconButton>
+          <IconButton onClick={blockCode}>
+            <MdCode />
+          </IconButton>
+        </Grid>
+        <Grid item>
+          <IconButton onClick={UnOrderedList}>
+            <MdFormatListBulleted />
+          </IconButton>
+          <IconButton onClick={OrderedList}>
+            <MdFormatListNumbered />
+          </IconButton>
+          {/* <ImagePicker /> */}
+        </Grid>
       </Grid>
-      <Grid item>
-        <IconButton onClick={UnOrderedList}>
-          <MdFormatListBulleted />
-        </IconButton>
-        <IconButton onClick={OrderedList}>
-          <MdFormatListNumbered />
-        </IconButton>
-        {/* <ImagePicker /> */}
-      </Grid>
-    </Grid>
+      <Divider variant="middle" />
+    </>
   );
 }

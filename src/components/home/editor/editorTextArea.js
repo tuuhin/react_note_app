@@ -1,6 +1,5 @@
 import { useCallback } from "react";
 import { Editable } from "slate-react";
-import { isKeyHotkey } from "is-hotkey";
 import { Typography } from "@mui/material";
 import { LinkStyle } from "./textStyles";
 
@@ -8,11 +7,7 @@ export default function EditorTextArea() {
   const renderElement = useCallback((props) => {
     switch (props.element.type) {
       case "block-quote":
-        return (
-          <blockquote {...props.attributes}>
-            <q>{props.children}</q>
-          </blockquote>
-        );
+        return <q {...props.attributes}>{props.children}</q>;
       case "typography":
         return (
           <Typography {...props.attributes} variant={props.element.typoMode}>
@@ -40,13 +35,15 @@ export default function EditorTextArea() {
   return (
     <Editable
       style={{
-        borderTop: "2px solid whitesmoke",
-        margin: "2px 5px 2px 0px",
-        padding: "10px 20px",
+        height: "50vh",
+        margin: "10px",
+        padding: "10px",
+        overflowY: "scroll",
+        overflowX: "hidden",
       }}
       renderElement={renderElement}
       renderLeaf={renderLeaf}
-      placeholder="Add Your note"
+      placeholder="your note over here"
     />
   );
 }

@@ -193,7 +193,7 @@ export const AddLink = () => {
   };
 
   const setLinkInEditor = () => {
-    const [link] = Editor.nodes(editor, { match: (n) => n.type == "link" });
+    const [link] = Editor.nodes(editor, { match: (n) => n.type === "link" });
     if (!link) {
       console.log("inserted");
       Transforms.insertNodes(editor, {
