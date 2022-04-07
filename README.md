@@ -11,7 +11,7 @@ Google Firebase is a Google-backed application development software that enables
   For this project we are mainly using above cited providers only.
 
 - **Cloud firestore 🧮**
-  Cloud firestore is the database of our project .The cloud firestore is a `NoSql` database similar to `monogdb`.The data is being stored in the cloud firestore appoximately like the `graph `shown below.
+  Cloud firestore is the database of our project .The cloud firestore is a `NoSql` database similar to `monogdb`.The data is being stored in the cloud firestore approximately like the `graph `shown below.
 
   ```mermaid
   stateDiagram
@@ -30,12 +30,12 @@ Google Firebase is a Google-backed application development software that enables
   ```
 
 - **Cloud Storage🏪**
-  As we have authenticated the user ,we needmake a profile page which ➡️ leads to the use cloud storage.`cloud storage` is simply a storage bucket to store the files.
+  As we have authenticated the user ,we need to make a profile page which ➡️ leads to the use cloud storage.`cloud storage` is simply a storage bucket to store the files.
   ```mermaid
   stateDiagram
   user --> picture1
   user --> picture2
-  credentails --> picture2
+  credentials --> picture2
   ```
   The last saved or added image is used as the user image
 - **Hosting🌏**
@@ -49,10 +49,10 @@ Google Firebase is a Google-backed application development software that enables
 
 ## Problems 💢
 
-This version 0.1.1 seems better than the previous one but still it's isn't complete . the notes can't be updated yet due to some problem with slate js. Thus there is no reason for update notes ,yet delete can be perferformed.
+This version 0.1.1 seems better than the previous one but still it's isn't complete . the notes can't be updated yet due to some problem with slate js. Thus there is no reason for update notes ,yet delete can be performed.
 
-> 👽 Project is not finised
+> 👽 Project is not finished
 
-## Conslusion ✋
+## Conclusion ✋
 
-The project is done properly ,but not good for usage , thus it can be said it's a hobby project, I am ending this project here ,feel free to contibute and let's make afternotes a proper notes app which it's supposed to be .
+The project is done properly ,but not good for usage , thus it can be said it's a hobby project, I am ending this project here ,feel free to contribute and let's make afternotes a proper notes app which it's supposed to be .

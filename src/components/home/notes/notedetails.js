@@ -14,7 +14,6 @@ export default function NoteDetails() {
 
   useEffect(() => {
     setNote(currentNote.note);
-    console.log(note);
   }, [currentNote, setNote]);
 
   if (!selected) {

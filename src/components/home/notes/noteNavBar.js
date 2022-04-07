@@ -6,10 +6,7 @@ import { useUser } from "../../../context/useUser";
 import { useSnackbar } from "../../../context/useSnackbar";
 import { currentDateFromTimeStamp } from "../../../utils/dateFormat";
 import { NoteButtons } from "../../common/styled";
-import {
-  updateNoteByNoteId,
-  removeNoteByNoteId,
-} from "../../../data/services/firestore";
+import { removeNoteByNoteId } from "../../../data/services/firestore";
 
 export default function NoteNavBar(props) {
   const { noteId, setSelected } = useNoteDetailed();
@@ -35,6 +32,7 @@ export default function NoteNavBar(props) {
     try {
       setIsSnackBarOpen(true);
       setAlertBody("Updating your notes");
+      console.log(tags);
       // await updateNoteByNoteId(user, { tags: tags });
       setAlertHead("success");
       setAlertBody(`${props.heading} has been updated successfully`);
