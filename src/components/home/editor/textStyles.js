@@ -13,9 +13,9 @@ export function LinkStyle(props) {
   return (
     <>
       <span {...props.attributes}>
-        <a onClick={options} style={{ backgroundColor: "blue" }}>
+        <button onClick={options} style={{ backgroundColor: "blue" }}>
           {props.children}
-        </a>
+        </button>
       </span>
       <Popover
         open={open}

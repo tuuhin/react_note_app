@@ -6,23 +6,26 @@ import {
   MenuItem,
   ListItemText,
 } from "@mui/material";
+import { useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { useUser } from "../../context/useUser";
 import { logOut } from "../../data/services/authservice";
 import { LogoLink } from "./styled";
-import { useState } from "react";
 
 export default function NavBar() {
   const { user, userInfo } = useUser();
   const [anchor, setAnchor] = useState(null);
 
-  const LogOut = async () => {
+  const LogOut = useCallback(async () => {
     try {
       await logOut();
     } catch (e) {
       console.warn(e);
     }
-  };
+  }, []);
+
+  const closeAnchor = () => setAnchor(null);
+  const open = !!anchor;
 
   return (
     <AppBar position="static" color={"inherit"}>
@@ -33,21 +36,16 @@ export default function NavBar() {
           </LogoLink>
         </div>
         <Menu
-          open={!!anchor}
+          open={open}
           anchorEl={anchor}
-          onClose={() => setAnchor(null)}
-          anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+          onClose={closeAnchor}
+          anchorOrigin={{ vertical: "center", horizontal: "center" }}
         >
           <MenuItem component={Link} to="/profile">
-            <ListItemText>{"Profile"}</ListItemText>
+            <ListItemText primary={"Profile"} />
           </MenuItem>
-          <MenuItem
-            onClick={LogOut}
-            component={Link}
-            to="/login"
-            color={"error"}
-          >
-            <ListItemText>{"Logout"}</ListItemText>
+          <MenuItem onClick={LogOut} component={Link} to="/login">
+            <ListItemText primary={"Logout"} />
           </MenuItem>
         </Menu>
         <Avatar
@@ -56,7 +54,11 @@ export default function NavBar() {
           sx={{
             ml: 1,
             border: "2px dashed gray",
-            "&:hover": { cursor: "pointer" },
+            transition: "250ms ease-in-out",
+            "&:hover": {
+              cursor: "pointer",
+              transform: "scale(1.2)",
+            },
           }}
         />
       </Toolbar>

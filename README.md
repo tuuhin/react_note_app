@@ -47,6 +47,12 @@ Google Firebase is a Google-backed application development software that enables
 
 > 🤖 Slate is currently in beta. Its core API is usable now, Some of its APIs are not "finalized" and will (breaking) change over time as we find better solutions.
 
-### Conclusion
+## Problems 💢
 
-It's under construction 🏗️
+This version 0.1.1 seems better than the previous one but still it's isn't complete . the notes can't be updated yet due to some problem with slate js. Thus there is no reason for update notes ,yet delete can be perferformed.
+
+> 👽 Project is not finised
+
+## Conslusion ✋
+
+The project is done properly ,but not good for usage , thus it can be said it's a hobby project, I am ending this project here ,feel free to contibute and let's make afternotes a proper notes app which it's supposed to be .

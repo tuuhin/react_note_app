@@ -1,6 +1,3 @@
-import { useState } from "react";
-import { Navigate } from "react-router-dom";
-import NavBar from "../common/navBar";
 import {
   Container,
   Avatar,
@@ -16,6 +13,9 @@ import {
   Snackbar,
 } from "@mui/material";
 import { MdCamera } from "react-icons/md";
+import { useState } from "react";
+import { Navigate } from "react-router-dom";
+import NavBar from "../common/navBar";
 import { useFilePicker } from "use-file-picker";
 import { useUser } from "../../context/useUser";
 import { BlackButton } from "../common/styled";
@@ -79,7 +79,6 @@ export default function UpdateProfile() {
         onSubmit={update}
         sx={{
           display: "flex",
-
           justifyContent: "center",
           alignItems: "center",
           flexDirection: "column",

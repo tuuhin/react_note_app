@@ -6,7 +6,7 @@ import NavBar from "../common/navBar";
 import { BlackButton } from "../common/styled";
 import bookImage from "../img/home.jpg";
 import Quotes from "./notes/quote";
-import "react-lazy-load-image-component/src/effects/blur.css";
+
 export default function Home() {
   const { user } = useUser();
 

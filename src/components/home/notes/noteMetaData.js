@@ -22,7 +22,6 @@ export default function NoteMetaData(props) {
   const open = !!anchor;
 
   useEffect(() => {
-    console.log("useEffect ran!!");
     setTags(props.tags);
   }, [props.tags, setTags]);
 
@@ -38,7 +37,7 @@ export default function NoteMetaData(props) {
   return (
     <>
       <Grid container sx={{ p: 1.5 }} rowSpacing={1} columnSpacing={2}>
-        <Grid item lg={2} sm={2}>
+        <Grid item lg={2} sm={3}>
           <Typography
             variant="subtitle2"
             sx={{ fontFamily: "Poppins", textTransform: "capitalize" }}
@@ -46,7 +45,7 @@ export default function NoteMetaData(props) {
             {"Created by"}
           </Typography>
         </Grid>
-        <Grid item lg={10} sm={10}>
+        <Grid item lg={10} sm={9}>
           <Stack direction={"row"} spacing={1} alignItems={"center"}>
             <Avatar
               sx={{ width: "30px", height: "30px", borderRadius: "5px" }}
@@ -60,7 +59,7 @@ export default function NoteMetaData(props) {
             </Typography>
           </Stack>
         </Grid>
-        <Grid item lg={2} sm={2}>
+        <Grid item lg={2} sm={3}>
           <Typography
             variant="subtitle2"
             sx={{ fontFamily: "Poppins", textTransform: "capitalize" }}
@@ -68,12 +67,13 @@ export default function NoteMetaData(props) {
             {"Last Modified At"}
           </Typography>
         </Grid>
-        <Grid item lg={10} sm={10}>
+        <Grid item lg={10} sm={9}>
           <Typography variant="body2">
-            {currentDateFromTimeStamp(props.updatedAt || props.createdAt)}
+            {props.createdAt &&
+              currentDateFromTimeStamp(props.updatedAt || props.createdAt)}
           </Typography>
         </Grid>
-        <Grid item lg={2} sm={2}>
+        <Grid item lg={2} sm={3}>
           <Typography
             variant="subtitle2"
             sx={{ fontFamily: "Poppins", textTransform: "capitalize" }}
@@ -81,11 +81,11 @@ export default function NoteMetaData(props) {
             {"Tags"}
           </Typography>
         </Grid>
-        <Grid item lg={10} sm={10}>
+        <Grid item lg={10} sm={9}>
           <Stack
             direction={"row"}
             alignItems={"center"}
-            sx={{ flexWrap: "wrap", gap: 1.5 }}
+            sx={{ flexWrap: "wrap", gap: 1, width: "100%" }}
           >
             {tags &&
               tags.map((e, i) => (

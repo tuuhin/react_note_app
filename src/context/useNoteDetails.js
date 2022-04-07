@@ -2,13 +2,11 @@ import { useState, useContext, createContext, useEffect } from "react";
 import { onSnapshot } from "firebase/firestore";
 import { useUser } from "./useUser";
 import { noteDetailsRef } from "../data/services/firestore";
+
 export const NoteDetailsContext = createContext();
 export const useNoteDetailed = () => useContext(NoteDetailsContext);
 
 const NoteDetailsProvider = (props) => {
-  const [noteId, setNoteId] = useState(null);
-  const [selected, setSelected] = useState(false);
-
   const { user } = useUser();
   const [currentNote, setCurrentNote] = useState({
     note: [
@@ -18,10 +16,12 @@ const NoteDetailsProvider = (props) => {
       },
     ],
   });
+  const [noteId, setNoteId] = useState(null);
+  const [selected, setSelected] = useState(false);
+
   useEffect(() => {
     if (!!noteId) {
       setSelected(true);
-
       const cleanUp = onSnapshot(noteDetailsRef(user, noteId), (snapshot) => {
         setCurrentNote({ ...snapshot.data(), id: snapshot.id });
       });

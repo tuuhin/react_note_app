@@ -22,7 +22,7 @@
     "react-router": "^6.2.1",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
-    "slate": "^0.76.1",
+    "slate": "^0.66.0",
     "slate-history": "^0.66.0",
     "slate-react": "^0.72.1",
     "use-file-picker": "^1.4.1",

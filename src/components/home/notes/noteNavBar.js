@@ -35,7 +35,7 @@ export default function NoteNavBar(props) {
     try {
       setIsSnackBarOpen(true);
       setAlertBody("Updating your notes");
-      await updateNoteByNoteId(user, { tags: tags });
+      // await updateNoteByNoteId(user, { tags: tags });
       setAlertHead("success");
       setAlertBody(`${props.heading} has been updated successfully`);
     } catch (e) {

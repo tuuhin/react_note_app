@@ -5,7 +5,6 @@ import { createEditor } from "slate";
 import { Slate, withReact } from "slate-react";
 import { withHistory } from "slate-history";
 import { useMemo } from "react";
-import PropTypes from "prop-types";
 
 const withInlines = (editor) => {
   const { isInline } = editor;
@@ -29,8 +28,3 @@ export default function Editor(props) {
     </Slate>
   );
 }
-
-Editor.prototype = {
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.any.isRequired,
-};

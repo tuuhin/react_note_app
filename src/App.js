@@ -8,11 +8,11 @@ import Auth from "./context/useUser";
 import InvalidPage from "./components/common/invalidPage";
 import { CssBaseline } from "@mui/material";
 import NotesProvider from "./context/useNotes";
+import "react-lazy-load-image-component/src/effects/blur.css";
 const App = () => {
   return (
     <Auth>
       <CssBaseline />
-
       <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<Home />} />

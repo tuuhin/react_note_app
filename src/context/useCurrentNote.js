@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState } from "react";
 
 export const CurrentNoteContext = createContext();
+
 export const useCurrentNote = () => useContext(CurrentNoteContext);
 
 const CurrentNote = (props) => {
